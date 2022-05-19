@@ -1,6 +1,7 @@
 import Blobs from './modules/mediaPlayer/blobs/Blobs';
 import Context from './modules/util/Context';
 import Stream from './modules/util/Stream';
+import KeyValue from './modules/mediaPlayer/keyValue/KeyValue';
 
 const broox = {
   util: {
@@ -10,7 +11,8 @@ const broox = {
   mediaPlayer: {
     blobs : {
       Blobs: Blobs
-    }
+    },
+    KeyValue: KeyValue
   }
 };
 
