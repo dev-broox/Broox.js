@@ -10,13 +10,43 @@ export default class Context {
    * @param destinationHeight Destination height.
    * @param destinationX Destination x position.
    * @param destinationY Destination y position.
-   * @param mirror Value indicating whether to mirror the image before. 
+   * @param mirror Value indicating whether to mirror the image before.
+   * ``` typescript
+   * // example
+   * const canvas = document.createElement('canvas');
+   * canvas.width = width;
+   * canvas.height = height;
+   * const context = canvas.getContext('2d');
+   * const video = document.getElementById('video')
+   * broox.media.Context.drawElement(video, context, width, height, 0, 0, false);
+   * ```
    */
   static drawVideo(video: HTMLVideoElement, context: CanvasRenderingContext2D, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) {
     this.drawElement(video, context, video.videoWidth, video.videoHeight, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
   }
 
-  private static drawElement(element: CanvasImageSource, context: CanvasRenderingContext2D, sourceWidth: number, sourceHeight: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) {
+  /**
+   * Renders an element in the given 2d context.
+   * @param element Element to draw in context.
+   * @param context 2d context.
+   * @param sourceWidth Source width.
+   * @param sourceHeight Source height.
+   * @param destinationWidth Destination width.
+   * @param destinationHeight Destination height.
+   * @param destinationX Destination x position.
+   * @param destinationY Destination y position.
+   * @param mirror Value indicating whether to mirror the image before.
+   * ``` typescript
+   * // example
+   * const canvas = document.createElement('canvas');
+   * canvas.width = width;
+   * canvas.height = height;
+   * const context = canvas.getContext('2d');
+   * const element = document.getElementById('img')
+   * broox.media.Context.drawElement(element, context, element.width, element.height, width, height, 0, 0, false);
+   * ```
+   */
+  static drawElement(element: CanvasImageSource, context: CanvasRenderingContext2D, sourceWidth: number, sourceHeight: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) {
     context.save();
     // get ratios
     const horizontalRatio = destinationWidth / sourceWidth;

@@ -6,7 +6,8 @@
   "module": "dist/broox.js",
   "scripts": {
     "watch": "parcel watch",
-    "build": "parcel build"
+    "build": "parcel build",
+    "doc": "typedoc"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/dev-broox/Broox.js#readme",
   "dependencies": {
-    "parcel": "^2.2.1"
+    "parcel": "^2.2.1",
+    "typedoc": "^0.22.17"
   }
 }

@@ -1,17 +1,17 @@
 import Blobs from './modules/mediaPlayer/blobs/Blobs';
-import Context from './modules/util/Context';
-import Stream from './modules/util/Stream';
+import Context from './modules/media/Context';
+import Stream from './modules/media/Stream';
 import KeyValue from './modules/mediaPlayer/keyValue/KeyValue';
+import Composition from './modules/media/Composition';
 
 const broox = {
-  util: {
+  media: {
     Stream: Stream,
-    Context: Context
+    Context: Context,
+    Composition: Composition
   },
   mediaPlayer: {
-    blobs : {
-      Blobs: Blobs
-    },
+    Blobs: Blobs,
     KeyValue: KeyValue
   }
 };
