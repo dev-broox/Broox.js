@@ -1,12 +1,12 @@
-import FileSystemStorage from './FileSystemStorage';
-import LocalStorage from './LocalStorage';
-import Storage from './Storage';
-import Window from './Window';
+import { FileSystemStorage } from './FileSystemStorage';
+import { LocalStorage } from './LocalStorage';
+import { Storage } from './Storage';
+import { Window } from './Window';
 
 /**
  * Stores and retrieves values from files in json format
  */
-export default class KeyValue {
+export class KeyValue {
   private contents: { [key: string]: any; } = {};
   private storage: Storage;
 

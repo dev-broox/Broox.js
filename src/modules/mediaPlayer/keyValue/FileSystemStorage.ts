@@ -1,7 +1,7 @@
 import * as path from 'path';
-import Storage from './Storage';
+import { Storage } from './Storage';
 
-export default class FileSystemStorage implements Storage {
+export class FileSystemStorage implements Storage {
   private directory: string;
   private fileSystem: any;
 

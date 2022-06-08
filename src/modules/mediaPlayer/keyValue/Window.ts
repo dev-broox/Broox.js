@@ -3,7 +3,7 @@ import path from "path";
 /**
  * Window wrapper
  */
-export default class Window {
+export class Window {
   static inElectron() {
     // @ts-ignore
     return !!window.electron;

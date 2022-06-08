@@ -1,7 +1,7 @@
 /**
  * Storage interface
  */
-interface Storage {
+export interface Storage {
   /**
    * 
    * @param projectName Project name
@@ -15,5 +15,3 @@ interface Storage {
    */
   read(projectName: string): any;
 }
-
-export default Storage;

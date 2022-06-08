@@ -1,9 +1,9 @@
-import Context from './Context';
+import { drawElement } from './Context';
 
 /**
  * Generates images composition based on different elements.
  */
-export default class Composition {
+export class Composition {
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private scale: number;
@@ -45,7 +45,7 @@ export default class Composition {
   addElement(element: any, x: number, y: number, width: number, height: number, scale: number, mirror: boolean) {
     const destinationWidth = this.canvas.width * this.scale * scale;
     const destinationHeight = (this.canvas.height - 2 * this.borderWidth) * scale;
-    Context.drawElement(element, this.context, width, height, destinationWidth, destinationHeight, this.borderWidth + x * scale * this.scale, this.borderWidth + y * scale * this.scale, mirror);
+    drawElement(element, this.context, width, height, destinationWidth, destinationHeight, this.borderWidth + x * scale * this.scale, this.borderWidth + y * scale * this.scale, mirror);
   }
 
   /**

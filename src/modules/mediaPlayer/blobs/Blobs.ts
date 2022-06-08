@@ -3,7 +3,7 @@ import TUIOBlobs from './tuio/TUIOBlobs'
 /**
  * Manages blobs
  */
-export default class Blobs {
+export class Blobs {
   private defaultAddress = null;
   private defaultController = new TUIOBlobs(null);
   private controllers = new Map();

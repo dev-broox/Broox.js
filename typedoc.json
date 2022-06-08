@@ -1,10 +1,7 @@
 {
   "entryPoints": [
-    "./src/modules/media/Stream.ts", 
-    "./src/modules/media/Context.ts",
-    "./src/modules/media/Composition.ts",
-    "./src/modules/mediaPlayer/keyValue/KeyValue.ts",
-    "./src/modules/mediaPlayer/blobs/Blobs.ts"
+    "./src/modules/media/Media.module.ts",
+    "./src/modules/mediaPlayer/MediaPlayer.module.ts"
   ],
   "entryPointStrategy" :"expand",
   "out": "docs",

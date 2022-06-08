@@ -1,18 +1,20 @@
-import Blobs from './modules/mediaPlayer/blobs/Blobs';
-import Context from './modules/media/Context';
-import Stream from './modules/media/Stream';
-import KeyValue from './modules/mediaPlayer/keyValue/KeyValue';
-import Composition from './modules/media/Composition';
+import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, Composition } from './modules/media/Media.module';
+import { Blobs, KeyValue, GestureHandler, GestureType } from './modules/mediaPlayer/MediaPlayer.module';
 
 const broox = {
   media: {
-    Stream: Stream,
-    Context: Context,
+    getAvailableDevices: getAvailableDevices,
+    getDeviceId: getDeviceId,
+    startDevice: startDevice,
+    drawElement: drawElement,
+    drawVideo: drawVideo,
     Composition: Composition
   },
   mediaPlayer: {
     Blobs: Blobs,
-    KeyValue: KeyValue
+    KeyValue: KeyValue,
+    GestureHandler: GestureHandler,
+    GestureType: GestureType
   }
 };
 
