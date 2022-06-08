@@ -6,6 +6,7 @@
     "./src/modules/mediaPlayer/keyValue/KeyValue.ts",
     "./src/modules/mediaPlayer/blobs/Blobs.ts"
   ],
-  "out": "doc",
+  "entryPointStrategy" :"expand",
+  "out": "docs",
   "excludePrivate": true
 }
