@@ -6,7 +6,7 @@ Provides context to the apps executed within the Media Player.
 
 #### {@link Blobs}
 
-Parses tuio events recieved by apps and keep track of the blobs.
+Parses tuio events recieved by apps and keeps track of the blobs.
 
 ``` typescript
 // example
@@ -53,7 +53,9 @@ Allows to create an image based on many media objects (images, videos, etc.).
 // example
 const composition = new broox.media.Composition(width, height, borderWidth);
 composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
-composition.addElement(image, 0, 0, image.width, image.height, 1, false);
+composition.get().then(blob => {
+   image.src = URL.createObjectURL(blob);
+)};
 ```
 <br/>
 
