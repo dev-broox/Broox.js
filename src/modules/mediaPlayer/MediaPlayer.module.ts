@@ -1,4 +1,6 @@
 /**
+ * Provides context to the apps executed within the Media Player.
+ * 
  * @module mediaPlayer
  */
 export { GestureType } from './gesture/GestureType';

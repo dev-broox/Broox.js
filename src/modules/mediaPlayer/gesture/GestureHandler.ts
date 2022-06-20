@@ -3,6 +3,11 @@ import { GestureType } from './GestureType';
 
 /**
  * Parse gestures coming from Vision Node
+ * ``` typescript
+ * // example
+ * const gestureHandler = new broox.mediaPlayer.GestureHandler(500, 2);
+ * gestureHandler.onPresence(() => console.log('Presence'));
+ * ```
  */
 export class GestureHandler {
   private time: number;
@@ -17,8 +22,8 @@ export class GestureHandler {
 
   /**
    * Creates an instance of the GestureHandler class.
-   * @param time Time lapse before accepting a gesture as such.
-   * @param delay Time before listening to other gestures once a gesture is accepted.
+   * @param time Time lapse in milliseconds before accepting a gesture as such.
+   * @param delay Time lapse in seconds before listening to other gestures once a gesture is accepted.
    */
   constructor(time: number, delay: number) {
     this.time = time;

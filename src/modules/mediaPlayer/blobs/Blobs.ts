@@ -2,6 +2,11 @@ import TUIOBlobs from './tuio/TUIOBlobs'
 
 /**
  * Manages blobs
+ *``` typescript
+ * // example
+ * const blobs = new broox.mediaPlayer.Blobs();
+ * const activeItems = blobs.getActiveItems();
+ * ```
  */
 export class Blobs {
   private defaultAddress = null;

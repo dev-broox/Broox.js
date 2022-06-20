@@ -10,6 +10,9 @@ export class KeyValue {
   private contents: { [key: string]: any; } = {};
   private storage: Storage;
 
+  /**
+   * Creates an instance of the Keyvalue class.
+   */
   constructor() {
     if(Window.inElectron()) {
       this.storage = new FileSystemStorage(Window.getDirectory(), Window.getFileSystem());

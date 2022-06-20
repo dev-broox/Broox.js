@@ -14,7 +14,7 @@
  * canvas.height = height;
  * const context = canvas.getContext('2d');
  * const video = document.getElementById('video')
- * broox.media.Context.drawElement(video, context, width, height, 0, 0, false);
+ * broox.media.drawElement(video, context, width, height, 0, 0, false);
  * ```
  */
 export function drawVideo(video: HTMLVideoElement, context: CanvasRenderingContext2D, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) {
@@ -39,7 +39,7 @@ export function drawVideo(video: HTMLVideoElement, context: CanvasRenderingConte
  * canvas.height = height;
  * const context = canvas.getContext('2d');
  * const element = document.getElementById('img')
- * broox.media.Context.drawElement(element, context, element.width, element.height, width, height, 0, 0, false);
+ * broox.media.drawElement(element, context, element.width, element.height, width, height, 0, 0, false);
  * ```
  */
 export function drawElement(element: CanvasImageSource, context: CanvasRenderingContext2D, sourceWidth: number, sourceHeight: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) {
