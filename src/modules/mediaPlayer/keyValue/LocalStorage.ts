@@ -16,6 +16,9 @@ export class LocalStorage implements Storage {
    */
   read(projectName: string): any {
     const content = localStorage.getItem(projectName);
-    return JSON.parse(content);
+    if(content) {
+      return JSON.parse(content);
+    }
+    return null;
   }
 }

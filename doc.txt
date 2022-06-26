@@ -40,6 +40,11 @@ Parses OSC events recieved by apps and allows to handle the different gestures.
 const gestureHandler = new broox.mediaPlayer.GestureHandler(500, 2);
 gestureHandler.onPresence(() => console.log('Presence'));
 ```
+
+#### Functions
+- {@link getMediaInfo}
+- {@link getDeviceInfo}
+<br/>
  
 ## {@link media | Media}
 

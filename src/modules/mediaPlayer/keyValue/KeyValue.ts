@@ -1,7 +1,7 @@
 import { FileSystemStorage } from './FileSystemStorage';
 import { LocalStorage } from './LocalStorage';
 import { Storage } from './Storage';
-import { Window } from './Window';
+import { Window } from '../Window';
 
 /**
  * Stores and retrieves values from files in json format
@@ -15,7 +15,7 @@ export class KeyValue {
    */
   constructor() {
     if(Window.inElectron()) {
-      this.storage = new FileSystemStorage(Window.getDirectory(), Window.getFileSystem());
+      this.storage = new FileSystemStorage(Window.getKeyValue());
     }
     else {
       this.storage = new LocalStorage();
