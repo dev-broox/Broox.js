@@ -73,7 +73,7 @@ export class Composition {
    * )};
    * ```
    */
-  get() {
+  get(): Promise<Blob> {
     return new Promise((resolve) => {
       this.canvas.toBlob(blob => resolve(blob), 'image/png', 1);
     });

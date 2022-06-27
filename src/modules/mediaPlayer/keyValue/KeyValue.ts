@@ -4,14 +4,17 @@ import { Storage } from './Storage';
 import { Window } from '../Window';
 
 /**
- * Stores and retrieves values from files in json format
+ * Stores and retrieves values in json format.
+ * Allows to persist data and be able to retrieve it after the media changes or the Media Player is reloaded.
+ * It can be useful for persisting configuration parameters modified at runtime.
+ * A project name and a key need to be specified in order to store and retrieve the data.
  */
 export class KeyValue {
   private contents: { [key: string]: any; } = {};
   private storage: Storage;
 
   /**
-   * Creates an instance of the Keyvalue class.
+   * Creates an instance of the KeyValue class.
    */
   constructor() {
     if(Window.inElectron()) {

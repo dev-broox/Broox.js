@@ -1,7 +1,7 @@
 import TUIOBlobs from './tuio/TUIOBlobs'
 
 /**
- * Manages blobs
+ * Parses tuio events recieved by apps and keeps track of the blobs.
  *``` typescript
  * // example
  * const blobs = new broox.mediaPlayer.Blobs();
@@ -23,8 +23,8 @@ export class Blobs {
   }
 
   /**
-   * Sets touch target
-   * @param target Target
+   * Sets touch target.
+   * @param target Target.
    */
   setTouchTarget(target) {
     if(target) {
@@ -36,9 +36,9 @@ export class Blobs {
   }
 
   /**
-   * Sets input
-   * @param inputs Inputs
-   * @param touchEventsTarget Target 
+   * Sets input.
+   * @param inputs Inputs.
+   * @param touchEventsTarget Target.
    */
   setInput(inputs = [], touchEventsTarget = null) {
     this.controllers = new Map();
@@ -67,11 +67,11 @@ export class Blobs {
   }
 
   /**
-   * Sets blobs space transform
-   * @param x X
-   * @param y Y
-   * @param width Width
-   * @param height Height
+   * Sets blobs space transform.
+   * @param x X.
+   * @param y Y.
+   * @param width Width.
+   * @param height Height.
    */
   setBlobsSpaceTransform(x, y, width, height) {
     this.loopControllers(controller => {
@@ -80,9 +80,9 @@ export class Blobs {
   }
 
   /**
-   * Sets touch event as enabled or disabled
-   * @param isEnabled Value indicating whether is enabled
-   * @param address Address
+   * Sets touch event as enabled or disabled.
+   * @param isEnabled Value indicating whether is enabled.
+   * @param address Address.
    */
   setTouchEventsEnabled(isEnabled, address = null) {
     let controller = this.getController(address);
@@ -92,9 +92,9 @@ export class Blobs {
   }
 
   /**
-   * Gets controller
-   * @param address Address
-   * @returns Controller
+   * Gets controller.
+   * @param address Address.
+   * @returns Controller.
    */
   getController(address = null) {
     if(!address && this.defaultController) {
@@ -110,9 +110,9 @@ export class Blobs {
   }
 
   /**
-   * Gets active items
-   * @param address Address
-   * @returns Active items
+   * Gets active items.
+   * @param address Address.
+   * @returns Active items.
    */
   getActiveItems(address = null) {
     let controller = this.getController(address);

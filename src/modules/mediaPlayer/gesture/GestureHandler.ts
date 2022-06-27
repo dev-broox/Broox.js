@@ -2,7 +2,7 @@ import { Gesture } from './Gesture';
 import { GestureType } from './GestureType';
 
 /**
- * Parse gestures coming from Vision Node
+ * Parses gestures coming from Vision Node and allows to add callbacks to perform an action when such gestures occure.
  * ``` typescript
  * // example
  * const gestureHandler = new broox.mediaPlayer.GestureHandler(500, 2);

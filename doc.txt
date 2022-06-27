@@ -1,5 +1,11 @@
 # Broox library
 
+## Using broox.js
+
+``` typescript
+import broox from './broox.js';
+```
+
 ## {@link mediaPlayer | Media Player}
 
 Provides context to the apps executed within the Media Player.
@@ -17,7 +23,7 @@ const activeItems = blobs.getActiveItems();
 
 #### {@link KeyValue}
 
-Allows apps to store json values associated to a project and a key in the file system.
+Allows apps to persist json values associated to a project and a key.
 
 ``` typescript
 // example
@@ -40,10 +46,15 @@ Parses OSC events recieved by apps and allows to handle the different gestures.
 const gestureHandler = new broox.mediaPlayer.GestureHandler(500, 2);
 gestureHandler.onPresence(() => console.log('Presence'));
 ```
+<br/>
 
 #### Functions
 - {@link getMediaInfo}
+  <br/>
+  Gets media information
 - {@link getDeviceInfo}
+  <br/>
+  Gets device information
 <br/>
  
 ## {@link media | Media}
@@ -66,8 +77,18 @@ composition.get().then(blob => {
 
 #### Functions
 - {@link getAvailableDevices}
+  <br/>
+  Gets navigator media devices.
 - {@link getDeviceId}
+  <br/>
+  Gets navigator device id.
 - {@link startDevice}
+  <br/>
+  Starts a given device (user media).
 - {@link drawElement}
+  <br/>
+  Renders an element in a given 2d context.
 - {@link drawVideo}
+  <br/>
+  Renders a video in a given 2d context.
 
