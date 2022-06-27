@@ -1,5 +1,5 @@
 {
-  "name": "broox",
+  "name": "broox.js",
   "version": "1.0.0",
   "description": "",
   "source": "src/index.ts",
@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "doc": "typedoc --out docs --readme doc.txt"
+    "doc": "typedoc --out docs --readme doc.txt --name \"broox.js API Reference\""
   },
   "repository": {
     "type": "git",

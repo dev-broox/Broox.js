@@ -1,5 +1,7 @@
 # Broox library
 
+This is JavaScript API Reference for broox.js library.
+
 ## Using broox.js
 
 ``` typescript
