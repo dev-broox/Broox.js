@@ -1,5 +1,5 @@
-import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, Composition } from './modules/media/Media.module';
-import { Blobs, KeyValue, GestureHandler, GestureType, getMediaInfo, getDeviceInfo } from './modules/mediaPlayer/MediaPlayer.module';
+import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, blobToImage, Composition, Recorder } from './modules/media/Media.module';
+import { Blobs, KeyValue, GestureHandler, GestureType, OscListener, getMediaInfo, getDeviceInfo } from './modules/mediaPlayer/MediaPlayer.module';
 
 const broox = {
   media: {
@@ -8,13 +8,16 @@ const broox = {
     startDevice: startDevice,
     drawElement: drawElement,
     drawVideo: drawVideo,
-    Composition: Composition
+    blobToImage: blobToImage,
+    Composition: Composition,
+    Recorder: Recorder
   },
   mediaPlayer: {
     Blobs: Blobs,
     KeyValue: KeyValue,
     GestureHandler: GestureHandler,
     GestureType: GestureType,
+    OscListener: OscListener,
     getMediaInfo: getMediaInfo,
     getDeviceInfo: getDeviceInfo
   }

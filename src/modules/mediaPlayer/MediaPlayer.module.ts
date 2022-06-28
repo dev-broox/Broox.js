@@ -39,6 +39,17 @@
  * ```
  * <br/>
  *
+ * #### {@link OscListener}
+ *
+ * Listens to OSC events and executes callback functions.
+ *
+ * ``` typescript
+ * // example
+ * const oscListener = new broox.mediaPlayer.OscListener();
+ * oscListener.add('/start', () => console.log('Start'));
+ * ```
+ * <br/>
+ * 
  * #### Functions
  * - {@link getMediaInfo}
  *   <br/>
@@ -54,4 +65,5 @@ export { GestureType } from './gesture/GestureType';
 export { GestureHandler } from './gesture/GestureHandler';
 export { KeyValue } from './keyValue/KeyValue';
 export { Blobs } from './blobs/Blobs';
+export { OscListener } from './OscListener';
 export { getMediaInfo, getDeviceInfo } from './Info';

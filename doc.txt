@@ -50,6 +50,17 @@ gestureHandler.onPresence(() => console.log('Presence'));
 ```
 <br/>
 
+#### {@link OscListener}
+
+Listens to OSC events and executes callback functions.
+
+``` typescript
+// example
+const oscListener = new broox.mediaPlayer.OscListener();
+oscListener.add('/start', () => console.log('Start'));
+```
+<br/>
+
 #### Functions
 - {@link getMediaInfo}
   <br/>
@@ -77,6 +88,18 @@ composition.get().then(blob => {
 ```
 <br/>
 
+ ``` typescript
+ // example
+ const recorder = new broox.media.Recorder(stream);
+ recorder.start();
+ setTimeout(() => {
+   recorder.stop().then(blob => {
+     console.log(blob);
+   )};
+ }, 10000);
+ ```
+ <br/>
+
 #### Functions
 - {@link getAvailableDevices}
   <br/>
@@ -93,4 +116,7 @@ composition.get().then(blob => {
 - {@link drawVideo}
   <br/>
   Renders a video in a given 2d context.
+- {@link blobToImage}
+  <br/>
+  Converts a blob to an image.
 

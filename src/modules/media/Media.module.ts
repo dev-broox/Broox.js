@@ -14,6 +14,19 @@
  * )};
  * ```
  * <br/>
+ * Allows to record a stream.
+ *
+ * ``` typescript
+ * // example
+ * const recorder = new broox.media.Recorder(stream);
+ * recorder.start();
+ * setTimeout(() => {
+ *   recorder.stop().then(blob => {
+ *     console.log(blob);
+ *   )};
+ * }, 10000);
+ * ```
+ * <br/>
  *
  * #### Functions
  * - {@link getAvailableDevices}
@@ -31,9 +44,14 @@
  * - {@link drawVideo}
  *   <br/>
  *   Renders a video in a given 2d context.
+* - {@link blobToImage}
+ *   <br/>
+ *   Converts a blob to an image.
  * 
  * @module media
  */
 export { drawElement, drawVideo } from './Context';
 export { getAvailableDevices, getDeviceId, startDevice } from './Stream';
+export { blobToImage } from './Blob';
 export { Composition } from './Composition';
+export { Recorder } from './Recorder';
