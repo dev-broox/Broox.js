@@ -53,11 +53,14 @@
  * #### Functions
  * - {@link getMediaInfo}
  *   <br/>
- *   Gets media information
+ *   Gets media information.
  * - {@link getDeviceInfo}
  *   <br/>
- *   Gets device information
- * <br/>
+ *   Gets device information.
+ *   <br/>
+ * - {@link logAlarm}
+ *   <br/>
+ *   Logs an alarm.
  * 
  * @module mediaPlayer
  */
@@ -67,3 +70,4 @@ export { KeyValue } from './keyValue/KeyValue';
 export { Blobs } from './blobs/Blobs';
 export { OscListener } from './OscListener';
 export { getMediaInfo, getDeviceInfo } from './Info';
+export { logAlarm } from './Log';

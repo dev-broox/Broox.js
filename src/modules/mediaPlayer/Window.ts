@@ -23,4 +23,9 @@ export class Window {
     // @ts-ignore
     return window.app && window.app.device;
   }
+
+  static logAlarm(subject: string, text: string) {
+    //@ts-ignore
+    window.app && window.app.logAlarm(subject, text);
+  }
 }

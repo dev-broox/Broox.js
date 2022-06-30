@@ -64,10 +64,13 @@ oscListener.add('/start', () => console.log('Start'));
 #### Functions
 - {@link getMediaInfo}
   <br/>
-  Gets media information
+  Gets media information.
 - {@link getDeviceInfo}
   <br/>
-  Gets device information
+  Gets device information.
+- {@link logAlarm}
+  <br/>
+  Logs an alarm.
 <br/>
  
 ## {@link media | Media}
