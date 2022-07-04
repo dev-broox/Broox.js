@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camera example</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 20px;
+        background-color: white;
+        color: gray;
+      }
+      #photo {
+        border: 1px solid gray;
+      }
+      #video {
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      #btnStart {
+        margin-top: 5px;
+      }
+      #btnShoot {
+        display: none;
+        float: right;
+      }
+      select {
+        width: 200px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>Camera</div>
+      <select id="camera">
+        <option></option>
+      </select>
+    </div>
+    <div>
+      <div>Scale</div>
+      <select id="scale">
+        <option value="1" selected>100%</option>
+        <option value="0.8">80%</option>
+        <option value="0.5">50%</option>
+        <option value="0.2">20%</option>
+      </select>
+    </div>
+    <div>
+      <div>Border width</div>
+      <select id="border">
+        <option value="10" selected>10px</option>
+        <option value="20">20px</option>
+        <option value="30">30px</option>
+        <option value="50">50px</option>
+      </select>
+    </div>
+    <button id="btnStart">Start</button>
+    <button id="btnShoot">Take photo</button>
+    <video id="video" autoplay></video>
+    <img id="photo" />
+    <script type="module">
+      import broox from './broox.js';
+      
+      const camera = document.getElementById('camera');
+      const scale = document.getElementById('scale');
+      const border = document.getElementById('border');
+      const video = document.getElementById('video');
+      const photo = document.getElementById('photo');
+      const btnShoot = document.getElementById('btnShoot');
+      // get available devices
+      broox.media.getAvailableDevices().then(devices => {
+        for(const device of devices) {
+          if(device.name) {
+            const option = document.createElement('option');
+            camera.options.add(new Option(device.name, device.id, false));
+          }
+        }
+      });
+      // start device
+      document.getElementById('btnStart').onclick = () => {
+        if(camera.value) {
+          broox.media.startDevice(camera.value).then(stream => {
+            video.srcObject = stream;
+            btnShoot.style.display = 'block';
+          });
+        }
+      };
+      // take photo
+      btnShoot.onclick = () => {
+        const composition = new broox.media.Composition(video.videoWidth, video.videoHeight, parseInt(border.value));
+        composition.addElement(video, 0, 0, video.videoWidth, video.videoHeight, parseFloat(scale.value), false);
+        composition.get().then(blob => {
+          photo.src = URL.createObjectURL(blob);
+        });
+      };
+    </script>
+  </body>
+</html>

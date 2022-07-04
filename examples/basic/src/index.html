@@ -55,7 +55,7 @@
       let projectName = 'demo';
       const keyValue = new broox.mediaPlayer.KeyValue();
       // store value in Media Player
-      document.getElementById('setValueBtn').onclick = function() {
+      document.getElementById('setValueBtn').onclick = () => {
         const key = document.getElementById('setKey');
         const value = document.getElementById('setValue');
         if(key.value && value.value) {
@@ -70,7 +70,7 @@
         }
       };
       // get value
-      document.getElementById('getValueBtn').onclick = function() {
+      document.getElementById('getValueBtn').onclick = () => {
         const key = document.getElementById('getKey');
         if(key.value) {
           const value = keyValue.getValue(projectName, key.value);
@@ -82,17 +82,17 @@
         }
       };
       // get media information
-      document.getElementById('getMediaBtn').onclick = function() {
+      document.getElementById('getMediaBtn').onclick = () => {
         const mediaInfo = broox.mediaPlayer.getMediaInfo();
         info.innerHTML = JSON.stringify(mediaInfo, null, 2);
       };
       // get device information
-      document.getElementById('getDeviceBtn').onclick = function() {
+      document.getElementById('getDeviceBtn').onclick = () => {
         const deviceInfo = broox.mediaPlayer.getDeviceInfo();
         info.innerHTML = JSON.stringify(deviceInfo, null, 2);
       };
       // send alarm to Media Player
-      document.getElementById('sendAlarmBtn').onclick = function() {
+      document.getElementById('sendAlarmBtn').onclick = () => {
         const subject = document.getElementById('subject');
         const text = document.getElementById('text');
         if(subject.value && text.value) {
