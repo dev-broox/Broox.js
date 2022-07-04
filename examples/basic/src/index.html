@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic example</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 20px;
+        background-color: white;
+        color: gray;
+      }
+      #info {
+        margin-top: 50px;
+      }
+      .action {
+        border: 1px solid gray;
+        padding: 20px;
+        display: inline-block;
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+      .actionInfo {
+        margin: 5px;
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="action">
+      <div class="actionInfo">Store a value in "demo" project</div>
+      <input id="setKey" type="text" placeholder="Enter key" />
+      <input id="setValue" type="text" placeholder="Enter value" />
+      <button id="setValueBtn">Store value</button>
+    </div>
+    <div class="action">
+      <div class="actionInfo">Get a value from "demo" project</div>
+      <input id="getKey" type="text" placeholder="Enter key" />
+      <button id="getValueBtn">Get value</button>
+    </div>
+    <div class="action">
+      <div class="actionInfo">Media Player information</div>
+      <button id="getMediaBtn">Get Media</button>
+      <button id="getDeviceBtn">Get Device</button>
+    </div>
+    <div class="action">
+      <div class="actionInfo">Send an alarm</div>
+      <input id="subject" type="text" placeholder="Enter subject" />
+      <input id="text" type="text" placeholder="Enter text" />
+      <button id="sendAlarmBtn">Send</button>
+    </div>
+    <pre id="info"></pre>
+    <script type="module">
+      import broox from './broox.js';
+      
+      let projectName = 'demo';
+      const keyValue = new broox.mediaPlayer.KeyValue();
+      // store value in Media Player
+      document.getElementById('setValueBtn').onclick = function() {
+        const key = document.getElementById('setKey');
+        const value = document.getElementById('setValue');
+        if(key.value && value.value) {
+          keyValue.setValue(projectName, key.value, value.value);
+          const info = document.getElementById('info');
+          info.innerHTML = 'Value set';
+          key.value = '';
+          value.value = '';
+        }
+        else {
+          info.innerHTML = 'You must set a key and a value';
+        }
+      };
+      // get value
+      document.getElementById('getValueBtn').onclick = function() {
+        const key = document.getElementById('getKey');
+        if(key.value) {
+          const value = keyValue.getValue(projectName, key.value);
+          info.innerHTML = JSON.stringify(value, null, 2);
+          key.value = '';
+        }
+        else {
+          info.innerHTML ='You must enter a key';
+        }
+      };
+      // get media information
+      document.getElementById('getMediaBtn').onclick = function() {
+        const mediaInfo = broox.mediaPlayer.getMediaInfo();
+        info.innerHTML = JSON.stringify(mediaInfo, null, 2);
+      };
+      // get device information
+      document.getElementById('getDeviceBtn').onclick = function() {
+        const deviceInfo = broox.mediaPlayer.getDeviceInfo();
+        info.innerHTML = JSON.stringify(deviceInfo, null, 2);
+      };
+      // send alarm to Media Player
+      document.getElementById('sendAlarmBtn').onclick = function() {
+        const subject = document.getElementById('subject');
+        const text = document.getElementById('text');
+        if(subject.value && text.value) {
+          broox.mediaPlayer.logAlarm(subject.value, text.value);
+          info.innerHTML = 'Alarm sent with subject "' + subject.value + '"" and text "' + text.value + '"';
+          subject.value = '';
+          text.value = '';
+        }
+        else {
+          info.innerHTML = 'You must enter a subject and a text';
+        }
+      };
+    </script>
+  </body>
+</html>

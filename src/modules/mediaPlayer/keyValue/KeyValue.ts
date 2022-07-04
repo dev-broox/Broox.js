@@ -2,6 +2,7 @@ import { FileSystemStorage } from './FileSystemStorage';
 import { LocalStorage } from './LocalStorage';
 import { Storage } from './Storage';
 import { Window } from '../Window';
+import Message from '../../../Message';
 
 /**
  * Stores and retrieves values in json format.
@@ -41,6 +42,10 @@ export class KeyValue {
    * ```
    */
   setValue(projectName: string, key: string, value: any) {
+    if(projectName === 'config') {
+      console.error(Message.forbiddenProjectName);
+      return;
+    }
     // get storage
     let content = this.getContent(projectName);
     if(!content) {
