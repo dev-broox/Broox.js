@@ -35,7 +35,7 @@
     <div>
       <div>Camera</div>
       <select id="camera">
-        <option></option>
+        <option>Default</option>
       </select>
     </div>
     <div>
@@ -80,12 +80,10 @@
       });
       // start device
       document.getElementById('btnStart').onclick = () => {
-        if(camera.value) {
-          broox.media.startDevice(camera.value).then(stream => {
-            video.srcObject = stream;
-            btnShoot.style.display = 'block';
-          });
-        }
+        broox.media.startDevice(camera.value).then(stream => {
+          video.srcObject = stream;
+          btnShoot.style.display = 'block';
+        });
       };
       // take photo
       btnShoot.onclick = () => {
