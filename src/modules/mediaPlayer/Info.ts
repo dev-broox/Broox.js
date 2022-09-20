@@ -8,7 +8,7 @@ import{ Window } from './Window';
  * const mediaInfo = broox.mediaPlayer.getMediaInfo();
  * ```
  */
-export function getMediaInfo(): any {
+export const getMediaInfo = (): any => {
   return Window.getMediaInfo();
 }
 
@@ -20,6 +20,6 @@ export function getMediaInfo(): any {
  * const deviceInfo = broox.mediaPlayer.getDeviceInfo();
  * ```
  */
- export function getDeviceInfo(): any {
+ export const getDeviceInfo = (): any => {
   return Window.getDeviceInfo();
 }

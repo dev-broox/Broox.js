@@ -1,31 +1,34 @@
 import { Storage } from './Storage';
 
 export class FileSystemStorage implements Storage {
-  private keyValue: any;
+  private writeJson: (name: string, json: any) => void;
+  private readJson: (name: string) => any;
 
   /**
    * 
-   * @param keyValue Key value manager 
+   * @param writeJson Function to write a json
+   * @param readJson Function to read a json 
    */
-  constructor(keyValue: any) {
-    this.keyValue = keyValue;
+  constructor(writeJson: (name: string, json: any) => void, readJson: (name: string) => any) {
+    this.writeJson = writeJson;
+    this.readJson = readJson;
   }
 
   /**
    * 
-   * @param projectName Project name
-   * @param content Json content
+   * @param name File name
+   * @param json Json content
    */
-   write(projectName: string, content: any): void {
-    this.keyValue.write(projectName, JSON.stringify(content));
+   write(name: string, json: any): void {
+    this.writeJson(name, JSON.stringify(json));
    }
 
    /**
     * 
-    * @param projectName Project name
+    * @param name File name
     */
-   read(projectName: string): any {
-    const content = JSON.parse(this.keyValue.read(projectName));
+   read(name: string): any {
+    const content = JSON.parse(this.readJson(name));
     return content;
    }
 }

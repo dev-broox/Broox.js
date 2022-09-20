@@ -51,9 +51,11 @@ export class Composition {
    * ```
    */
   addElement(element: any, x: number, y: number, width: number, height: number, scale: number, mirror: boolean) {
-    const destinationWidth = this.canvas.width * this.scale * scale;
-    const destinationHeight = (this.canvas.height - 2 * this.borderWidth) * scale;
-    drawElement(element, this.context, width, height, destinationWidth, destinationHeight, this.borderWidth + x * scale * this.scale, this.borderWidth + y * scale * this.scale, mirror);
+    const destinationWidth = width * this.scale * scale;
+    const destinationHeight = height * this.scale * scale;
+    const destinationX = this.borderWidth + x * scale * this.scale;
+    const destinationY = this.borderWidth + y * scale * this.scale;
+    drawElement(element, this.context, width, height, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
   }
 
   /**
@@ -75,7 +77,7 @@ export class Composition {
    */
   get(): Promise<Blob> {
     return new Promise((resolve) => {
-      this.canvas.toBlob(blob => resolve(blob), 'image/png', 1);
+      this.canvas.toBlob(blob => resolve(blob), 'image/jpeg', 1);
     });
   }
 }

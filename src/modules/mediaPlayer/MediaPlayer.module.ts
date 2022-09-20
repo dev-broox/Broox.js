@@ -61,6 +61,10 @@
  * - {@link logAlarm}
  *   <br/>
  *   Logs an alarm.
+ *   <br/>
+ * - {@link downloadFile}
+ *   <br/>
+ *   Downloads a file.
  * 
  * @module mediaPlayer
  */
@@ -71,3 +75,4 @@ export { Blobs } from './blobs/Blobs';
 export { OscListener } from './OscListener';
 export { getMediaInfo, getDeviceInfo } from './Info';
 export { logAlarm } from './Log';
+export { downloadFile } from './File';

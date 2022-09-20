@@ -1,4 +1,4 @@
-import{ Window } from './Window';
+import { Window } from './Window';
 
 /**
  * Logs an alarm.
@@ -9,6 +9,6 @@ import{ Window } from './Window';
  * broox.mediaPlayer.logAlarm('Error', e.message);
  * ```
  */
-export function logAlarm(subject: string, text: string): any {
+export const logAlarm = (subject: string, text: string): any => {
   return Window.logAlarm(subject, text);
 }

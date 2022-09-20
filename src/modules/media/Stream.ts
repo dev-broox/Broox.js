@@ -8,7 +8,7 @@ import Message from '../../Message';
  * broox.media.getAvailableDevices().then(devices => {});
  * ```
  */
-export function getAvailableDevices(): Promise<any[]> {
+export const getAvailableDevices = (): Promise<any[]> => {
   return new Promise((resolve, reject) => {
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
@@ -37,7 +37,7 @@ export function getAvailableDevices(): Promise<any[]> {
  * });
  * ```
  */
-export function getDeviceId(name: string): Promise<string> {
+export const getDeviceId = (name: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
@@ -68,6 +68,6 @@ export function getDeviceId(name: string): Promise<string> {
  * });
  * ```
  */
-export function startDevice(deviceId: string, width: number, height: number) {
+export const startDevice = (deviceId: string, width: number, height: number): Promise<MediaStream> => {
   return navigator.mediaDevices.getUserMedia({ video: { deviceId: deviceId, width: width, height: height }});
 }

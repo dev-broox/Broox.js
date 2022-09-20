@@ -1,5 +1,3 @@
-import path from "path";
-
 /**
  * Window wrapper
  */
@@ -9,9 +7,19 @@ export class Window {
     return !!window.electron;
   }
 
-  static getKeyValue() {
+  static writeJson(name: string, json: any) {
     // @ts-ignore
-    return window.app && window.app.keyValue;
+    return window.app && window.app.writeJson(name, json);
+  }
+
+  static readJson(name: string) {
+    // @ts-ignore
+    return window.app && window.app.readJson(name);
+  }
+
+  static downloadFile(url: string, name: string, onUpdate: (percent: number) => void, onError: (error: any) => void, onSuccess: (path: string) => void) {
+    // @ts-ignore
+    return window.app && window.app.downloadFile && window.app.downloadFile(url, name, onUpdate, onError, onSuccess);
   }
 
   static getMediaInfo() {

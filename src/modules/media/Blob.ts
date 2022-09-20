@@ -6,7 +6,7 @@
  * broox.media.blobToImage(blobg).then(image => {});
  * ```
  */
- export function blobToImage(blob: Blob) {
+ export const blobToImage = (blob: Blob) => {
   return new Promise((resolve) => {
     const image = new Image();
     image.onload = () => {

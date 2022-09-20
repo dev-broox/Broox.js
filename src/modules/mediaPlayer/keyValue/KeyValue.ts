@@ -19,7 +19,7 @@ export class KeyValue {
    */
   constructor() {
     if(Window.inElectron()) {
-      this.storage = new FileSystemStorage(Window.getKeyValue());
+      this.storage = new FileSystemStorage(Window.writeJson, Window.readJson);
     }
     else {
       this.storage = new LocalStorage();
@@ -28,7 +28,7 @@ export class KeyValue {
 
   /**
    * Sets a value in storage
-   * @param projectName Project name
+   * @param name File name
    * @param key Key assigned to the value to store
    * @param value Value to store
    * ``` typescript
@@ -41,23 +41,23 @@ export class KeyValue {
    * keyValue.set('testApp', 'profile', user);
    * ```
    */
-  setValue(projectName: string, key: string, value: any) {
-    if(projectName === 'config') {
+  setValue(name: string, key: string, value: any) {
+    if(name === 'config') {
       console.error(Message.forbiddenProjectName);
       return;
     }
     // get storage
-    let content = this.getContent(projectName);
+    let content = this.getContent(name);
     if(!content) {
       content = {};
     }
     content[key] = value;
-    this.storage.write(projectName, content);
+    this.storage.write(name, content);
   }
 
   /**
    * Gets a value from a content in storage
-   * @param projectName Project name
+   * @param name File name
    * @param key Key
    * @returns The value for the given key
    * ``` typescript
@@ -67,25 +67,25 @@ export class KeyValue {
    * console.log('User', user);
    * ```
    */
-  getValue(projectName: string, key: string): any {
-    const storage = this.getContent(projectName);
+  getValue(name: string, key: string): any {
+    const storage = this.getContent(name);
     return storage ? storage[key] : null;
   }
 
   /**
    * Gets a content from memory or storage
-   * @param projectName Project name
+   * @param name File name
    * @returns The content with the given name if exists, null otherwise
    */
-  private getContent(projectName: string): any {
+  private getContent(name: string): any {
     // get storage from memory
-    if(this.contents[projectName]) {
-      return this.contents[projectName];
+    if(this.contents[name]) {
+      return this.contents[name];
     }
     else {
       // get content from storage
       try {
-        return this.storage.read(projectName);
+        return this.storage.read(name);
       } catch (error) {
         // the content does not exist
         return null;
