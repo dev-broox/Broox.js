@@ -45,14 +45,20 @@ export const drawVideo = (video: HTMLVideoElement, context: CanvasRenderingConte
 export const drawElement = (element: CanvasImageSource, context: CanvasRenderingContext2D, sourceWidth: number, sourceHeight: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) => {
   context.save();
   // get ratios
-  const horizontalRatio = destinationWidth / sourceWidth;
-  const verticalRatio = destinationHeight / sourceHeight;
+  const horizontalRatio = Math.round((destinationWidth / sourceWidth) * 100) / 100;
+    const verticalRatio = Math.round((destinationHeight / sourceHeight) * 100) / 100;
   let height = 0;
   let width = 0;
   let leftOffset = 0;
   let topOffset = 0;
   // take center of element vertically or horizontally depending on ratio
-  if(verticalRatio > horizontalRatio) {
+  if(verticalRatio === horizontalRatio) {
+    width = sourceWidth;
+    height = sourceHeight;
+    leftOffset = 0;
+    topOffset = 0;
+  }
+  else if(verticalRatio > horizontalRatio) {
     height = sourceHeight;
     width = destinationWidth / verticalRatio;
     leftOffset = (sourceWidth - width) / 2;
