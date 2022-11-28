@@ -1,4 +1,4 @@
-import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, blobToImage, Composition, Recorder } from './modules/media/Media.module';
+import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, blobToImage, Composition, Recorder, drawPartOfElement } from './modules/media/Media.module';
 import { Blobs, KeyValue, GestureHandler, GestureType, OscListener, getMediaInfo, getDeviceInfo, logAlarm, downloadFile } from './modules/mediaPlayer/MediaPlayer.module';
 
 const broox = {
@@ -7,6 +7,7 @@ const broox = {
     getDeviceId: getDeviceId,
     startDevice: startDevice,
     drawElement: drawElement,
+    drawPartOfElement: drawPartOfElement,
     drawVideo: drawVideo,
     blobToImage: blobToImage,
     Composition: Composition,

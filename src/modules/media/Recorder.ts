@@ -41,13 +41,13 @@ export class Recorder {
   /**
    * Starts recording.
    */
-  start() {
+  start(options: MediaRecorderOptions) {
     const self = this;
     this.promise = new Promise((resolve, reject) => {
       self.resolve = resolve;
     });
     let data = [];
-    this.recorder = new MediaRecorder(this.stream);
+    this.recorder = new MediaRecorder(this.stream, options || {});
     this.recorder.ondataavailable = e => data.push(e.data);
     this.recorder.onstop = () => {
       self.resolve(new Blob(data, { type: 'video/webm' }));

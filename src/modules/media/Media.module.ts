@@ -41,6 +41,9 @@
  * - {@link drawElement}
  *   <br/>
  *   Renders an element in a given 2d context.
+ * - {@link drawPartOfElement}
+ *   <br/>
+ *   Renders a part of an element in a given 2d context.
  * - {@link drawVideo}
  *   <br/>
  *   Renders a video in a given 2d context.
@@ -50,7 +53,7 @@
  * 
  * @module media
  */
-export { drawElement, drawVideo } from './Context';
+export { drawElement, drawPartOfElement, drawVideo } from './Context';
 export { getAvailableDevices, getDeviceId, startDevice } from './Stream';
 export { blobToImage } from './Blob';
 export { Composition } from './Composition';

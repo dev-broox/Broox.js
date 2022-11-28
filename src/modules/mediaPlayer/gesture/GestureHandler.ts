@@ -18,7 +18,9 @@ export class GestureHandler {
   private bothHandsUpCallback: () => any;
   private leftHandUpCallback: () => any;
   private rightHandUpCallback: () => any;
-  private handOnChestCallback: () => any;
+  private bothHandsOnChestCallback: () => any;
+  private leftHandOnChestCallback: () => any;
+  private rightHandOnChestCallback: () => any;
 
   /**
    * Creates an instance of the GestureHandler class.
@@ -50,7 +52,7 @@ export class GestureHandler {
       }
       else if(args[0] === 'prop' && args[2] === 'poses') {
         const types = args.slice(3);
-        if(types.length) {
+        if(types.length && types.indexOf(GestureType.LeftHandUp) >= 0 || types.indexOf(GestureType.RightHandUp) >= 0 || types.indexOf(GestureType.BothHandsUp) >= 0 || types.indexOf(GestureType.LeftHandOnChest) >= 0 || types.indexOf(GestureType.RightHandOnChest) >= 0 || types.indexOf(GestureType.BothHandsOnChest) >= 0) {
           const gesture = new Gesture(types, new Date().getTime());
           this.gestures.push(gesture);
           this.check();
@@ -92,11 +94,27 @@ export class GestureHandler {
   }
 
   /**
-   * Adds a callback function for the "hand on chest" gesture.
-   * @param callback Function that will be executed when the "hand on chest" gesture is detected.
+   * Adds a callback function for the "both hands on chest" gesture.
+   * @param callback Function that will be executed when the "both hands on chest" gesture is detected.
    */
-  onHandOnChest(callback: () => any) {
-    this.handOnChestCallback = callback;
+  onBothHandsOnChest(callback: () => any) {
+    this.bothHandsOnChestCallback = callback;
+  }
+
+  /**
+   * Adds a callback function for the "left hand on chest" gesture.
+   * @param callback Function that will be executed when the "left hand on chest" gesture is detected.
+   */
+  onLeftHandOnChest(callback: () => any) {
+    this.leftHandOnChestCallback = callback;
+  }
+
+  /**
+   * Adds a callback function for the "right hand on chest" gesture.
+   * @param callback Function that will be executed when the "right hand on chest" gesture is detected.
+   */
+  onRightHandOnChest(callback: () => any) {
+    this.rightHandOnChestCallback = callback;
   }
 
   /**
@@ -116,10 +134,9 @@ export class GestureHandler {
       else if(this.gestures.length > 1) {
         const lastTimestamp = lastGesture.getTimestamp();
         let i = lastIndex;
-        let gesture: Gesture = null;
+        let gesture: Gesture | null = null;
         // find last gesture before the time lapse defined
         while(!gesture && --i >= 0 && this.gestures[i].getTypes().indexOf(type) >= 0) {
-          console.log(this.gestures[i]);
           if(lastTimestamp - this.gestures[i].getTimestamp() > this.time) {
             gesture = this.gestures[i];
           }
@@ -152,7 +169,13 @@ export class GestureHandler {
       this.rightHandUpCallback && this.rightHandUpCallback();
     }
     else if(type === GestureType.BothHandsOnChest) {
-      this.handOnChestCallback && this.handOnChestCallback();
+      this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
+    }
+    else if(type === GestureType.LeftHandOnChest) {
+      this.leftHandOnChestCallback && this.leftHandOnChestCallback();
+    }
+    else if(type === GestureType.RightHandOnChest) {
+      this.rightHandOnChestCallback && this.rightHandOnChestCallback();
     }
   }
 }
