@@ -20,7 +20,21 @@
   },
   "homepage": "https://github.com/dev-broox/Broox.js#readme",
   "dependencies": {
+    "@types/gsap": "^3.0.0",
+    "@types/qrcode": "^1.5.0",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "gsap": "^3.11.3",
     "parcel": "^2.2.1",
+    "qrcode": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typedoc": "^0.22.17"
+  },
+  "peerDependencies": {
+    "gsap": "^3.11.3",
+    "qrcode": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
