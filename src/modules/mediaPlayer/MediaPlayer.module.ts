@@ -1,14 +1,14 @@
 /**
  * Provides context to the apps executed within the Media Player.
  *
- * #### {@link Blobs}
+ * #### {@link BlobsController}
  *
  * Parses tuio events recieved by apps and keeps track of the blobs.
  *
  * ``` typescript
  * // example
- * const blobs = new broox.mediaPlayer.Blobs();
- * const activeItems = blobs.getActiveItems();
+ * const blobsController = new broox.mediaPlayer.BlobsController(width, height, false, () => {...);
+ * const skeletons = blobsController.getSkeletons();
  * ```
  * <br/>
  *
@@ -71,7 +71,8 @@
 export { GestureType } from './gesture/GestureType';
 export { GestureHandler } from './gesture/GestureHandler';
 export { KeyValue } from './keyValue/KeyValue';
-export { Blobs } from './blobs/Blobs';
+export { BlobsController } from './blobs/BlobsController';
+export { AddressType } from './blobs/AddressType';
 export { OscListener } from './OscListener';
 export { getMediaInfo, getDeviceInfo } from './Info';
 export { logAlarm } from './Log';

@@ -12,16 +12,16 @@ import broox from './broox.js';
 
 Provides context to the apps executed within the Media Player.
 
-#### {@link Blobs}
+ #### {@link BlobsController}
+ 
+ Parses tuio events recieved by apps and keeps track of the blobs.
 
-Parses tuio events recieved by apps and keeps track of the blobs.
-
-``` typescript
-// example
-const blobs = new broox.mediaPlayer.Blobs();
-const activeItems = blobs.getActiveItems();
-```
-<br/>
+  ``` typescript
+ // example
+ const blobsController = new broox.mediaPlayer.BlobsController(width, height, false, () => {...);
+ const skeletons = blobsController.getSkeletons();
+ ```
+ <br/>
 
 #### {@link KeyValue}
 

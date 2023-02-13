@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blobs example</title>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import broox from './broox.js';
+      let blobSettings = {
+        activeArea: { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight },
+        handScale: 1,
+        blobScale: 1,
+        simulate: true
+      };
+      const canvas = document.createElement('canvas');
+      canvas.style.position = 'absolute';
+      canvas.style.left = 0;
+      canvas.style.top = 0;
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
+      const context = canvas.getContext('2d');
+      document.body.appendChild(canvas);
+      const onUpdate = () => {
+        const blobs = blobsController.getSingleBlobs();
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
+        context.lineWidth = 2;
+        context.strokeStyle = 'red';
+        context.rect(blobSettings.activeArea.x, blobSettings.activeArea.y, blobSettings.activeArea.width, blobSettings.activeArea.height);
+        context.stroke();
+        for(let blob of blobs.values() || []) {
+          const b = blob.get();
+          context.beginPath();
+          context.arc(b.rect.x, b.rect.y, 20, 0, 2 * Math.PI, false);
+          context.fillStyle = '#ff0000';
+          context.fill();
+          context.lineWidth = 2;
+          context.strokeStyle = '#000000';
+          context.stroke();
+        }
+      };
+      const onBlobAdded = (id, x, y) => {
+        console.log('onBlobAdded', id, x, y);
+      };
+      const onBlobDeleted = (id) => {
+        console.log('onBlobDeleted', id);
+      };
+      const onFrameUpdated = (fseq) => {
+        console.log('onFrameUpdated', fseq);
+      };
+      const onSettingsChanged = (settings) => {
+        console.log('Settings changed', settings);
+        blobSettings = settings;
+      }
+      const blobsController = new broox.mediaPlayer.BlobsController(blobSettings.activeArea.width, blobSettings.activeArea.height, blobSettings.simulate, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated, onSettingsChanged);
+      blobsController.setKeyToOpenSettings('d');
+    </script>
+  </body>
+</html>
