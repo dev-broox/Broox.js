@@ -8,10 +8,10 @@ const randomBlobId = 'random';
 
 export class Blobs {
   private type: string;
-  private onUpdateCallback: () => {};
-  private onBlobAddedCallback: (id: string, x: number, y: number) => {};
-  private onBlobDeletedCallback: (id: string) => {};
-  private onFrameUpdatedCallback: (fseq: any) => {};
+  private onUpdateCallback: () => void;
+  private onBlobAddedCallback: (id: string, x: number, y: number) => void;
+  private onBlobDeletedCallback: (id: string) => void;
+  private onFrameUpdatedCallback: (fseq: any) => void;
   private blobs: Map<string, any> = new Map();
   private mouseEnabled: boolean = false;
   private calculateBlobTimeAlive: boolean = true;
@@ -21,7 +21,7 @@ export class Blobs {
   private activeArea: Rect;
   private scale: number = 1;
 
-  constructor(type: string, width: number, height: number, scale: number, onUpdate: () => {}, onBlobAdded: (id: string, x: number, y: number) => {}, onBlobDeleted: (id: string) => {}, onFrameUpdated: (fseq: any) => {}) {
+  constructor(type: string, width: number, height: number, scale: number, onUpdate: () => void, onBlobAdded: (id: string, x: number, y: number) => void, onBlobDeleted: (id: string) => void, onFrameUpdated: (fseq: any) => void) {
     this.type = type;
     this.activeArea = { x: 0, y: 0, width: width, height: height };
     this.scale = scale;
@@ -59,7 +59,6 @@ export class Blobs {
     }
     else {
       this.updateBlobsAlive([]);
-      console.log('removing mousemove event listener');
       window.removeEventListener('mousemove', f, false);
     }
   }
@@ -114,7 +113,6 @@ export class Blobs {
         continue;
       }
       var address = json[i].address;
-      console.log('onOSCMessage address', address);
       if(address !== this.type ) {
         continue;
       }
@@ -182,13 +180,11 @@ export class Blobs {
         blobData.height = blobData.width;
         break;
       case AddressType.marker:
-        console.log('is marker');
         blobData.classId = args[2];
         blobData.x = args[3];
         blobData.y = args[4];
         blobData.rotation = args[5];
         blobData.width = args[6];
-        console.log(args[2]);
         break;
     }
     let corrected = blobData;
@@ -305,10 +301,6 @@ export class Blobs {
       }
     }
   }
-  
-  // private onMouseUpdate(evt: any) {
-  //   this.updateBlob(mouseBlobId, evt.pageX / document.body.clientWidth, evt.pageY / document.body.clientHeight, 0, 0, 0, 0, 0, 0, '');
-  // }
 
   private createRandomBlob() {
     if(!this.randomBlobsEnabled) {
