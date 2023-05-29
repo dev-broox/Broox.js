@@ -119,6 +119,16 @@ export class BlobsController {
   }
 
   /**
+   * Sets blobs colors.
+   * @param handColor Skeleton hands color.
+   * @param blobColor Single blob color.
+   */
+  setBlobsColor(handColor: string, blobColor: string) {
+    this.handColor = handColor;
+    this.blobColor = blobColor;
+  }
+
+  /**
    * Simulates single blob with the mouse pointer.
    * @param value Value indicating whether to simulate a single blob with the mouse pointer.
    */

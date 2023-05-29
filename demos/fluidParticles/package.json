@@ -1,0 +1,17 @@
+{
+  "name": "particles",
+  "version": "1.0.0",
+  "description": "[Play here](https://paveldogreat.github.io/WebGL-Fluid-Simulation/)",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --public-url ./"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.8.3"
+  }
+}
