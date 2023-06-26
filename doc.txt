@@ -122,4 +122,19 @@ composition.get().then(blob => {
 - {@link blobToImage}
   <br/>
   Converts a blob to an image.
+<br/>
 
+## {@link logger | Logger}
+
+Provides logging options.
+
+ #### {@link LogController}
+ 
+ Enables or disables logs to console.
+
+  ``` typescript
+ // example
+ const logController = new broox.logger.LogController(true, () => {...);
+ console.log(message);
+ ```
+<br/>

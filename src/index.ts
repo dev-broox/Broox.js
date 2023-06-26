@@ -1,5 +1,6 @@
 import { getAvailableDevices, getDeviceId, startDevice, drawElement, drawVideo, blobToImage, Composition, Recorder, drawPartOfElement } from './modules/media/Media.module';
 import { BlobsController, AddressType, KeyValue, GestureHandler, GestureType, OscListener, getMediaInfo, getDeviceInfo, logAlarm, downloadFile } from './modules/mediaPlayer/MediaPlayer.module';
+import { LogController } from './modules/logger/Logger.module';
 
 const broox = {
   media: {
@@ -24,6 +25,9 @@ const broox = {
     getDeviceInfo: getDeviceInfo,
     logAlarm: logAlarm,
     downloadFile: downloadFile
+  },
+  logger: {
+    LogController: LogController
   }
 };
 

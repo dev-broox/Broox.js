@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blobs example</title>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import broox from './index.js';
+
+      const logController = new broox.logger.LogController(true, (settings) => {
+        console.log('settings changed', settings);
+        if(!settings.enabled) {
+          console.log('this message should not show up in console');
+          console.info('this info message should not show up in console');
+          console.warn('this warn message should not show up in console');
+          console.debug('this debug message should not show up in console');
+          console.error('this error message should not show up in console');
+        }
+        else {
+          console.log('this message should show up in console', settings);
+          console.info('this info message should show up in console');
+          console.warn('this warn message should show up in console');
+          console.debug('this debug message should show up in console');
+          console.error('this error message should show up in console');
+        }
+      });
+      logController.setKeyToOpenSettings('l');
+      console.log('this initial message should show up in console');
+    </script>
+  </body>
+</html>
