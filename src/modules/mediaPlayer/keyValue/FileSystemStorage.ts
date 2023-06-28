@@ -20,7 +20,7 @@ export class FileSystemStorage implements Storage {
    * @param json Json content
    */
    write(name: string, json: any): void {
-    this.writeJson(name, JSON.stringify(json));
+    this.writeJson(name, json);
    }
 
    /**
@@ -28,7 +28,7 @@ export class FileSystemStorage implements Storage {
     * @param name File name
     */
    read(name: string): any {
-    const content = JSON.parse(this.readJson(name));
+    const content = this.readJson(name);
     return content;
    }
 }

@@ -379,13 +379,13 @@ class $b37b5f75238e2b33$export$410db1ee4b845acb {
    * @param name File name
    * @param json Json content
    */ write(name, json) {
-        this.writeJson(name, JSON.stringify(json));
+        this.writeJson(name, json);
     }
     /**
     * 
     * @param name File name
     */ read(name) {
-        const content = JSON.parse(this.readJson(name));
+        const content = this.readJson(name);
         return content;
     }
 }
@@ -8335,6 +8335,145 @@ const $6478894b9d0eb5a2$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
 
 
 
+
+class $8dfbb31d00ab2c46$export$c72f6eaae7b9adff {
+    open(settings, onChange, onClose) {
+        this.pane = new $f5656f04fd7f761f$exports.Pane();
+        this.pane.addInput(settings, 'logEnabled', {
+            label: 'Log enabled'
+        });
+        this.pane.addInput(settings, 'errorEnabled', {
+            label: 'Error enabled'
+        });
+        this.pane.addInput(settings, 'warnEnabled', {
+            label: 'Warn enabled'
+        });
+        this.pane.addInput(settings, 'infoEnabled', {
+            label: 'Info enabled'
+        });
+        this.pane.addInput(settings, 'debugEnabled', {
+            label: 'Debug enabled'
+        });
+        this.pane.on('change', ()=>{
+            onChange(this.pane.exportPreset());
+        });
+        this.pane.addSeparator();
+        const btn = this.pane.addButton({
+            title: 'CLOSE'
+        });
+        btn.on('click', ()=>{
+            onClose();
+            this.pane.dispose();
+        });
+    }
+    close() {
+        this.pane && this.pane.dispose();
+    }
+}
+
+
+class $01cf7c246395b81b$export$7e5c6f1dff24d331 {
+    /**
+   * 
+   * @param enabled Value indicating whether logging is enabled.
+   * @param onSettingsChanged On settings changed callback. 
+   */ constructor(enabled, onSettingsChanged){
+        this.keyToOpenSettings = 'l';
+        this.settingsOpened = false;
+        this.logEnabled = false;
+        this.errorEnabled = false;
+        this.warnEnabled = false;
+        this.infoEnabled = false;
+        this.debugEnabled = false;
+        this.log = console.log;
+        this.error = console.error;
+        this.warn = console.warn;
+        this.info = console.info;
+        this.debug = console.debug;
+        this.logEnabled = this.errorEnabled = this.warnEnabled = this.infoEnabled = this.debugEnabled = enabled;
+        this.onSettingsChangedCallback = onSettingsChanged;
+        this.settings = new $8dfbb31d00ab2c46$export$c72f6eaae7b9adff();
+        window.addEventListener('keydown', (event)=>{
+            if (event.key === this.keyToOpenSettings) {
+                console.log('opening log settings...', event.key);
+                this.settingsOpened ? this.closeSettings() : this.openSettings();
+            }
+        });
+    }
+    /**
+   * Opens a panel to set the blobs settings.
+   */ openSettings() {
+        this.settingsOpened = true;
+        let settings = {
+            logEnabled: this.logEnabled,
+            errorEnabled: this.errorEnabled,
+            warnEnabled: this.warnEnabled,
+            infoEnabled: this.infoEnabled,
+            debugEnabled: this.debugEnabled
+        };
+        this.settings.open(settings, (newSettings)=>{
+            this.setLogEnabled(newSettings.logEnabled);
+            this.setErrorEnabled(newSettings.errorEnabled);
+            this.setWarnEnabled(newSettings.warnEnabled);
+            this.setInfoEnabled(newSettings.infoEnabled);
+            this.setDebugEnabled(newSettings.debugEnabled);
+            this.onSettingsChangedCallback && this.onSettingsChangedCallback(newSettings);
+        }, ()=>{
+            this.settingsOpened = false;
+        });
+    }
+    /**
+   * Closes the blobs settings panel.
+   */ closeSettings() {
+        this.settingsOpened = false;
+        this.settings.close();
+    }
+    /**
+   * Sets a value indicating whether log is enabled.
+   */ setLogEnabled(value) {
+        this.logEnabled = value;
+        console.log = value ? this.log : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether error is enabled.
+   */ setErrorEnabled(value) {
+        this.errorEnabled = value;
+        console.error = value ? this.error : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether warn is enabled.
+   */ setWarnEnabled(value) {
+        this.warnEnabled = value;
+        console.warn = value ? this.warn : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether info is enabled.
+   */ setInfoEnabled(value) {
+        this.infoEnabled = value;
+        console.info = value ? this.info : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether debug is enabled.
+   */ setDebugEnabled(value) {
+        this.debugEnabled = value;
+        console.debug = value ? this.debug : ()=>{
+        };
+    }
+    /**
+   * Sets the key to open the settings panel when pressed.
+   * @param key Key.
+   */ setKeyToOpenSettings(key) {
+        this.keyToOpenSettings = key;
+    }
+}
+
+
+
+
 const $e98f3455ba14d218$var$broox = {
     media: {
         getAvailableDevices: $765649a831e5cd99$export$13a2ac54ef3e3802,
@@ -8358,6 +8497,9 @@ const $e98f3455ba14d218$var$broox = {
         getDeviceInfo: $1969843397ad4b01$export$a5202107d3e3cdb0,
         logAlarm: $36099b9c9195dda7$export$4b2634a642f10d54,
         downloadFile: $6478894b9d0eb5a2$export$bb3b75778e3e272
+    },
+    logger: {
+        LogController: $01cf7c246395b81b$export$7e5c6f1dff24d331
     }
 };
 var $e98f3455ba14d218$export$2e2bcd8739ae039 = $e98f3455ba14d218$var$broox;
