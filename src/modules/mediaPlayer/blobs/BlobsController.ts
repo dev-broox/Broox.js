@@ -31,6 +31,7 @@ export class BlobsController {
    * 
    * @param width Active area width.
    * @param height Active area height.
+   * * @param simulate Value indicating whether to show the settings panel.
    * @param simulate Value indicating whether to sumulate a blob with the mouse pointer.
    * @param onUpdate On update callback.
    * @param onBlobAdded On blob added callback.
@@ -38,7 +39,7 @@ export class BlobsController {
    * @param onFrameUpdated On frame udpated callback.
    * @param onSettingsChanged On settings changed callback.
    */
-  constructor(width: number, height: number, simulate: boolean, onUpdate?: () => void, onBlobAdded?: (id: string, x: number, y: number) => void, onBlobDeleted?: (id: string) => void, onFrameUpdated?: (fseq: number) => void, onSettingsChanged?: (settings: any) => void) {
+  constructor(width: number, height: number, showSettingsPanel: boolean, simulate: boolean, onUpdate?: () => void, onBlobAdded?: (id: string, x: number, y: number) => void, onBlobDeleted?: (id: string) => void, onFrameUpdated?: (fseq: number) => void, onSettingsChanged?: (settings: any) => void) {
     this.simulate = simulate;
     this.activeArea = { x: 0, y: 0, width: width, height: height };
     this.blobScale = 1;
@@ -60,21 +61,23 @@ export class BlobsController {
       this.singleBlobs.onOSCMessage(event.data);
       this.skeletonBlobs.onOSCMessage(event.data);
     }, false);
-    window.addEventListener('keydown', (event) => {
-      if(event.key === this.keyToOpenSettings) {
-        console.log('opening settings...', event.key);
-        this.settingsOpened ? this.closeSettings() : this.openSettings();
-      }
-    });
-    // create canvas and context for debugging purposes
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'absolute';
-    canvas.style.left = '0';
-    canvas.style.top = '0';
-    canvas.width = width;
-    canvas.height = height;
-    document.body.appendChild(canvas);
-    this.debugContext = canvas.getContext('2d');
+    if(showSettingsPanel) {
+      window.addEventListener('keydown', (event) => {
+        if(event.key === this.keyToOpenSettings) {
+          console.log('opening settings...', event.key);
+          this.settingsOpened ? this.closeSettings() : this.openSettings();
+        }
+      });
+      // create canvas and context for debugging purposes
+      const canvas = document.createElement('canvas');
+      canvas.style.position = 'absolute';
+      canvas.style.left = '0';
+      canvas.style.top = '0';
+      canvas.width = width;
+      canvas.height = height;
+      document.body.appendChild(canvas);
+      this.debugContext = canvas.getContext('2d');
+    }
   }
 
   /**
@@ -192,7 +195,7 @@ export class BlobsController {
   }
  
   private onUpdate() {
-    this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
+    this.debugContext && this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
     if(this.debug) {
       this.drawActiveArea();
       if(this.showBlob) {

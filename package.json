@@ -25,11 +25,12 @@
     "tweakpane": "^3.1.4",
     "typedoc": "^0.22.17"
   },
+  "main": "dist/main/broox.js",
   "targets": {
     "main": {
       "includeNodeModules": [
-        "tweakpane",
-        "hex-to-rgba"
+        "hex-to-rgba",
+        "tweakpane"
       ]
     }
   },
