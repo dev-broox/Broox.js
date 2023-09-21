@@ -1,229 +1,21 @@
-function $parcel$defineInteropFlag(a) {
-  Object.defineProperty(a, '__esModule', {value: true, configurable: true});
-}
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
-
-$parcel$defineInteropFlag(module.exports);
-
-$parcel$export(module.exports, "default", () => $e98f3455ba14d218$export$2e2bcd8739ae039);
-const $e183a97f5f97e4cc$export$fa3373cf5ebce5bf = (video, context, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    $e183a97f5f97e4cc$export$ea631e88b0322146(video, context, video.videoWidth, video.videoHeight, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-};
-const $e183a97f5f97e4cc$export$ea631e88b0322146 = (element, context, sourceWidth, sourceHeight, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    $e183a97f5f97e4cc$export$586746d88f07c896(element, context, false, sourceWidth, sourceHeight, 0, 0, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-};
-const $e183a97f5f97e4cc$export$586746d88f07c896 = (element, context, cutToScale, sourceWidth, sourceHeight, sourceX, sourceY, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    // get ratios
-    const horizontalRatio = Math.round(destinationWidth / sourceWidth * 100) / 100;
-    const verticalRatio = Math.round(destinationHeight / sourceHeight * 100) / 100;
-    let height = 0;
-    let width = 0;
-    let leftOffset = 0;
-    let topOffset = 0;
-    // take center of element vertically or horizontally depending on ratio
-    if (verticalRatio === horizontalRatio) {
-        width = sourceWidth;
-        height = sourceHeight;
-        leftOffset = 0;
-        topOffset = 0;
-    } else if (verticalRatio > horizontalRatio && cutToScale || verticalRatio < horizontalRatio && !cutToScale) {
-        height = sourceHeight;
-        width = destinationWidth / verticalRatio;
-        leftOffset = (sourceWidth - width) / 2;
-    } else {
-        width = sourceWidth;
-        height = destinationHeight / horizontalRatio;
-        topOffset = (sourceHeight - height) / 2;
-    }
-    if (mirror) {
-        context.scale(-1, 1);
-        context.drawImage(element, sourceX + leftOffset, sourceY + topOffset, width, height, -destinationX, destinationY, -destinationWidth, destinationHeight);
-    } else context.drawImage(element, sourceX + leftOffset, sourceY + topOffset, width, height, destinationX, destinationY, destinationWidth, destinationHeight);
-};
-
-
-let $d2b9ddd5e06273c6$var$Message;
-(function(Message) {
-    Message["deviceNotFound"] = 'Device not found';
-    Message["forbiddenProjectName"] = 'Please use a different project name';
-})($d2b9ddd5e06273c6$var$Message || ($d2b9ddd5e06273c6$var$Message = {
-}));
-var $d2b9ddd5e06273c6$export$2e2bcd8739ae039 = $d2b9ddd5e06273c6$var$Message;
-
-
-const $765649a831e5cd99$export$13a2ac54ef3e3802 = ()=>{
-    return new Promise((resolve, reject)=>{
-        navigator.mediaDevices.enumerateDevices().then((devices)=>{
-            const result = devices.map((d)=>{
-                return {
-                    id: d.deviceId,
-                    name: d.label
-                };
-            });
-            resolve(result);
-        }).catch((error)=>{
-            reject(error.message);
-        });
-    });
-};
-const $765649a831e5cd99$export$be262d700bd1c696 = (name)=>{
-    return new Promise((resolve, reject)=>{
-        navigator.mediaDevices.enumerateDevices().then((devices)=>{
-            for(let i = 0; i < devices.length; i++)if (devices[i].label === name) {
-                resolve(devices[i].deviceId);
-                return;
-            }
-            reject($d2b9ddd5e06273c6$export$2e2bcd8739ae039.deviceNotFound);
-        }).catch((error)=>{
-            reject(error.message);
-        });
-    });
-};
-const $765649a831e5cd99$export$b04c27f4306c4f03 = (deviceId, width, height)=>{
-    return navigator.mediaDevices.getUserMedia({
-        video: {
-            deviceId: deviceId,
-            width: width,
-            height: height
-        }
-    });
-};
-
-
-const $38abc3f5362e2345$export$408b3c1884176160 = (blob)=>{
-    return new Promise((resolve)=>{
-        const image = new Image();
-        image.onload = ()=>{
-            URL.revokeObjectURL(image.src);
-            resolve(image);
-        };
-        image.src = URL.createObjectURL(blob);
-    });
-};
-
-
-
-class $8578191a55f7d828$export$d955f48b7132ae28 {
-    /**
-   * Generates an instance of the Composition class.
-   * @param width Composition width.
-   * @param height Composition height.
-   * @param borderWidth Border width.
-   */ constructor(width, height, borderWidth){
-        this.borderWidth = borderWidth;
-        this.canvas = document.createElement('canvas');
-        this.scale = (width - this.borderWidth * 2) / width;
-        this.canvas.width = width;
-        this.canvas.height = height * this.scale + this.borderWidth * 2;
-        this.context = this.canvas.getContext('2d');
-        this.context.fillStyle = 'white';
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    /**
-   * Adds an element to the composition.
-   * @param element Element to add.
-   * @param x Element X position.
-   * @param y Element Y position.
-   * @param width Element width.
-   * @param height Element height.
-   * @param scale Element scale.
-   * @param mirror Value indicating whether to mirror the image.
-   * ``` typescript
-   * // example
-   * const composition = new broox.media.Composition(width, height, borderWidth);
-   * composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
-   * composition.addElement(image, 0, 0, image.width, image.height, 1, false);
-   * ```
-   */ addElement(element, x, y, width, height, scale, mirror) {
-        const destinationWidth = width * this.scale * scale;
-        const destinationHeight = height * this.scale * scale;
-        const destinationX = this.borderWidth + x * scale * this.scale;
-        const destinationY = this.borderWidth + y * scale * this.scale;
-        $e183a97f5f97e4cc$export$ea631e88b0322146(element, this.context, width, height, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-    }
-    /**
-   * Clears the composition.
-   */ clear() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    /**
-   * Gets the resulting composition.
-   * @returns A promise with a blob containing the composition.
-   * ``` typescript
-   * // example
-   * composition.get().then(blob => {
-   *   image.src = URL.createObjectURL(blob);
-   * )};
-   * ```
-   */ get() {
-        return new Promise((resolve)=>{
-            this.canvas.toBlob((blob)=>resolve(blob)
-            , 'image/jpeg', 1);
-        });
-    }
-}
-
-
-class $73504911da825798$export$336a011955157f9a {
-    constructor(stream){
-        this.stream = stream;
-    }
-    /**
-   * Sets a stream to record.
-   * @param stream Stream to record.
-   */ setStream(stream) {
-        this.stream = stream;
-    }
-    /**
-   * Starts recording.
-   */ start(options) {
-        const self = this;
-        this.promise = new Promise((resolve, reject)=>{
-            self.resolve = resolve;
-        });
-        let data = [];
-        this.recorder = new MediaRecorder(this.stream, options || {
-        });
-        this.recorder.ondataavailable = (e)=>data.push(e.data)
-        ;
-        this.recorder.onstop = ()=>{
-            self.resolve(new Blob(data, {
-                type: 'video/webm'
-            }));
-        };
-        this.recorder.start();
-    }
-    /**
-   * Stops recording.
-   */ stop() {
-        this.recorder.state === 'recording' && this.recorder.stop();
-        return this.promise;
-    }
-}
-
-
-
-
-let $768e44e06ebfd72f$export$ff50662d7c6e93a2;
-(function($768e44e06ebfd72f$export$ff50662d7c6e93a2) {
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["LeftHandUp"] = 'left_hand_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["RightHandUp"] = 'right_hand_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["BothHandsUp"] = 'both_hands_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["PointsLeft"] = 'points_left';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["PointsRight"] = 'points_right';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["LeftHandOnChest"] = 'left_hand_on_chest';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["RightHandOnChest"] = 'right_hand_on_chest';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["BothHandsOnChest"] = 'both_hands_on_chest';
-})($768e44e06ebfd72f$export$ff50662d7c6e93a2 || ($768e44e06ebfd72f$export$ff50662d7c6e93a2 = {
+let $a43912e23e510d22$export$ff50662d7c6e93a2;
+(function($a43912e23e510d22$export$ff50662d7c6e93a2) {
+    $a43912e23e510d22$export$ff50662d7c6e93a2["LeftHandUp"] = 'left_hand_up';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["RightHandUp"] = 'right_hand_up';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["BothHandsUp"] = 'both_hands_up';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["PointsLeft"] = 'points_left';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["PointsRight"] = 'points_right';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["LeftHandOnChest"] = 'left_hand_on_chest';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["RightHandOnChest"] = 'right_hand_on_chest';
+    $a43912e23e510d22$export$ff50662d7c6e93a2["BothHandsOnChest"] = 'both_hands_on_chest';
+})($a43912e23e510d22$export$ff50662d7c6e93a2 || ($a43912e23e510d22$export$ff50662d7c6e93a2 = {
 }));
 
 
-class $5918d9527446c446$export$61ce360501d38a6f {
+class $46a461d2b2746f9d$export$61ce360501d38a6f {
     /**
    * Creates an instance of the Gesture class.
    * @param types Gesture types.
@@ -250,7 +42,7 @@ class $5918d9527446c446$export$61ce360501d38a6f {
 
 
 
-class $750483b3996c802c$export$dfd4fa32db6567bf {
+class $ca1057830a34181e$export$dfd4fa32db6567bf {
     /**
    * Creates an instance of the GestureHandler class.
    * @param time Time lapse in milliseconds before accepting a gesture as such.
@@ -274,8 +66,8 @@ class $750483b3996c802c$export$dfd4fa32db6567bf {
             if (args[0] === 'id') this.presenceCallback && this.presenceCallback();
             else if (args[0] === 'prop' && args[2] === 'poses') {
                 const types = args.slice(3);
-                if (types.length && types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandOnChest) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandOnChest) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) >= 0) {
-                    const gesture = new $5918d9527446c446$export$61ce360501d38a6f(types, new Date().getTime());
+                if (types.length && types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.RightHandUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandOnChest) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.RightHandOnChest) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) >= 0) {
+                    const gesture = new $46a461d2b2746f9d$export$61ce360501d38a6f(types, new Date().getTime());
                     this.gestures.push(gesture);
                     this.check();
                 }
@@ -334,7 +126,7 @@ class $750483b3996c802c$export$dfd4fa32db6567bf {
         if (lastGestureTypes.length === 1) {
             const type = lastGestureTypes[0];
             // if gesture is BothHandsUp or BothHandsOnChest, send the event
-            if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp || type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) this.send(type);
+            if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp || type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) this.send(type);
             else if (this.gestures.length > 1) {
                 const lastTimestamp = lastGesture.getTimestamp();
                 let i = lastIndex;
@@ -355,17 +147,17 @@ class $750483b3996c802c$export$dfd4fa32db6567bf {
         setTimeout(()=>{
             this.listening = true;
         }, this.delay * 1000);
-        if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp) this.bothHandsUpCallback && this.bothHandsUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandUp) this.leftHandUpCallback && this.leftHandUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandUp) this.rightHandUpCallback && this.rightHandUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandOnChest) this.leftHandOnChestCallback && this.leftHandOnChestCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandOnChest) this.rightHandOnChestCallback && this.rightHandOnChestCallback();
+        if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp) this.bothHandsUpCallback && this.bothHandsUpCallback();
+        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandUp) this.leftHandUpCallback && this.leftHandUpCallback();
+        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.RightHandUp) this.rightHandUpCallback && this.rightHandUpCallback();
+        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
+        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandOnChest) this.leftHandOnChestCallback && this.leftHandOnChestCallback();
+        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.RightHandOnChest) this.rightHandOnChestCallback && this.rightHandOnChestCallback();
     }
 }
 
 
-class $b37b5f75238e2b33$export$410db1ee4b845acb {
+class $cde140d71bb91357$export$410db1ee4b845acb {
     /**
    * 
    * @param writeJson Function to write a json
@@ -379,19 +171,19 @@ class $b37b5f75238e2b33$export$410db1ee4b845acb {
    * @param name File name
    * @param json Json content
    */ write(name, json) {
-        this.writeJson(name, JSON.stringify(json));
+        this.writeJson(name, json);
     }
     /**
     * 
     * @param name File name
     */ read(name) {
-        const content = JSON.parse(this.readJson(name));
+        const content = this.readJson(name);
         return content;
     }
 }
 
 
-class $867841deeedae440$export$19fffca37ef3e106 {
+class $b994462a75fd2128$export$19fffca37ef3e106 {
     /**
    * 
    * @param name File name
@@ -411,7 +203,7 @@ class $867841deeedae440$export$19fffca37ef3e106 {
 }
 
 
-class $6771a07d445d5fd2$export$cec157cbbbaf65c9 {
+class $8793b126ef6d35f3$export$cec157cbbbaf65c9 {
     static inElectron() {
         // @ts-ignore
         return !!window.electron;
@@ -443,15 +235,23 @@ class $6771a07d445d5fd2$export$cec157cbbbaf65c9 {
 }
 
 
+let $22049581978d5377$var$Message;
+(function(Message) {
+    Message["deviceNotFound"] = 'Device not found';
+    Message["forbiddenProjectName"] = 'Please use a different project name';
+})($22049581978d5377$var$Message || ($22049581978d5377$var$Message = {
+}));
+var $22049581978d5377$export$2e2bcd8739ae039 = $22049581978d5377$var$Message;
 
-class $f42e9746dec83db7$export$12b3cc2522c3bba5 {
+
+class $22b34b762f136ae1$export$12b3cc2522c3bba5 {
     /**
    * Creates an instance of the KeyValue class.
    */ constructor(){
         this.contents = {
         };
-        if ($6771a07d445d5fd2$export$cec157cbbbaf65c9.inElectron()) this.storage = new $b37b5f75238e2b33$export$410db1ee4b845acb($6771a07d445d5fd2$export$cec157cbbbaf65c9.writeJson, $6771a07d445d5fd2$export$cec157cbbbaf65c9.readJson);
-        else this.storage = new $867841deeedae440$export$19fffca37ef3e106();
+        if ($8793b126ef6d35f3$export$cec157cbbbaf65c9.inElectron()) this.storage = new $cde140d71bb91357$export$410db1ee4b845acb($8793b126ef6d35f3$export$cec157cbbbaf65c9.writeJson, $8793b126ef6d35f3$export$cec157cbbbaf65c9.readJson);
+        else this.storage = new $b994462a75fd2128$export$19fffca37ef3e106();
     }
     /**
    * Sets a value in storage
@@ -469,7 +269,7 @@ class $f42e9746dec83db7$export$12b3cc2522c3bba5 {
    * ```
    */ setValue(name, key, value) {
         if (name === 'config') {
-            console.error($d2b9ddd5e06273c6$export$2e2bcd8739ae039.forbiddenProjectName);
+            console.error($22049581978d5377$export$2e2bcd8739ae039.forbiddenProjectName);
             return;
         }
         // get storage
@@ -512,12 +312,12 @@ class $f42e9746dec83db7$export$12b3cc2522c3bba5 {
 }
 
 
-var $f58d92019cb5bf2c$exports = {};
+var $9cf2c14da0873913$exports = {};
 "use strict";
-var $f58d92019cb5bf2c$var$removeHash = function removeHash(hex) {
+var $9cf2c14da0873913$var$removeHash = function removeHash(hex) {
     return hex.charAt(0) === '#' ? hex.slice(1) : hex;
 };
-var $f58d92019cb5bf2c$var$parseHex = function parseHex(nakedHex) {
+var $9cf2c14da0873913$var$parseHex = function parseHex(nakedHex) {
     var isShort = nakedHex.length === 3 || nakedHex.length === 4;
     var twoDigitHexR = isShort ? "".concat(nakedHex.slice(0, 1)).concat(nakedHex.slice(0, 1)) : nakedHex.slice(0, 2);
     var twoDigitHexG = isShort ? "".concat(nakedHex.slice(1, 2)).concat(nakedHex.slice(1, 2)) : nakedHex.slice(2, 4);
@@ -530,24 +330,24 @@ var $f58d92019cb5bf2c$var$parseHex = function parseHex(nakedHex) {
         a: twoDigitHexA
     };
 };
-var $f58d92019cb5bf2c$var$hexToDecimal = function hexToDecimal(hex) {
+var $9cf2c14da0873913$var$hexToDecimal = function hexToDecimal(hex) {
     return parseInt(hex, 16);
 };
-var $f58d92019cb5bf2c$var$hexesToDecimals = function hexesToDecimals(_ref) {
+var $9cf2c14da0873913$var$hexesToDecimals = function hexesToDecimals(_ref) {
     var r = _ref.r, g = _ref.g, b = _ref.b, a = _ref.a;
     return {
-        r: $f58d92019cb5bf2c$var$hexToDecimal(r),
-        g: $f58d92019cb5bf2c$var$hexToDecimal(g),
-        b: $f58d92019cb5bf2c$var$hexToDecimal(b),
-        a: +($f58d92019cb5bf2c$var$hexToDecimal(a) / 255).toFixed(2)
+        r: $9cf2c14da0873913$var$hexToDecimal(r),
+        g: $9cf2c14da0873913$var$hexToDecimal(g),
+        b: $9cf2c14da0873913$var$hexToDecimal(b),
+        a: +($9cf2c14da0873913$var$hexToDecimal(a) / 255).toFixed(2)
     };
 };
-var $f58d92019cb5bf2c$var$isNumeric = function isNumeric(n) {
+var $9cf2c14da0873913$var$isNumeric = function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }; // eslint-disable-line no-restricted-globals, max-len
-var $f58d92019cb5bf2c$var$formatRgb = function formatRgb(decimalObject, parameterA) {
+var $9cf2c14da0873913$var$formatRgb = function formatRgb(decimalObject, parameterA) {
     var r = decimalObject.r, g = decimalObject.g, b = decimalObject.b, parsedA = decimalObject.a;
-    var a = $f58d92019cb5bf2c$var$isNumeric(parameterA) ? parameterA : parsedA;
+    var a = $9cf2c14da0873913$var$isNumeric(parameterA) ? parameterA : parsedA;
     return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
 };
 /**
@@ -558,28 +358,28 @@ var $f58d92019cb5bf2c$var$formatRgb = function formatRgb(decimalObject, paramete
  * @param The hex value to convert. ('123456'. '#123456', ''123', '#123')
  * @param An alpha value to apply. (optional) ('0.5', '0.25')
  * @return An rgb or rgba value. ('rgb(11, 22, 33)'. 'rgba(11, 22, 33, 0.5)')
- */ var $f58d92019cb5bf2c$var$hexToRgba = function hexToRgba(hex, a) {
-    var hashlessHex = $f58d92019cb5bf2c$var$removeHash(hex);
-    var hexObject = $f58d92019cb5bf2c$var$parseHex(hashlessHex);
-    var decimalObject = $f58d92019cb5bf2c$var$hexesToDecimals(hexObject);
-    return $f58d92019cb5bf2c$var$formatRgb(decimalObject, a);
+ */ var $9cf2c14da0873913$var$hexToRgba = function hexToRgba(hex, a) {
+    var hashlessHex = $9cf2c14da0873913$var$removeHash(hex);
+    var hexObject = $9cf2c14da0873913$var$parseHex(hashlessHex);
+    var decimalObject = $9cf2c14da0873913$var$hexesToDecimals(hexObject);
+    return $9cf2c14da0873913$var$formatRgb(decimalObject, a);
 };
-$f58d92019cb5bf2c$exports = $f58d92019cb5bf2c$var$hexToRgba;
+$9cf2c14da0873913$exports = $9cf2c14da0873913$var$hexToRgba;
 
 
-let $e39bc340930643f9$export$189c6ba3eaa96ac2;
-(function($e39bc340930643f9$export$189c6ba3eaa96ac2) {
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["object"] = '/tuio/2Dobj';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["cursor"] = '/tuio/2Dcur';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["blob"] = '/tuio/2Dblb';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["marker"] = '/tuio/broox_markers';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["skel"] = '/tuio/skel';
-})($e39bc340930643f9$export$189c6ba3eaa96ac2 || ($e39bc340930643f9$export$189c6ba3eaa96ac2 = {
+let $7682ffceaf95de26$export$189c6ba3eaa96ac2;
+(function($7682ffceaf95de26$export$189c6ba3eaa96ac2) {
+    $7682ffceaf95de26$export$189c6ba3eaa96ac2["object"] = '/tuio/2Dobj';
+    $7682ffceaf95de26$export$189c6ba3eaa96ac2["cursor"] = '/tuio/2Dcur';
+    $7682ffceaf95de26$export$189c6ba3eaa96ac2["blob"] = '/tuio/2Dblb';
+    $7682ffceaf95de26$export$189c6ba3eaa96ac2["marker"] = '/tuio/broox_markers';
+    $7682ffceaf95de26$export$189c6ba3eaa96ac2["skel"] = '/tuio/skel';
+})($7682ffceaf95de26$export$189c6ba3eaa96ac2 || ($7682ffceaf95de26$export$189c6ba3eaa96ac2 = {
 }));
 
 
 
-class $43444b336f9d9b5b$var$SingleBlob {
+class $33781b20cc40af3a$var$SingleBlob {
     constructor(id, classId = ''){
         this.id = id;
         this.classId = classId;
@@ -613,10 +413,10 @@ class $43444b336f9d9b5b$var$SingleBlob {
         };
     }
 }
-var $43444b336f9d9b5b$export$2e2bcd8739ae039 = $43444b336f9d9b5b$var$SingleBlob;
+var $33781b20cc40af3a$export$2e2bcd8739ae039 = $33781b20cc40af3a$var$SingleBlob;
 
 
-class $d3c7f14041d104ac$var$SkeletonBlob {
+class $70b36441bac09780$var$SkeletonBlob {
     constructor(id){
         this.leftHand = {
             x: -1,
@@ -656,12 +456,12 @@ class $d3c7f14041d104ac$var$SkeletonBlob {
         };
     }
 }
-var $d3c7f14041d104ac$export$2e2bcd8739ae039 = $d3c7f14041d104ac$var$SkeletonBlob;
+var $70b36441bac09780$export$2e2bcd8739ae039 = $70b36441bac09780$var$SkeletonBlob;
 
 
-const $442dc193c46cf57f$var$mouseBlobId = 'mouse';
-const $442dc193c46cf57f$var$randomBlobId = 'random';
-class $442dc193c46cf57f$export$b6c32681ca39b455 {
+const $240353ca4ec1a540$var$mouseBlobId = 'mouse';
+const $240353ca4ec1a540$var$randomBlobId = 'random';
+class $240353ca4ec1a540$export$b6c32681ca39b455 {
     constructor(type, width, height, scale, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated){
         this.blobs = new Map();
         this.mouseEnabled = false;
@@ -706,7 +506,7 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
                 width: 20,
                 height: 20
             };
-            this.updateBlob($442dc193c46cf57f$var$mouseBlobId, blobData.x, blobData.y, blobData.width, blobData.height, 0, 0, 0, 0, '');
+            this.updateBlob($240353ca4ec1a540$var$mouseBlobId, blobData.x, blobData.y, blobData.width, blobData.height, 0, 0, 0, 0, '');
         };
         if (enabled) window.addEventListener('mousemove', f, false);
         else {
@@ -735,7 +535,7 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
     update() {
         if (this.randomBlobsEnabled) {
             let idsToRemove = [];
-            for (let [id, blob] of this.blobs)if (id.includes($442dc193c46cf57f$var$randomBlobId)) {
+            for (let [id, blob] of this.blobs)if (id.includes($240353ca4ec1a540$var$randomBlobId)) {
                 if (this.isBlobInBounds(blob)) {
                     const b = blob.get();
                     blob.update(b.x + b.velocityX, b.y + b.velocityY, 10, 10, 0, b.velocityX, b.velocityY);
@@ -773,12 +573,12 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
         }
     }
     parseBlobData(address, args) {
-        if (address === $e39bc340930643f9$export$189c6ba3eaa96ac2.skel) return this.parseBlobSkeletonData(address, args);
+        if (address === $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel) return this.parseBlobSkeletonData(address, args);
         var blobData = {
         };
         blobData.id = args[1].toString();
         switch(address){
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.blob:
+            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.blob:
                 if (!this.checkBlobDataFormat(args, 13)) return null;
                 blobData.x = args[2];
                 blobData.y = args[3];
@@ -789,21 +589,21 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
                 blobData.velocityY = args[9];
                 blobData.timeAlive = args[12];
                 break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.object:
+            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.object:
                 if (!this.checkBlobDataFormat(args, 11)) return null;
                 blobData.classId = args[2];
                 blobData.x = args[3];
                 blobData.y = args[4];
                 blobData.rotation = args[5];
                 break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.cursor:
+            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.cursor:
                 if (!this.checkBlobDataFormat(args, 7)) return null;
                 blobData.x = args[2];
                 blobData.y = args[3];
                 blobData.width = 60 / this.activeArea.width;
                 blobData.height = blobData.width;
                 break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.marker:
+            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.marker:
                 blobData.classId = args[2];
                 blobData.x = args[3];
                 blobData.y = args[4];
@@ -819,8 +619,8 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
         return blobData;
     }
     parseBlobSkeletonData(address, args) {
-        if (address !== $e39bc340930643f9$export$189c6ba3eaa96ac2.skel) {
-            console.log('Wrong address, expected ' + $e39bc340930643f9$export$189c6ba3eaa96ac2.skel + ' but got ' + address);
+        if (address !== $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel) {
+            console.log('Wrong address, expected ' + $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel + ' but got ' + address);
             return null;
         }
         let blobData = {
@@ -862,10 +662,10 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
     }
     updateBlobWithData(type, blobData) {
         switch(type){
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.skel:
+            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel:
                 let id = blobData.id;
                 if (!this.blobs.has(id)) {
-                    const blob = new $d3c7f14041d104ac$export$2e2bcd8739ae039(id);
+                    const blob = new $70b36441bac09780$export$2e2bcd8739ae039(id);
                     this.blobs.set(id, blob);
                     blob.update(blobData.leftHand, blobData.rightHand, blobData.scale);
                     this.onBlobAddedCallback && this.onBlobAddedCallback(id, 0, 0);
@@ -880,7 +680,7 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
     }
     updateBlob(id, x, y, width, height, rotation, velocityX, velocityY, timeAlive = 0, classId = '') {
         if (!this.blobs.has(id)) {
-            const blob = new $43444b336f9d9b5b$export$2e2bcd8739ae039(id, classId);
+            const blob = new $33781b20cc40af3a$export$2e2bcd8739ae039(id, classId);
             this.blobs.set(id, blob);
             blob.update(x, y, width, height, rotation, velocityX, velocityY, timeAlive);
             this.onBlobAddedCallback && this.onBlobAddedCallback(id, x, y);
@@ -933,13 +733,13 @@ class $442dc193c46cf57f$export$b6c32681ca39b455 {
 }
 
 
-var $f5656f04fd7f761f$exports = {};
+var $f4c70f265695a3d5$exports = {};
 /*! Tweakpane 3.1.4 (c) 2016 cocopon, licensed under the MIT license. */ (function(global, factory) {
-    typeof $f5656f04fd7f761f$exports === 'object' && "object" !== 'undefined' ? factory($f5656f04fd7f761f$exports) : typeof define === 'function' && define.amd ? define([
+    typeof $f4c70f265695a3d5$exports === 'object' && "object" !== 'undefined' ? factory($f4c70f265695a3d5$exports) : typeof define === 'function' && define.amd ? define([
         'exports'
     ], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Tweakpane = {
     }));
-})($f5656f04fd7f761f$exports, function(exports) {
+})($f4c70f265695a3d5$exports, function(exports) {
     'use strict';
     /***
      * A simple semantic versioning perser.
@@ -7988,9 +7788,9 @@ var $f5656f04fd7f761f$exports = {};
 });
 
 
-class $36a91428d492be2f$export$c72f6eaae7b9adff {
+class $f888c10c3e512a5e$export$c72f6eaae7b9adff {
     open(settings, maxWidth, maxHeight, onChange, onKill, onClose) {
-        this.pane = new $f5656f04fd7f761f$exports.Pane();
+        this.pane = new $f4c70f265695a3d5$exports.Pane();
         this.pane.addInput(settings, 'activeArea', {
             label: 'X / Y',
             x: {
@@ -8071,18 +7871,19 @@ class $36a91428d492be2f$export$c72f6eaae7b9adff {
 }
 
 
-class $80f994675897b386$export$64c1e2689525a052 {
+class $5f964503c3de6edd$export$64c1e2689525a052 {
     /**
    * 
    * @param width Active area width.
    * @param height Active area height.
+   * * @param simulate Value indicating whether to show the settings panel.
    * @param simulate Value indicating whether to sumulate a blob with the mouse pointer.
    * @param onUpdate On update callback.
    * @param onBlobAdded On blob added callback.
    * @param onBlobDeleted  On blob deleted callback.
    * @param onFrameUpdated On frame udpated callback.
    * @param onSettingsChanged On settings changed callback.
-   */ constructor(width, height, simulate, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated, onSettingsChanged){
+   */ constructor(width, height, showSettingsPanel, simulate, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated, onSettingsChanged){
         this.simulate = false;
         this.showBlob = true;
         this.showHand = true;
@@ -8105,31 +7906,33 @@ class $80f994675897b386$export$64c1e2689525a052 {
             onUpdate && onUpdate();
             this.onUpdate();
         };
-        this.skeletonBlobs = new $442dc193c46cf57f$export$b6c32681ca39b455($e39bc340930643f9$export$189c6ba3eaa96ac2.skel, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
-        this.singleBlobs = new $442dc193c46cf57f$export$b6c32681ca39b455($e39bc340930643f9$export$189c6ba3eaa96ac2.blob, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
+        this.skeletonBlobs = new $240353ca4ec1a540$export$b6c32681ca39b455($7682ffceaf95de26$export$189c6ba3eaa96ac2.skel, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
+        this.singleBlobs = new $240353ca4ec1a540$export$b6c32681ca39b455($7682ffceaf95de26$export$189c6ba3eaa96ac2.blob, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
         this.simulate && this.singleBlobs.enableMouseBlob(true);
         this.maxWidth = width;
         this.maxHeight = height;
-        this.settings = new $36a91428d492be2f$export$c72f6eaae7b9adff();
+        this.settings = new $f888c10c3e512a5e$export$c72f6eaae7b9adff();
         window.addEventListener('message', (event)=>{
             this.singleBlobs.onOSCMessage(event.data);
             this.skeletonBlobs.onOSCMessage(event.data);
         }, false);
-        window.addEventListener('keydown', (event)=>{
-            if (event.key === this.keyToOpenSettings) {
-                console.log('opening settings...', event.key);
-                this.settingsOpened ? this.closeSettings() : this.openSettings();
-            }
-        });
-        // create canvas and context for debugging purposes
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'absolute';
-        canvas.style.left = '0';
-        canvas.style.top = '0';
-        canvas.width = width;
-        canvas.height = height;
-        document.body.appendChild(canvas);
-        this.debugContext = canvas.getContext('2d');
+        if (showSettingsPanel) {
+            window.addEventListener('keydown', (event)=>{
+                if (event.key === this.keyToOpenSettings) {
+                    console.log('opening settings...', event.key);
+                    this.settingsOpened ? this.closeSettings() : this.openSettings();
+                }
+            });
+            // create canvas and context for debugging purposes
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'absolute';
+            canvas.style.left = '0';
+            canvas.style.top = '0';
+            canvas.width = width;
+            canvas.height = height;
+            document.body.appendChild(canvas);
+            this.debugContext = canvas.getContext('2d');
+        }
     }
     /**
    * Gets skeleton blobs.
@@ -8168,6 +7971,14 @@ class $80f994675897b386$export$64c1e2689525a052 {
         this.blobScale = blobScale;
         this.skeletonBlobs.setScale(handScale);
         this.singleBlobs.setScale(blobScale);
+    }
+    /**
+   * Sets blobs colors.
+   * @param handColor Skeleton hands color.
+   * @param blobColor Single blob color.
+   */ setBlobsColor(handColor, blobColor) {
+        this.handColor = handColor;
+        this.blobColor = blobColor;
     }
     /**
    * Simulates single blob with the mouse pointer.
@@ -8233,7 +8044,7 @@ class $80f994675897b386$export$64c1e2689525a052 {
         this.keyToOpenSettings = key;
     }
     onUpdate() {
-        this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
+        this.debugContext && this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
         if (this.debug) {
             this.drawActiveArea();
             if (this.showBlob) {
@@ -8264,16 +8075,16 @@ class $80f994675897b386$export$64c1e2689525a052 {
         this.debugContext.beginPath();
         this.debugContext.lineWidth = 2;
         this.debugContext.rect(blob.x - blob.width / 2, blob.y - blob.height / 2, blob.width, blob.height);
-        this.debugContext.fillStyle = (/*@__PURE__*/$parcel$interopDefault($f58d92019cb5bf2c$exports))(color, 0.2);
+        this.debugContext.fillStyle = (/*@__PURE__*/$parcel$interopDefault($9cf2c14da0873913$exports))(color, 0.2);
         this.debugContext.fill();
-        this.debugContext.strokeStyle = (/*@__PURE__*/$parcel$interopDefault($f58d92019cb5bf2c$exports))(color);
+        this.debugContext.strokeStyle = (/*@__PURE__*/$parcel$interopDefault($9cf2c14da0873913$exports))(color);
         this.debugContext.stroke();
     }
 }
 
 
 
-class $66419f53867917a5$export$bf5acd943326457 {
+class $d1c10740c6e30151$export$bf5acd943326457 {
     /**
    * Creates an instance of the OscListener class.
    */ constructor(){
@@ -8301,24 +8112,24 @@ class $66419f53867917a5$export$bf5acd943326457 {
 
 
 
-const $1969843397ad4b01$export$498ecf32d8e5038b = ()=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.getMediaInfo();
+const $d713032d8a3debc9$export$498ecf32d8e5038b = ()=>{
+    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.getMediaInfo();
 };
-const $1969843397ad4b01$export$a5202107d3e3cdb0 = ()=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.getDeviceInfo();
-};
-
-
-
-const $36099b9c9195dda7$export$4b2634a642f10d54 = (subject, text)=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.logAlarm(subject, text);
+const $d713032d8a3debc9$export$a5202107d3e3cdb0 = ()=>{
+    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.getDeviceInfo();
 };
 
 
 
-const $6478894b9d0eb5a2$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
+const $0c7a49d86b49a02e$export$4b2634a642f10d54 = (subject, text)=>{
+    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.logAlarm(subject, text);
+};
+
+
+
+const $4167c5b92e36a342$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
     return new Promise((resolve, reject)=>{
-        $6771a07d445d5fd2$export$cec157cbbbaf65c9.inElectron() ? $6771a07d445d5fd2$export$cec157cbbbaf65c9.downloadFile(url, name, onUpdate, (error)=>reject(error)
+        $8793b126ef6d35f3$export$cec157cbbbaf65c9.inElectron() ? $8793b126ef6d35f3$export$cec157cbbbaf65c9.downloadFile(url, name, onUpdate, (error)=>reject(error)
         , (path)=>resolve(path)
         ) : resolve(url);
     });
@@ -8327,32 +8138,5 @@ const $6478894b9d0eb5a2$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
 
 
 
-const $e98f3455ba14d218$var$broox = {
-    media: {
-        getAvailableDevices: $765649a831e5cd99$export$13a2ac54ef3e3802,
-        getDeviceId: $765649a831e5cd99$export$be262d700bd1c696,
-        startDevice: $765649a831e5cd99$export$b04c27f4306c4f03,
-        drawElement: $e183a97f5f97e4cc$export$ea631e88b0322146,
-        drawPartOfElement: $e183a97f5f97e4cc$export$586746d88f07c896,
-        drawVideo: $e183a97f5f97e4cc$export$fa3373cf5ebce5bf,
-        blobToImage: $38abc3f5362e2345$export$408b3c1884176160,
-        Composition: $8578191a55f7d828$export$d955f48b7132ae28,
-        Recorder: $73504911da825798$export$336a011955157f9a
-    },
-    mediaPlayer: {
-        BlobsController: $80f994675897b386$export$64c1e2689525a052,
-        AddressType: $e39bc340930643f9$export$189c6ba3eaa96ac2,
-        KeyValue: $f42e9746dec83db7$export$12b3cc2522c3bba5,
-        GestureHandler: $750483b3996c802c$export$dfd4fa32db6567bf,
-        GestureType: $768e44e06ebfd72f$export$ff50662d7c6e93a2,
-        OscListener: $66419f53867917a5$export$bf5acd943326457,
-        getMediaInfo: $1969843397ad4b01$export$498ecf32d8e5038b,
-        getDeviceInfo: $1969843397ad4b01$export$a5202107d3e3cdb0,
-        logAlarm: $36099b9c9195dda7$export$4b2634a642f10d54,
-        downloadFile: $6478894b9d0eb5a2$export$bb3b75778e3e272
-    }
-};
-var $e98f3455ba14d218$export$2e2bcd8739ae039 = $e98f3455ba14d218$var$broox;
-
-
-//# sourceMappingURL=index.js.map
+export {$a43912e23e510d22$export$ff50662d7c6e93a2 as GestureType, $ca1057830a34181e$export$dfd4fa32db6567bf as GestureHandler, $22b34b762f136ae1$export$12b3cc2522c3bba5 as KeyValue, $5f964503c3de6edd$export$64c1e2689525a052 as BlobsController, $7682ffceaf95de26$export$189c6ba3eaa96ac2 as AddressType, $d1c10740c6e30151$export$bf5acd943326457 as OscListener, $d713032d8a3debc9$export$498ecf32d8e5038b as getMediaInfo, $d713032d8a3debc9$export$a5202107d3e3cdb0 as getDeviceInfo, $0c7a49d86b49a02e$export$4b2634a642f10d54 as logAlarm, $4167c5b92e36a342$export$bb3b75778e3e272 as downloadFile};
+//# sourceMappingURL=broox.js.map

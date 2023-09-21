@@ -1,13 +1,19 @@
 /**
  * Provides logging options.
+ * #### Usage
  *
- * #### {@link Logger}
+ * ``` typescript
+ * import { LogController } from './brooxLogger.js';
+ * ```
+ * <br/>
+ *
+ * #### {@link LogController}
  *
  * Enables or disables logs to console.
  *
  * ``` typescript
  * // example
- * const logController = new broox.logger.LogController(true, () => {...);
+ * const logController = new LogController(true, () => {...);
  * console.log(message);
  * ```
  * <br/>

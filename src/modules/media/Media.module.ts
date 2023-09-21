@@ -1,5 +1,11 @@
 /**
  * Provides classes and functions related to the rendering process of different media.
+ * #### Usage
+ *
+ * ``` typescript
+ * import { Composition, startDevice } from './brooxMedia.js';
+ * ```
+ * <br/>
  *
  * #### {@link Composition}
  *
@@ -7,7 +13,7 @@
  *
  * ``` typescript
  * // example
- * const composition = new broox.media.Composition(width, height, borderWidth);
+ * const composition = new Composition(width, height, borderWidth);
  * composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
  * composition.get().then(blob => {
  *    image.src = URL.createObjectURL(blob);
@@ -18,7 +24,7 @@
  *
  * ``` typescript
  * // example
- * const recorder = new broox.media.Recorder(stream);
+ * const recorder = new Recorder(stream);
  * recorder.start();
  * setTimeout(() => {
  *   recorder.stop().then(blob => {

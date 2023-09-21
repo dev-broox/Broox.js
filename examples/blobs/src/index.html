@@ -12,9 +12,9 @@
   </head>
   <body>
     <script type="module">
-      import broox from './index.js';
+      import { BlobsController } from './broox.js';
 
-      const blobsController = new broox.mediaPlayer.BlobsController(document.body.clientWidth, document.body.clientHeight, false, () => {}, () => {}, () => {}, () => {});
+      const blobsController = new BlobsController(document.body.clientWidth, document.body.clientHeight, true, false, () => {}, () => {}, () => {}, () => {});
       blobsController.setKeyToOpenSettings('d');
     </script>
   </body>

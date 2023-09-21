@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import broox from './lib/index';
+import { BlobsController, KeyValue } from './lib/broox';
 
 'use strict';
 
 let blobsController;
-let keyValue = new broox.mediaPlayer.KeyValue();
+let keyValue = new KeyValue();
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
@@ -37,11 +37,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function onViewDidLoad() {
-    blobsController = new broox.mediaPlayer.BlobsController(document.body.clientWidth, document.body.clientHeight, false, () => {}, onBlobAdded, onBlobDeleted, () => {}, onSettingsChanged);
+    blobsController = new BlobsController(document.body.clientWidth, document.body.clientHeight, true, false, () => {}, onBlobAdded, onBlobDeleted, () => {}, onSettingsChanged);
     blobsController.setKeyToOpenSettings('d');
     const settings = keyValue.getValue('blobs', 'settings');
     console.log('stored settings', settings);
-    if(settings && settings !== {}) {
+    if(settings && settings != {}) {
       blobsController.setActiveArea(settings.activeArea.x, settings.activeArea.y, settings.activeArea.width, settings.activeArea.height);
       blobsController.setBlobsScale(settings.handScale, settings.blobScale);
       blobsController.setBlobsColor(settings.handColor, settings.blobColor);
@@ -117,7 +117,6 @@ function update () {
             handIdsDeleted.push(id);
         }
     }
-
 
     // deleted
     for (let id of handIdsDeleted) {

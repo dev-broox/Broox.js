@@ -1,945 +1,10 @@
-function $parcel$defineInteropFlag(a) {
-  Object.defineProperty(a, '__esModule', {value: true, configurable: true});
-}
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
-function $parcel$interopDefault(a) {
-  return a && a.__esModule ? a.default : a;
-}
-
-$parcel$defineInteropFlag(module.exports);
-
-$parcel$export(module.exports, "default", () => $e98f3455ba14d218$export$2e2bcd8739ae039);
-const $e183a97f5f97e4cc$export$fa3373cf5ebce5bf = (video, context, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    $e183a97f5f97e4cc$export$ea631e88b0322146(video, context, video.videoWidth, video.videoHeight, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-};
-const $e183a97f5f97e4cc$export$ea631e88b0322146 = (element, context, sourceWidth, sourceHeight, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    $e183a97f5f97e4cc$export$586746d88f07c896(element, context, false, sourceWidth, sourceHeight, 0, 0, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-};
-const $e183a97f5f97e4cc$export$586746d88f07c896 = (element, context, cutToScale, sourceWidth, sourceHeight, sourceX, sourceY, destinationWidth, destinationHeight, destinationX, destinationY, mirror = false)=>{
-    // get ratios
-    const horizontalRatio = Math.round(destinationWidth / sourceWidth * 100) / 100;
-    const verticalRatio = Math.round(destinationHeight / sourceHeight * 100) / 100;
-    let height = 0;
-    let width = 0;
-    let leftOffset = 0;
-    let topOffset = 0;
-    // take center of element vertically or horizontally depending on ratio
-    if (verticalRatio === horizontalRatio) {
-        width = sourceWidth;
-        height = sourceHeight;
-        leftOffset = 0;
-        topOffset = 0;
-    } else if (verticalRatio > horizontalRatio && cutToScale || verticalRatio < horizontalRatio && !cutToScale) {
-        height = sourceHeight;
-        width = destinationWidth / verticalRatio;
-        leftOffset = (sourceWidth - width) / 2;
-    } else {
-        width = sourceWidth;
-        height = destinationHeight / horizontalRatio;
-        topOffset = (sourceHeight - height) / 2;
-    }
-    if (mirror) {
-        context.scale(-1, 1);
-        context.drawImage(element, sourceX + leftOffset, sourceY + topOffset, width, height, -destinationX, destinationY, -destinationWidth, destinationHeight);
-    } else context.drawImage(element, sourceX + leftOffset, sourceY + topOffset, width, height, destinationX, destinationY, destinationWidth, destinationHeight);
-};
-
-
-let $d2b9ddd5e06273c6$var$Message;
-(function(Message) {
-    Message["deviceNotFound"] = 'Device not found';
-    Message["forbiddenProjectName"] = 'Please use a different project name';
-})($d2b9ddd5e06273c6$var$Message || ($d2b9ddd5e06273c6$var$Message = {
-}));
-var $d2b9ddd5e06273c6$export$2e2bcd8739ae039 = $d2b9ddd5e06273c6$var$Message;
-
-
-const $765649a831e5cd99$export$13a2ac54ef3e3802 = ()=>{
-    return new Promise((resolve, reject)=>{
-        navigator.mediaDevices.enumerateDevices().then((devices)=>{
-            const result = devices.map((d)=>{
-                return {
-                    id: d.deviceId,
-                    name: d.label
-                };
-            });
-            resolve(result);
-        }).catch((error)=>{
-            reject(error.message);
-        });
-    });
-};
-const $765649a831e5cd99$export$be262d700bd1c696 = (name)=>{
-    return new Promise((resolve, reject)=>{
-        navigator.mediaDevices.enumerateDevices().then((devices)=>{
-            for(let i = 0; i < devices.length; i++)if (devices[i].label === name) {
-                resolve(devices[i].deviceId);
-                return;
-            }
-            reject($d2b9ddd5e06273c6$export$2e2bcd8739ae039.deviceNotFound);
-        }).catch((error)=>{
-            reject(error.message);
-        });
-    });
-};
-const $765649a831e5cd99$export$b04c27f4306c4f03 = (deviceId, width, height)=>{
-    return navigator.mediaDevices.getUserMedia({
-        video: {
-            deviceId: deviceId,
-            width: width,
-            height: height
-        }
-    });
-};
-
-
-const $38abc3f5362e2345$export$408b3c1884176160 = (blob)=>{
-    return new Promise((resolve)=>{
-        const image = new Image();
-        image.onload = ()=>{
-            URL.revokeObjectURL(image.src);
-            resolve(image);
-        };
-        image.src = URL.createObjectURL(blob);
-    });
-};
-
-
-
-class $8578191a55f7d828$export$d955f48b7132ae28 {
-    /**
-   * Generates an instance of the Composition class.
-   * @param width Composition width.
-   * @param height Composition height.
-   * @param borderWidth Border width.
-   */ constructor(width, height, borderWidth){
-        this.borderWidth = borderWidth;
-        this.canvas = document.createElement('canvas');
-        this.scale = (width - this.borderWidth * 2) / width;
-        this.canvas.width = width;
-        this.canvas.height = height * this.scale + this.borderWidth * 2;
-        this.context = this.canvas.getContext('2d');
-        this.context.fillStyle = 'white';
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    /**
-   * Adds an element to the composition.
-   * @param element Element to add.
-   * @param x Element X position.
-   * @param y Element Y position.
-   * @param width Element width.
-   * @param height Element height.
-   * @param scale Element scale.
-   * @param mirror Value indicating whether to mirror the image.
-   * ``` typescript
-   * // example
-   * const composition = new broox.media.Composition(width, height, borderWidth);
-   * composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
-   * composition.addElement(image, 0, 0, image.width, image.height, 1, false);
-   * ```
-   */ addElement(element, x, y, width, height, scale, mirror) {
-        const destinationWidth = width * this.scale * scale;
-        const destinationHeight = height * this.scale * scale;
-        const destinationX = this.borderWidth + x * scale * this.scale;
-        const destinationY = this.borderWidth + y * scale * this.scale;
-        $e183a97f5f97e4cc$export$ea631e88b0322146(element, this.context, width, height, destinationWidth, destinationHeight, destinationX, destinationY, mirror);
-    }
-    /**
-   * Clears the composition.
-   */ clear() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    /**
-   * Gets the resulting composition.
-   * @returns A promise with a blob containing the composition.
-   * ``` typescript
-   * // example
-   * composition.get().then(blob => {
-   *   image.src = URL.createObjectURL(blob);
-   * )};
-   * ```
-   */ get() {
-        return new Promise((resolve)=>{
-            this.canvas.toBlob((blob)=>resolve(blob)
-            , 'image/jpeg', 1);
-        });
-    }
-}
-
-
-class $73504911da825798$export$336a011955157f9a {
-    constructor(stream){
-        this.stream = stream;
-    }
-    /**
-   * Sets a stream to record.
-   * @param stream Stream to record.
-   */ setStream(stream) {
-        this.stream = stream;
-    }
-    /**
-   * Starts recording.
-   */ start(options) {
-        const self = this;
-        this.promise = new Promise((resolve, reject)=>{
-            self.resolve = resolve;
-        });
-        let data = [];
-        this.recorder = new MediaRecorder(this.stream, options || {
-        });
-        this.recorder.ondataavailable = (e)=>data.push(e.data)
-        ;
-        this.recorder.onstop = ()=>{
-            self.resolve(new Blob(data, {
-                type: 'video/webm'
-            }));
-        };
-        this.recorder.start();
-    }
-    /**
-   * Stops recording.
-   */ stop() {
-        this.recorder.state === 'recording' && this.recorder.stop();
-        return this.promise;
-    }
-}
-
-
-
-
-let $768e44e06ebfd72f$export$ff50662d7c6e93a2;
-(function($768e44e06ebfd72f$export$ff50662d7c6e93a2) {
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["LeftHandUp"] = 'left_hand_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["RightHandUp"] = 'right_hand_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["BothHandsUp"] = 'both_hands_up';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["PointsLeft"] = 'points_left';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["PointsRight"] = 'points_right';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["LeftHandOnChest"] = 'left_hand_on_chest';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["RightHandOnChest"] = 'right_hand_on_chest';
-    $768e44e06ebfd72f$export$ff50662d7c6e93a2["BothHandsOnChest"] = 'both_hands_on_chest';
-})($768e44e06ebfd72f$export$ff50662d7c6e93a2 || ($768e44e06ebfd72f$export$ff50662d7c6e93a2 = {
-}));
-
-
-class $5918d9527446c446$export$61ce360501d38a6f {
-    /**
-   * Creates an instance of the Gesture class.
-   * @param types Gesture types.
-   * @param timestamp Timestamp.
-   */ constructor(types, timestamp){
-        this.types = [];
-        this.timestamp = 0;
-        this.types = types;
-        this.timestamp = timestamp;
-    }
-    /**
-   * Gets the types.
-   * @returns Gesture types.
-   */ getTypes() {
-        return this.types;
-    }
-    /**
-   * Gets the timestamp.
-   * @returns Timestamp.
-   */ getTimestamp() {
-        return this.timestamp;
-    }
-}
-
-
-
-class $750483b3996c802c$export$dfd4fa32db6567bf {
-    /**
-   * Creates an instance of the GestureHandler class.
-   * @param time Time lapse in milliseconds before accepting a gesture as such.
-   * @param delay Time lapse in seconds before listening to other gestures once a gesture is accepted.
-   */ constructor(time, delay){
-        this.listening = true;
-        this.gestures = [];
-        this.time = time;
-        this.delay = delay;
-        const self = this;
-        // listen osc events
-        window.addEventListener('message', (event)=>{
-            for(let i = 0; i < event.data.length; i++)if (event.data[i].address === '/de/person') self.add(event.data[i].args);
-        }, false);
-    }
-    /**
-   * Adds a potential gesture to be processed.
-   * @param args OSC event args.
-   */ add(args) {
-        if (this.listening) {
-            if (args[0] === 'id') this.presenceCallback && this.presenceCallback();
-            else if (args[0] === 'prop' && args[2] === 'poses') {
-                const types = args.slice(3);
-                if (types.length && types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandOnChest) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandOnChest) >= 0 || types.indexOf($768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) >= 0) {
-                    const gesture = new $5918d9527446c446$export$61ce360501d38a6f(types, new Date().getTime());
-                    this.gestures.push(gesture);
-                    this.check();
-                }
-            }
-        }
-    }
-    /**
-   * Adds a callback function for the "presence" gesture.
-   * @param callback Function that will be executed when the presence gesture is detected.
-   */ onPresence(callback) {
-        this.presenceCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "both hands up" gesture.
-   * @param callback Function that will be executed when the "both hands up" gesture is detected.
-   */ onBothHandsUp(callback) {
-        this.bothHandsUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "left hand up" gesture.
-   * @param callback Function that will be executed when the "left hand up" gesture is detected.
-   */ onLeftHandUp(callback) {
-        this.leftHandUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "right hand up" gesture.
-   * @param callback Function that will be executed when the "right hand up" gesture is detected.
-   */ onRightHandUp(callback) {
-        this.rightHandUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "both hands on chest" gesture.
-   * @param callback Function that will be executed when the "both hands on chest" gesture is detected.
-   */ onBothHandsOnChest(callback) {
-        this.bothHandsOnChestCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "left hand on chest" gesture.
-   * @param callback Function that will be executed when the "left hand on chest" gesture is detected.
-   */ onLeftHandOnChest(callback) {
-        this.leftHandOnChestCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "right hand on chest" gesture.
-   * @param callback Function that will be executed when the "right hand on chest" gesture is detected.
-   */ onRightHandOnChest(callback) {
-        this.rightHandOnChestCallback = callback;
-    }
-    /**
-   * Checks whether a gesture was made. 
-   */ check() {
-        // get last gesture
-        const lastIndex = this.gestures.length - 1;
-        const lastGesture = this.gestures[lastIndex];
-        const lastGestureTypes = lastGesture.getTypes();
-        if (lastGestureTypes.length === 1) {
-            const type = lastGestureTypes[0];
-            // if gesture is BothHandsUp or BothHandsOnChest, send the event
-            if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp || type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) this.send(type);
-            else if (this.gestures.length > 1) {
-                const lastTimestamp = lastGesture.getTimestamp();
-                let i = lastIndex;
-                let gesture = null;
-                // find last gesture before the time lapse defined
-                while(!gesture && --i >= 0 && this.gestures[i].getTypes().indexOf(type) >= 0)if (lastTimestamp - this.gestures[i].getTimestamp() > this.time) gesture = this.gestures[i];
-                if (gesture) this.send(type);
-            }
-        }
-    }
-    /**
-   * Executes a callback function based on the gesture made.
-   * @param type Gesture made.
-   */ send(type) {
-        console.log('Gesture ' + type + ' sent');
-        this.listening = false;
-        this.gestures = [];
-        setTimeout(()=>{
-            this.listening = true;
-        }, this.delay * 1000);
-        if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsUp) this.bothHandsUpCallback && this.bothHandsUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandUp) this.leftHandUpCallback && this.leftHandUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandUp) this.rightHandUpCallback && this.rightHandUpCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.BothHandsOnChest) this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.LeftHandOnChest) this.leftHandOnChestCallback && this.leftHandOnChestCallback();
-        else if (type === $768e44e06ebfd72f$export$ff50662d7c6e93a2.RightHandOnChest) this.rightHandOnChestCallback && this.rightHandOnChestCallback();
-    }
-}
-
-
-class $b37b5f75238e2b33$export$410db1ee4b845acb {
-    /**
-   * 
-   * @param writeJson Function to write a json
-   * @param readJson Function to read a json 
-   */ constructor(writeJson, readJson){
-        this.writeJson = writeJson;
-        this.readJson = readJson;
-    }
-    /**
-   * 
-   * @param name File name
-   * @param json Json content
-   */ write(name, json) {
-        this.writeJson(name, JSON.stringify(json));
-    }
-    /**
-    * 
-    * @param name File name
-    */ read(name) {
-        const content = JSON.parse(this.readJson(name));
-        return content;
-    }
-}
-
-
-class $867841deeedae440$export$19fffca37ef3e106 {
-    /**
-   * 
-   * @param name File name
-   * @param content Json content
-   */ write(name, content) {
-        localStorage.setItem(name, JSON.stringify(content));
-    }
-    /**
-   * 
-   * @param name File name
-   * @returns Json content for the given project
-   */ read(name) {
-        const content = localStorage.getItem(name);
-        if (content) return JSON.parse(content);
-        return null;
-    }
-}
-
-
-class $6771a07d445d5fd2$export$cec157cbbbaf65c9 {
-    static inElectron() {
-        // @ts-ignore
-        return !!window.electron;
-    }
-    static writeJson(name, json) {
-        // @ts-ignore
-        return window.app && window.app.writeJson(name, json);
-    }
-    static readJson(name) {
-        // @ts-ignore
-        return window.app && window.app.readJson(name);
-    }
-    static downloadFile(url, name, onUpdate, onError, onSuccess) {
-        // @ts-ignore
-        return window.app && window.app.downloadFile && window.app.downloadFile(url, name, onUpdate, onError, onSuccess);
-    }
-    static getMediaInfo() {
-        // @ts-ignore
-        return window.app && window.app.media;
-    }
-    static getDeviceInfo() {
-        // @ts-ignore
-        return window.app && window.app.device;
-    }
-    static logAlarm(subject, text) {
-        //@ts-ignore
-        window.app && window.app.logAlarm(subject, text);
-    }
-}
-
-
-
-class $f42e9746dec83db7$export$12b3cc2522c3bba5 {
-    /**
-   * Creates an instance of the KeyValue class.
-   */ constructor(){
-        this.contents = {
-        };
-        if ($6771a07d445d5fd2$export$cec157cbbbaf65c9.inElectron()) this.storage = new $b37b5f75238e2b33$export$410db1ee4b845acb($6771a07d445d5fd2$export$cec157cbbbaf65c9.writeJson, $6771a07d445d5fd2$export$cec157cbbbaf65c9.readJson);
-        else this.storage = new $867841deeedae440$export$19fffca37ef3e106();
-    }
-    /**
-   * Sets a value in storage
-   * @param name File name
-   * @param key Key assigned to the value to store
-   * @param value Value to store
-   * ``` typescript
-   * // example
-   * const user = {
-   *   firstName: 'John',
-   *   lastName: 'Doe'
-   * };
-   * const keyValue = new broox.mediaPlayer.KeyValue();
-   * keyValue.set('testApp', 'profile', user);
-   * ```
-   */ setValue(name, key, value) {
-        if (name === 'config') {
-            console.error($d2b9ddd5e06273c6$export$2e2bcd8739ae039.forbiddenProjectName);
-            return;
-        }
-        // get storage
-        let content = this.getContent(name);
-        if (!content) content = {
-        };
-        content[key] = value;
-        this.storage.write(name, content);
-    }
-    /**
-   * Gets a value from a content in storage
-   * @param name File name
-   * @param key Key
-   * @returns The value for the given key
-   * ``` typescript
-   * // example
-   * const keyValue = new broox.mediaPlayer.KeyValue();
-   * const user = keyValue.get('testApp', 'profile');
-   * console.log('User', user);
-   * ```
-   */ getValue(name, key) {
-        const storage = this.getContent(name);
-        return storage ? storage[key] : null;
-    }
-    /**
-   * Gets a content from memory or storage
-   * @param name File name
-   * @returns The content with the given name if exists, null otherwise
-   */ getContent(name) {
-        // get storage from memory
-        if (this.contents[name]) return this.contents[name];
-        else // get content from storage
-        try {
-            return this.storage.read(name);
-        } catch (error) {
-            // the content does not exist
-            return null;
-        }
-    }
-}
-
-
-var $f58d92019cb5bf2c$exports = {};
-"use strict";
-var $f58d92019cb5bf2c$var$removeHash = function removeHash(hex) {
-    return hex.charAt(0) === '#' ? hex.slice(1) : hex;
-};
-var $f58d92019cb5bf2c$var$parseHex = function parseHex(nakedHex) {
-    var isShort = nakedHex.length === 3 || nakedHex.length === 4;
-    var twoDigitHexR = isShort ? "".concat(nakedHex.slice(0, 1)).concat(nakedHex.slice(0, 1)) : nakedHex.slice(0, 2);
-    var twoDigitHexG = isShort ? "".concat(nakedHex.slice(1, 2)).concat(nakedHex.slice(1, 2)) : nakedHex.slice(2, 4);
-    var twoDigitHexB = isShort ? "".concat(nakedHex.slice(2, 3)).concat(nakedHex.slice(2, 3)) : nakedHex.slice(4, 6);
-    var twoDigitHexA = (isShort ? "".concat(nakedHex.slice(3, 4)).concat(nakedHex.slice(3, 4)) : nakedHex.slice(6, 8)) || 'ff'; // const numericA = +((parseInt(a, 16) / 255).toFixed(2));
-    return {
-        r: twoDigitHexR,
-        g: twoDigitHexG,
-        b: twoDigitHexB,
-        a: twoDigitHexA
-    };
-};
-var $f58d92019cb5bf2c$var$hexToDecimal = function hexToDecimal(hex) {
-    return parseInt(hex, 16);
-};
-var $f58d92019cb5bf2c$var$hexesToDecimals = function hexesToDecimals(_ref) {
-    var r = _ref.r, g = _ref.g, b = _ref.b, a = _ref.a;
-    return {
-        r: $f58d92019cb5bf2c$var$hexToDecimal(r),
-        g: $f58d92019cb5bf2c$var$hexToDecimal(g),
-        b: $f58d92019cb5bf2c$var$hexToDecimal(b),
-        a: +($f58d92019cb5bf2c$var$hexToDecimal(a) / 255).toFixed(2)
-    };
-};
-var $f58d92019cb5bf2c$var$isNumeric = function isNumeric(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-}; // eslint-disable-line no-restricted-globals, max-len
-var $f58d92019cb5bf2c$var$formatRgb = function formatRgb(decimalObject, parameterA) {
-    var r = decimalObject.r, g = decimalObject.g, b = decimalObject.b, parsedA = decimalObject.a;
-    var a = $f58d92019cb5bf2c$var$isNumeric(parameterA) ? parameterA : parsedA;
-    return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
-};
-/**
- * Turns an old-fashioned css hex color value into a rgb color value.
- *
- * If you specify an alpha value, you'll get a rgba() value instead.
- *
- * @param The hex value to convert. ('123456'. '#123456', ''123', '#123')
- * @param An alpha value to apply. (optional) ('0.5', '0.25')
- * @return An rgb or rgba value. ('rgb(11, 22, 33)'. 'rgba(11, 22, 33, 0.5)')
- */ var $f58d92019cb5bf2c$var$hexToRgba = function hexToRgba(hex, a) {
-    var hashlessHex = $f58d92019cb5bf2c$var$removeHash(hex);
-    var hexObject = $f58d92019cb5bf2c$var$parseHex(hashlessHex);
-    var decimalObject = $f58d92019cb5bf2c$var$hexesToDecimals(hexObject);
-    return $f58d92019cb5bf2c$var$formatRgb(decimalObject, a);
-};
-$f58d92019cb5bf2c$exports = $f58d92019cb5bf2c$var$hexToRgba;
-
-
-let $e39bc340930643f9$export$189c6ba3eaa96ac2;
-(function($e39bc340930643f9$export$189c6ba3eaa96ac2) {
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["object"] = '/tuio/2Dobj';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["cursor"] = '/tuio/2Dcur';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["blob"] = '/tuio/2Dblb';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["marker"] = '/tuio/broox_markers';
-    $e39bc340930643f9$export$189c6ba3eaa96ac2["skel"] = '/tuio/skel';
-})($e39bc340930643f9$export$189c6ba3eaa96ac2 || ($e39bc340930643f9$export$189c6ba3eaa96ac2 = {
-}));
-
-
-
-class $43444b336f9d9b5b$var$SingleBlob {
-    constructor(id, classId = ''){
-        this.id = id;
-        this.classId = classId;
-    }
-    update(x, y, width, height, rotation = 0, velocityX = null, velocityY = null, timeAlive = 0) {
-        this.rect = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
-        };
-        this.rotation = rotation;
-        this.timeAlive = timeAlive;
-        if (velocityX === null && velocityY === null && this.rect.x !== null && this.rect.y !== null) {
-            this.velocityX = x - this.rect.x;
-            this.velocityY = y - this.rect.y;
-        } else {
-            this.velocityX = velocityX;
-            this.velocityY = velocityY;
-        }
-    }
-    get() {
-        return {
-            id: this.id,
-            classId: this.classId,
-            rect: this.rect,
-            rotation: this.rotation,
-            timeAlive: this.timeAlive,
-            velocityX: this.velocityX,
-            velocityY: this.velocityY
-        };
-    }
-}
-var $43444b336f9d9b5b$export$2e2bcd8739ae039 = $43444b336f9d9b5b$var$SingleBlob;
-
-
-class $d3c7f14041d104ac$var$SkeletonBlob {
-    constructor(id){
-        this.leftHand = {
-            x: -1,
-            y: -1,
-            width: 0,
-            height: 0,
-            id: ''
-        };
-        this.rightHand = {
-            x: -1,
-            y: -1,
-            width: 0,
-            height: 0,
-            id: ''
-        };
-        this.id = id;
-        this.leftHand.id = id + '_left_hand';
-        this.rightHand.id = id + '_right_hand';
-    }
-    update(leftHand, rightHand, scale) {
-        this.leftHand.x = leftHand.x;
-        this.leftHand.y = leftHand.y;
-        this.leftHand.width = leftHand.width;
-        this.leftHand.height = leftHand.height;
-        this.rightHand.x = rightHand.x;
-        this.rightHand.y = rightHand.y;
-        this.rightHand.width = rightHand.width;
-        this.rightHand.height = rightHand.height;
-        this.scale = scale;
-    }
-    get() {
-        return {
-            id: this.id,
-            leftHand: this.leftHand,
-            rightHand: this.rightHand,
-            scale: this.scale
-        };
-    }
-}
-var $d3c7f14041d104ac$export$2e2bcd8739ae039 = $d3c7f14041d104ac$var$SkeletonBlob;
-
-
-const $442dc193c46cf57f$var$mouseBlobId = 'mouse';
-const $442dc193c46cf57f$var$randomBlobId = 'random';
-class $442dc193c46cf57f$export$b6c32681ca39b455 {
-    constructor(type, width, height, scale, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated){
-        this.blobs = new Map();
-        this.mouseEnabled = false;
-        this.calculateBlobTimeAlive = true;
-        this.randomBlobsEnabled = false;
-        this.randomBlobsTimeout = null;
-        this.randomBlobsCounter = 0;
-        this.scale = 1;
-        this.type = type;
-        this.activeArea = {
-            x: 0,
-            y: 0,
-            width: width,
-            height: height
-        };
-        this.scale = scale;
-        this.onUpdateCallback = onUpdate;
-        this.onBlobAddedCallback = onBlobAdded;
-        this.onBlobDeletedCallback = onBlobDeleted;
-        this.onFrameUpdatedCallback = onFrameUpdated;
-    }
-    getBlobs() {
-        return this.blobs;
-    }
-    setScale(scale) {
-        this.scale = scale;
-    }
-    setActiveArea(x, y, width, height) {
-        this.activeArea = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
-        };
-    }
-    enableMouseBlob(enabled) {
-        this.mouseEnabled = enabled;
-        const f = (evt)=>{
-            const blobData = {
-                x: evt.pageX / document.body.clientWidth * this.activeArea.width + this.activeArea.x,
-                y: evt.pageY / document.body.clientHeight * this.activeArea.height + this.activeArea.y,
-                width: 20,
-                height: 20
-            };
-            this.updateBlob($442dc193c46cf57f$var$mouseBlobId, blobData.x, blobData.y, blobData.width, blobData.height, 0, 0, 0, 0, '');
-        };
-        if (enabled) window.addEventListener('mousemove', f, false);
-        else {
-            this.updateBlobsAlive([]);
-            window.removeEventListener('mousemove', f, false);
-        }
-    }
-    enableRandomBlobs(enabled) {
-        this.randomBlobsEnabled = enabled;
-        if (this.randomBlobsTimeout !== null) {
-            clearTimeout(this.randomBlobsTimeout);
-            this.randomBlobsTimeout = null;
-        }
-        this.randomBlobsCounter = 0;
-        enabled && this.createRandomBlob();
-    }
-    isMouseEnabled() {
-        return this.mouseEnabled;
-    }
-    areRandomBlobsEnabled() {
-        return this.randomBlobsEnabled;
-    }
-    killBlobs() {
-        this.updateBlobsAlive([]);
-    }
-    update() {
-        if (this.randomBlobsEnabled) {
-            let idsToRemove = [];
-            for (let [id, blob] of this.blobs)if (id.includes($442dc193c46cf57f$var$randomBlobId)) {
-                if (this.isBlobInBounds(blob)) {
-                    const b = blob.get();
-                    blob.update(b.x + b.velocityX, b.y + b.velocityY, 10, 10, 0, b.velocityX, b.velocityY);
-                } else {
-                    this.onBlobDeletedCallback(id);
-                    idsToRemove.push(id);
-                }
-            }
-            for (let id1 of idsToRemove)this.blobs.delete(id1);
-        }
-    }
-    onOSCMessage(json) {
-        for(var i in json){
-            var args = json[i].args;
-            if (args == undefined) continue;
-            var address = json[i].address;
-            if (address !== this.type) continue;
-            switch(args[0]){
-                case 'fseq':
-                    if (args.length > 1) this.onFrameUpdatedCallback && this.onFrameUpdatedCallback(args[1]);
-                    break;
-                case 'set':
-                    const blobData = this.parseBlobData(json[i].address, args);
-                    if (blobData == null) continue;
-                    this.updateBlobWithData(address, blobData);
-                    this.onUpdateCallback && this.onUpdateCallback();
-                    break;
-                case 'alive':
-                    this.updateBlobsAlive(args);
-                    this.onUpdateCallback && this.onUpdateCallback();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    parseBlobData(address, args) {
-        if (address === $e39bc340930643f9$export$189c6ba3eaa96ac2.skel) return this.parseBlobSkeletonData(address, args);
-        var blobData = {
-        };
-        blobData.id = args[1].toString();
-        switch(address){
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.blob:
-                if (!this.checkBlobDataFormat(args, 13)) return null;
-                blobData.x = args[2];
-                blobData.y = args[3];
-                blobData.rotation = args[4];
-                blobData.width = args[5];
-                blobData.height = args[6];
-                blobData.velocityX = args[8];
-                blobData.velocityY = args[9];
-                blobData.timeAlive = args[12];
-                break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.object:
-                if (!this.checkBlobDataFormat(args, 11)) return null;
-                blobData.classId = args[2];
-                blobData.x = args[3];
-                blobData.y = args[4];
-                blobData.rotation = args[5];
-                break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.cursor:
-                if (!this.checkBlobDataFormat(args, 7)) return null;
-                blobData.x = args[2];
-                blobData.y = args[3];
-                blobData.width = 60 / this.activeArea.width;
-                blobData.height = blobData.width;
-                break;
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.marker:
-                blobData.classId = args[2];
-                blobData.x = args[3];
-                blobData.y = args[4];
-                blobData.rotation = args[5];
-                blobData.width = args[6];
-                break;
-        }
-        let corrected = blobData;
-        blobData.x = corrected.x * this.activeArea.width + this.activeArea.x;
-        blobData.y = corrected.y * this.activeArea.height + this.activeArea.y;
-        blobData.width *= this.activeArea.width * this.scale;
-        blobData.height *= this.activeArea.height * this.scale;
-        return blobData;
-    }
-    parseBlobSkeletonData(address, args) {
-        if (address !== $e39bc340930643f9$export$189c6ba3eaa96ac2.skel) {
-            console.log('Wrong address, expected ' + $e39bc340930643f9$export$189c6ba3eaa96ac2.skel + ' but got ' + address);
-            return null;
-        }
-        let blobData = {
-        };
-        blobData.id = args[1].toString();
-        const scale = args[6];
-        blobData.leftHand = {
-            x: args[2],
-            y: args[3],
-            width: scale * this.activeArea.width * this.scale,
-            height: scale * this.activeArea.height * this.scale
-        };
-        blobData.rightHand = {
-            x: args[4],
-            y: args[5],
-            width: scale * this.activeArea.width * this.scale,
-            height: scale * this.activeArea.height * this.scale
-        };
-        blobData.scale = scale;
-        if (this.isSkeletonJointDetected(blobData.leftHand)) {
-            blobData.leftHand.x = blobData.leftHand.x * this.activeArea.width + this.activeArea.x;
-            blobData.leftHand.y = blobData.leftHand.y * this.activeArea.height + this.activeArea.y;
-        }
-        if (this.isSkeletonJointDetected(blobData.rightHand)) {
-            blobData.rightHand.x = blobData.rightHand.x * this.activeArea.width + this.activeArea.x;
-            blobData.rightHand.y = blobData.rightHand.y * this.activeArea.height + this.activeArea.y;
-        }
-        return blobData;
-    }
-    isSkeletonJointDetected(joint) {
-        return joint.x >= 0 && joint.y >= 0;
-    }
-    checkBlobDataFormat(args, length) {
-        if (args.length !== length) {
-            console.log('Wrong Tuio set format. Supposed to have length ' + length + ' and has length ' + args.length);
-            return false;
-        }
-        return true;
-    }
-    updateBlobWithData(type, blobData) {
-        switch(type){
-            case $e39bc340930643f9$export$189c6ba3eaa96ac2.skel:
-                let id = blobData.id;
-                if (!this.blobs.has(id)) {
-                    const blob = new $d3c7f14041d104ac$export$2e2bcd8739ae039(id);
-                    this.blobs.set(id, blob);
-                    blob.update(blobData.leftHand, blobData.rightHand, blobData.scale);
-                    this.onBlobAddedCallback && this.onBlobAddedCallback(id, 0, 0);
-                } else {
-                    const blob = this.blobs.get(id);
-                    blob.update(blobData.leftHand, blobData.rightHand, blobData.scale);
-                }
-                break;
-            default:
-                this.updateBlob(blobData.id, blobData.x, blobData.y, blobData.width, blobData.height, blobData.rotation, blobData.velocityX, blobData.velocityY, blobData.timeAlive, blobData.classId);
-        }
-    }
-    updateBlob(id, x, y, width, height, rotation, velocityX, velocityY, timeAlive = 0, classId = '') {
-        if (!this.blobs.has(id)) {
-            const blob = new $43444b336f9d9b5b$export$2e2bcd8739ae039(id, classId);
-            this.blobs.set(id, blob);
-            blob.update(x, y, width, height, rotation, velocityX, velocityY, timeAlive);
-            this.onBlobAddedCallback && this.onBlobAddedCallback(id, x, y);
-        } else {
-            const blob = this.blobs.get(id);
-            let blobTimeAlive = timeAlive;
-            if (this.calculateBlobTimeAlive && blobTimeAlive <= 0) blobTimeAlive = blob.timeAlive + 0.01;
-            blob.update(x, y, width, height, rotation, velocityX, velocityY, blobTimeAlive);
-        }
-        this.onUpdateCallback && this.onUpdateCallback();
-    }
-    updateBlobsAlive(idsAlive) {
-        const idsToRemove = [];
-        if (!idsAlive || idsAlive.length === 0) this.blobs.clear();
-        else {
-            for (let [id, blob] of this.blobs){
-                let isAlive = false;
-                for (let aliveItem of idsAlive){
-                    isAlive = aliveItem === id;
-                    if (isAlive) break;
-                }
-                if (!isAlive) {
-                    this.onBlobDeletedCallback && this.onBlobDeletedCallback(id);
-                    idsToRemove.push(id);
-                }
-            }
-            for (let id2 of idsToRemove)this.blobs.delete(id2);
-        }
-    }
-    createRandomBlob() {
-        if (!this.randomBlobsEnabled) return;
-        const fromTopOrBottom = Math.random() <= 0.5;
-        const dirX = Math.random() <= 0.5 ? 1 : -1;
-        const dirY = Math.random() <= 0.5 ? 1 : -1;
-        const minVelX = fromTopOrBottom ? 0 : 0.5;
-        const minVelY = fromTopOrBottom ? 0.5 : 0;
-        const velocityX = (Math.random() * 2 + minVelX) * dirX;
-        const velocityY = (Math.random() * 2 + minVelY) * dirY;
-        const x = fromTopOrBottom ? this.activeArea.width * Math.random() + this.activeArea.x : velocityX > 0 ? this.activeArea.x : this.activeArea.width + this.activeArea.x;
-        const y = fromTopOrBottom ? velocityY > 0 ? this.activeArea.y : this.activeArea.height + this.activeArea.y : this.activeArea.height * Math.random() + this.activeArea.y;
-        this.updateBlob('random_' + this.randomBlobsCounter, x, y, 10, 10, 0, velocityX, velocityY);
-        this.randomBlobsCounter++;
-        this.randomBlobsTimeout = setTimeout(()=>{
-            this.createRandomBlob();
-        }, Math.random() * 3000 + 1000);
-    }
-    isBlobInBounds(blob) {
-        return !(blob.x < -9 + this.activeArea.x || blob.x > this.activeArea.width + this.activeArea.x || blob.y < -this.activeArea.height * 0.5 + this.activeArea.y || blob.y > this.activeArea.height + this.activeArea.y);
-    }
-}
-
-
-var $f5656f04fd7f761f$exports = {};
+var $5309a366319f1d03$exports = {};
 /*! Tweakpane 3.1.4 (c) 2016 cocopon, licensed under the MIT license. */ (function(global, factory) {
-    typeof $f5656f04fd7f761f$exports === 'object' && "object" !== 'undefined' ? factory($f5656f04fd7f761f$exports) : typeof define === 'function' && define.amd ? define([
+    typeof $5309a366319f1d03$exports === 'object' && "object" !== 'undefined' ? factory($5309a366319f1d03$exports) : typeof define === 'function' && define.amd ? define([
         'exports'
     ], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Tweakpane = {
     }));
-})($f5656f04fd7f761f$exports, function(exports) {
+})($5309a366319f1d03$exports, function(exports) {
     'use strict';
     /***
      * A simple semantic versioning perser.
@@ -7988,73 +7053,26 @@ var $f5656f04fd7f761f$exports = {};
 });
 
 
-class $36a91428d492be2f$export$c72f6eaae7b9adff {
-    open(settings, maxWidth, maxHeight, onChange, onKill, onClose) {
-        this.pane = new $f5656f04fd7f761f$exports.Pane();
-        this.pane.addInput(settings, 'activeArea', {
-            label: 'X / Y',
-            x: {
-                step: 20
-            },
-            y: {
-                step: 20
-            }
+class $2b5d64822f74b5ef$export$c72f6eaae7b9adff {
+    open(settings, onChange, onClose) {
+        this.pane = new $5309a366319f1d03$exports.Pane();
+        this.pane.addInput(settings, 'logEnabled', {
+            label: 'Log enabled'
         });
-        this.pane.addInput(settings.activeArea, 'width', {
-            label: 'Width',
-            min: 100,
-            max: maxWidth,
-            step: 10
+        this.pane.addInput(settings, 'errorEnabled', {
+            label: 'Error enabled'
         });
-        this.pane.addInput(settings.activeArea, 'height', {
-            label: 'Height',
-            min: 100,
-            max: maxHeight,
-            step: 10
+        this.pane.addInput(settings, 'warnEnabled', {
+            label: 'Warn enabled'
         });
-        const handFolder = this.pane.addFolder({
-            title: 'Hand',
-            expanded: true
+        this.pane.addInput(settings, 'infoEnabled', {
+            label: 'Info enabled'
         });
-        handFolder.addInput(settings, 'showHand', {
-            label: 'Show'
-        });
-        handFolder.addInput(settings, 'handScale', {
-            label: 'Hand Scale',
-            min: 0,
-            max: 2,
-            step: 0.1
-        });
-        handFolder.addInput(settings, 'handColor', {
-            label: 'Hand Color'
-        });
-        const blobFolder = this.pane.addFolder({
-            title: 'Blob',
-            expanded: true
-        });
-        blobFolder.addInput(settings, 'showBlob', {
-            label: 'Show'
-        });
-        blobFolder.addInput(settings, 'blobScale', {
-            label: 'Blob Scale',
-            min: 0,
-            max: 2,
-            step: 0.1
-        });
-        blobFolder.addInput(settings, 'blobColor', {
-            label: 'Blob Color'
-        });
-        blobFolder.addInput(settings, 'simulate', {
-            label: 'Simulate with mouse'
+        this.pane.addInput(settings, 'debugEnabled', {
+            label: 'Debug enabled'
         });
         this.pane.on('change', ()=>{
             onChange(this.pane.exportPreset());
-        });
-        const killBtn = this.pane.addButton({
-            title: 'Kill blobs'
-        });
-        killBtn.on('click', ()=>{
-            onKill();
         });
         this.pane.addSeparator();
         const btn = this.pane.addButton({
@@ -8071,161 +7089,54 @@ class $36a91428d492be2f$export$c72f6eaae7b9adff {
 }
 
 
-class $80f994675897b386$export$64c1e2689525a052 {
+class $a0cc4050d1811b83$export$7e5c6f1dff24d331 {
     /**
    * 
-   * @param width Active area width.
-   * @param height Active area height.
-   * @param simulate Value indicating whether to sumulate a blob with the mouse pointer.
-   * @param onUpdate On update callback.
-   * @param onBlobAdded On blob added callback.
-   * @param onBlobDeleted  On blob deleted callback.
-   * @param onFrameUpdated On frame udpated callback.
-   * @param onSettingsChanged On settings changed callback.
-   */ constructor(width, height, simulate, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated, onSettingsChanged){
-        this.simulate = false;
-        this.showBlob = true;
-        this.showHand = true;
-        this.keyToOpenSettings = 's';
+   * @param enabled Value indicating whether logging is enabled.
+   * @param onSettingsChanged On settings changed callback. 
+   */ constructor(enabled, onSettingsChanged){
+        this.keyToOpenSettings = 'l';
         this.settingsOpened = false;
-        this.debug = false;
-        this.simulate = simulate;
-        this.activeArea = {
-            x: 0,
-            y: 0,
-            width: width,
-            height: height
-        };
-        this.blobScale = 1;
-        this.blobColor = '#0000FF';
-        this.handScale = 1;
-        this.handColor = '#FF0000';
+        this.logEnabled = false;
+        this.errorEnabled = false;
+        this.warnEnabled = false;
+        this.infoEnabled = false;
+        this.debugEnabled = false;
+        this.log = console.log;
+        this.error = console.error;
+        this.warn = console.warn;
+        this.info = console.info;
+        this.debug = console.debug;
+        this.logEnabled = this.errorEnabled = this.warnEnabled = this.infoEnabled = this.debugEnabled = enabled;
         this.onSettingsChangedCallback = onSettingsChanged;
-        const onBlobsUpdate = ()=>{
-            onUpdate && onUpdate();
-            this.onUpdate();
-        };
-        this.skeletonBlobs = new $442dc193c46cf57f$export$b6c32681ca39b455($e39bc340930643f9$export$189c6ba3eaa96ac2.skel, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
-        this.singleBlobs = new $442dc193c46cf57f$export$b6c32681ca39b455($e39bc340930643f9$export$189c6ba3eaa96ac2.blob, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
-        this.simulate && this.singleBlobs.enableMouseBlob(true);
-        this.maxWidth = width;
-        this.maxHeight = height;
-        this.settings = new $36a91428d492be2f$export$c72f6eaae7b9adff();
-        window.addEventListener('message', (event)=>{
-            this.singleBlobs.onOSCMessage(event.data);
-            this.skeletonBlobs.onOSCMessage(event.data);
-        }, false);
+        this.settings = new $2b5d64822f74b5ef$export$c72f6eaae7b9adff();
         window.addEventListener('keydown', (event)=>{
             if (event.key === this.keyToOpenSettings) {
-                console.log('opening settings...', event.key);
+                console.log('opening log settings...', event.key);
                 this.settingsOpened ? this.closeSettings() : this.openSettings();
             }
         });
-        // create canvas and context for debugging purposes
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'absolute';
-        canvas.style.left = '0';
-        canvas.style.top = '0';
-        canvas.width = width;
-        canvas.height = height;
-        document.body.appendChild(canvas);
-        this.debugContext = canvas.getContext('2d');
-    }
-    /**
-   * Gets skeleton blobs.
-   * @returns Skeleton blobs.
-   */ getSkeletons() {
-        return this.skeletonBlobs.getBlobs();
-    }
-    /**
-   * Gets single blobs.
-   * @returns Single blobs.
-   */ getSingleBlobs() {
-        return this.singleBlobs.getBlobs();
-    }
-    /**
-   * Sets the blobs active area.
-   * @param x Left offset.
-   * @param y Top offset.
-   * @param width Width.
-   * @param height Height.
-   */ setActiveArea(x, y, width, height) {
-        this.activeArea = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
-        };
-        this.skeletonBlobs.setActiveArea(x, y, width, height);
-        this.singleBlobs.setActiveArea(x, y, width, height);
-    }
-    /**
-   * Sets blobs scale.
-   * @param handScale Skeleton hands scale.
-   * @param blobScale Single blob scale.
-   */ setBlobsScale(handScale, blobScale) {
-        this.handScale = handScale;
-        this.blobScale = blobScale;
-        this.skeletonBlobs.setScale(handScale);
-        this.singleBlobs.setScale(blobScale);
-    }
-    /**
-   * Sets blobs colors.
-   * @param handColor Skeleton hands color.
-   * @param blobColor Single blob color.
-   */ setBlobsColor(handColor, blobColor) {
-        this.handColor = handColor;
-        this.blobColor = blobColor;
-    }
-    /**
-   * Simulates single blob with the mouse pointer.
-   * @param value Value indicating whether to simulate a single blob with the mouse pointer.
-   */ setSimulate(value) {
-        this.simulate = value;
-        this.singleBlobs.enableMouseBlob(value);
-    }
-    /**
-   * Sets debug mode.
-   * @param value Value indicating whether to start the debug mode.
-   */ setDebug(value) {
-        this.debug = value;
-    }
-    /**
-   * Kilss active blobs.
-   */ killBlobs() {
-        this.skeletonBlobs.killBlobs();
-        this.singleBlobs.killBlobs();
     }
     /**
    * Opens a panel to set the blobs settings.
    */ openSettings() {
         this.settingsOpened = true;
-        this.debug = true;
         let settings = {
-            activeArea: {
-                ...this.activeArea
-            },
-            showHand: this.showHand,
-            handScale: this.handScale,
-            handColor: this.handColor,
-            showBlob: this.showBlob,
-            blobScale: this.blobScale,
-            blobColor: this.blobColor,
-            simulate: this.simulate
+            logEnabled: this.logEnabled,
+            errorEnabled: this.errorEnabled,
+            warnEnabled: this.warnEnabled,
+            infoEnabled: this.infoEnabled,
+            debugEnabled: this.debugEnabled
         };
-        this.settings.open(settings, this.maxWidth, this.maxHeight, (newSettings)=>{
-            this.setActiveArea(newSettings.activeArea.x, newSettings.activeArea.y, newSettings.activeArea.width, newSettings.activeArea.height);
-            this.setBlobsScale(newSettings.handScale, newSettings.blobScale);
-            this.showBlob = newSettings.showBlob;
-            this.blobColor = newSettings.blobColor;
-            this.showHand = newSettings.showHand;
-            this.handColor = newSettings.handColor;
-            this.setSimulate(newSettings.simulate);
+        this.settings.open(settings, (newSettings)=>{
+            this.setLogEnabled(newSettings.logEnabled);
+            this.setErrorEnabled(newSettings.errorEnabled);
+            this.setWarnEnabled(newSettings.warnEnabled);
+            this.setInfoEnabled(newSettings.infoEnabled);
+            this.setDebugEnabled(newSettings.debugEnabled);
             this.onSettingsChangedCallback && this.onSettingsChangedCallback(newSettings);
-        }, ()=>this.killBlobs
-        , ()=>{
+        }, ()=>{
             this.settingsOpened = false;
-            this.debug = false;
         });
     }
     /**
@@ -8235,132 +7146,50 @@ class $80f994675897b386$export$64c1e2689525a052 {
         this.settings.close();
     }
     /**
+   * Sets a value indicating whether log is enabled.
+   */ setLogEnabled(value) {
+        this.logEnabled = value;
+        console.log = value ? this.log : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether error is enabled.
+   */ setErrorEnabled(value) {
+        this.errorEnabled = value;
+        console.error = value ? this.error : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether warn is enabled.
+   */ setWarnEnabled(value) {
+        this.warnEnabled = value;
+        console.warn = value ? this.warn : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether info is enabled.
+   */ setInfoEnabled(value) {
+        this.infoEnabled = value;
+        console.info = value ? this.info : ()=>{
+        };
+    }
+    /**
+   * Sets a value indicating whether debug is enabled.
+   */ setDebugEnabled(value) {
+        this.debugEnabled = value;
+        console.debug = value ? this.debug : ()=>{
+        };
+    }
+    /**
    * Sets the key to open the settings panel when pressed.
    * @param key Key.
    */ setKeyToOpenSettings(key) {
         this.keyToOpenSettings = key;
     }
-    onUpdate() {
-        this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
-        if (this.debug) {
-            this.drawActiveArea();
-            if (this.showBlob) {
-                const singleBlobs = this.getSingleBlobs();
-                for (let blob of singleBlobs.values() || []){
-                    const b = blob.get();
-                    this.drawBlob(b.rect, this.blobColor);
-                }
-            }
-            if (this.showHand) {
-                const skeletons = this.getSkeletons();
-                for (let skeleton of skeletons.values() || []){
-                    const s = skeleton.get();
-                    this.drawBlob(s.leftHand, this.handColor);
-                    this.drawBlob(s.rightHand, this.handColor);
-                }
-            }
-        }
-    }
-    drawActiveArea() {
-        this.debugContext.beginPath();
-        this.debugContext.lineWidth = 2;
-        this.debugContext.strokeStyle = '#ff0000';
-        this.debugContext.rect(this.activeArea.x, this.activeArea.y, this.activeArea.width, this.activeArea.height);
-        this.debugContext.stroke();
-    }
-    drawBlob(blob, color) {
-        this.debugContext.beginPath();
-        this.debugContext.lineWidth = 2;
-        this.debugContext.rect(blob.x - blob.width / 2, blob.y - blob.height / 2, blob.width, blob.height);
-        this.debugContext.fillStyle = (/*@__PURE__*/$parcel$interopDefault($f58d92019cb5bf2c$exports))(color, 0.2);
-        this.debugContext.fill();
-        this.debugContext.strokeStyle = (/*@__PURE__*/$parcel$interopDefault($f58d92019cb5bf2c$exports))(color);
-        this.debugContext.stroke();
-    }
 }
 
 
 
-class $66419f53867917a5$export$bf5acd943326457 {
-    /**
-   * Creates an instance of the OscListener class.
-   */ constructor(){
-        this.events = new Map();
-        const self = this;
-        // listen osc events
-        window.addEventListener('message', (event)=>{
-            for(let i = 0; i < event.data.length; i++){
-                const e = event.data[i].address;
-                if (self.events.has(e)) {
-                    const callback = self.events.get(e);
-                    callback();
-                }
-            }
-        }, false);
-    }
-    /**
-   * Adds a callback function to the given event.
-   * @param event Event name to listen to.
-   * @param callback Function to execute when the event is recieved.
-   */ add(event, callback) {
-        this.events.set(event, callback);
-    }
-}
 
-
-
-const $1969843397ad4b01$export$498ecf32d8e5038b = ()=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.getMediaInfo();
-};
-const $1969843397ad4b01$export$a5202107d3e3cdb0 = ()=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.getDeviceInfo();
-};
-
-
-
-const $36099b9c9195dda7$export$4b2634a642f10d54 = (subject, text)=>{
-    return $6771a07d445d5fd2$export$cec157cbbbaf65c9.logAlarm(subject, text);
-};
-
-
-
-const $6478894b9d0eb5a2$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
-    return new Promise((resolve, reject)=>{
-        $6771a07d445d5fd2$export$cec157cbbbaf65c9.inElectron() ? $6771a07d445d5fd2$export$cec157cbbbaf65c9.downloadFile(url, name, onUpdate, (error)=>reject(error)
-        , (path)=>resolve(path)
-        ) : resolve(url);
-    });
-};
-
-
-
-
-const $e98f3455ba14d218$var$broox = {
-    media: {
-        getAvailableDevices: $765649a831e5cd99$export$13a2ac54ef3e3802,
-        getDeviceId: $765649a831e5cd99$export$be262d700bd1c696,
-        startDevice: $765649a831e5cd99$export$b04c27f4306c4f03,
-        drawElement: $e183a97f5f97e4cc$export$ea631e88b0322146,
-        drawPartOfElement: $e183a97f5f97e4cc$export$586746d88f07c896,
-        drawVideo: $e183a97f5f97e4cc$export$fa3373cf5ebce5bf,
-        blobToImage: $38abc3f5362e2345$export$408b3c1884176160,
-        Composition: $8578191a55f7d828$export$d955f48b7132ae28,
-        Recorder: $73504911da825798$export$336a011955157f9a
-    },
-    mediaPlayer: {
-        BlobsController: $80f994675897b386$export$64c1e2689525a052,
-        AddressType: $e39bc340930643f9$export$189c6ba3eaa96ac2,
-        KeyValue: $f42e9746dec83db7$export$12b3cc2522c3bba5,
-        GestureHandler: $750483b3996c802c$export$dfd4fa32db6567bf,
-        GestureType: $768e44e06ebfd72f$export$ff50662d7c6e93a2,
-        OscListener: $66419f53867917a5$export$bf5acd943326457,
-        getMediaInfo: $1969843397ad4b01$export$498ecf32d8e5038b,
-        getDeviceInfo: $1969843397ad4b01$export$a5202107d3e3cdb0,
-        logAlarm: $36099b9c9195dda7$export$4b2634a642f10d54,
-        downloadFile: $6478894b9d0eb5a2$export$bb3b75778e3e272
-    }
-};
-var $e98f3455ba14d218$export$2e2bcd8739ae039 = $e98f3455ba14d218$var$broox;
-
-
-//# sourceMappingURL=index.js.map
+export {$a0cc4050d1811b83$export$7e5c6f1dff24d331 as LogController};
+//# sourceMappingURL=broox.js.map

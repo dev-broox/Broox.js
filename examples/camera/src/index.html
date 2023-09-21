@@ -61,7 +61,7 @@
     <video id="video" autoplay></video>
     <img id="photo" />
     <script type="module">
-      import broox from './broox.js';
+      import { getAvailableDevices, startDevice, Composition } from './broox.js';
       
       const camera = document.getElementById('camera');
       const scale = document.getElementById('scale');
@@ -70,7 +70,7 @@
       const photo = document.getElementById('photo');
       const btnShoot = document.getElementById('btnShoot');
       // get available devices
-      broox.media.getAvailableDevices().then(devices => {
+      getAvailableDevices().then(devices => {
         for(const device of devices) {
           if(device.name) {
             const option = document.createElement('option');
@@ -80,14 +80,14 @@
       });
       // start device
       document.getElementById('btnStart').onclick = () => {
-        broox.media.startDevice(camera.value).then(stream => {
+        startDevice(camera.value).then(stream => {
           video.srcObject = stream;
           btnShoot.style.display = 'block';
         });
       };
       // take photo
       btnShoot.onclick = () => {
-        const composition = new broox.media.Composition(video.videoWidth, video.videoHeight, parseInt(border.value));
+        const composition = new Composition(video.videoWidth, video.videoHeight, parseInt(border.value));
         composition.addElement(video, 0, 0, video.videoWidth, video.videoHeight, parseFloat(scale.value), false);
         composition.get().then(blob => {
           photo.src = URL.createObjectURL(blob);

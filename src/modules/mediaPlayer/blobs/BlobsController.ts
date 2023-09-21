@@ -31,7 +31,7 @@ export class BlobsController {
    * 
    * @param width Active area width.
    * @param height Active area height.
-   * * @param simulate Value indicating whether to show the settings panel.
+   * @param simulate Value indicating whether to show the settings panel.
    * @param simulate Value indicating whether to sumulate a blob with the mouse pointer.
    * @param onUpdate On update callback.
    * @param onBlobAdded On blob added callback.

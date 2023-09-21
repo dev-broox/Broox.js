@@ -25,13 +25,38 @@
     "tweakpane": "^3.1.4",
     "typedoc": "^0.22.17"
   },
-  "main": "dist/main/broox.js",
+  "media": "dist/media/brooxMedia.js",
+  "mediaPlayer": "dist/mediaPlayer/brooxMediaPlayer.js",
+  "logger": "dist/logger/brooxLogger.js",
+  "analytics": "dist/analytics/brooxAnalytics.js",
   "targets": {
-    "main": {
+    "media": {
+      "source": "src/modules/media/Media.module.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true
+    },
+    "mediaPlayer": {
+      "source": "src/modules/mediaPlayer/MediaPlayer.module.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true,
       "includeNodeModules": [
         "hex-to-rgba",
         "tweakpane"
       ]
+    },
+    "logger": {
+      "source": "src/modules/logger/Logger.module.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true,
+      "includeNodeModules": [
+        "hex-to-rgba",
+        "tweakpane"
+      ]
+    },
+    "analytics": {
+      "source": "src/modules/analytics/Analytics.module.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true
     }
   },
   "devDependencies": {

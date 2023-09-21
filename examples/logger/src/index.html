@@ -12,9 +12,9 @@
   </head>
   <body>
     <script type="module">
-      import broox from './index.js';
+      import { LogController } from './broox.js';
 
-      const logController = new broox.logger.LogController(true, (settings) => {
+      const logController = new LogController(true, (settings) => {
         console.log('settings changed', settings);
         if(!settings.enabled) {
           console.log('this message should not show up in console');

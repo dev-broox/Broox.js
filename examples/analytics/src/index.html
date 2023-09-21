@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Analytics example</title>
+  </head>
+  <body>
+    <script type="module">
+      import { getProfile, getProduct, getAudiences, getByYear, getCollapsed } from './broox.js';
+      
+      getProfile({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(profile => console.log('profile', profile));
+      getAudiences({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(a => {
+        const audiences = [];
+        for(const [key, value] of Object.entries(a)) {
+          audiences.push({ id: key, name: value });
+        }
+        console.log('audiences', audiences);
+        getProduct({}, ['marker'], audiences, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(product => {
+          console.log('product', product);
+        });
+        getByYear({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(result => {
+          console.log('byYear', result);
+        });
+        getCollapsed({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(collapsed => {
+          console.log('collapsed', collapsed);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,5 +1,11 @@
 /**
  * Provides context to the apps executed within the Media Player.
+ * #### Usage
+ *
+* ``` typescript
+* import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
+* ```
+* <br/>
  *
  * #### {@link BlobsController}
  *
@@ -7,7 +13,7 @@
  *
  * ``` typescript
  * // example
- * const blobsController = new broox.mediaPlayer.BlobsController(width, height, false, () => {...);
+ * const blobsController = new BlobsController(width, height, true, false, () => {...);
  * const skeletons = blobsController.getSkeletons();
  * ```
  * <br/>
@@ -22,7 +28,7 @@
  *   firstName: 'John',
  *   lastName: 'Doe'
  * };
- * const keyValue = new broox.mediaPlayer.KeyValue();
+ * const keyValue = new KeyValue();
  * keyValue.set('testApp', 'profile', user);
  * const profile = keyValue.get('testApp', 'profile');
  * ```
@@ -34,7 +40,7 @@
  *
  * ``` typescript
  * // example
- * const gestureHandler = new broox.mediaPlayer.GestureHandler(500, 2);
+ * const gestureHandler = new GestureHandler(500, 2);
  * gestureHandler.onPresence(() => console.log('Presence'));
  * ```
  * <br/>
@@ -45,7 +51,7 @@
  *
  * ``` typescript
  * // example
- * const oscListener = new broox.mediaPlayer.OscListener();
+ * const oscListener = new OscListener();
  * oscListener.add('/start', () => console.log('Start'));
  * ```
  * <br/>

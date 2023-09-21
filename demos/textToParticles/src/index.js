@@ -1,4 +1,4 @@
-import broox from './lib/index';
+import { BlobsController, KeyValue } from './lib/broox';
 
 (async () => {
   const response = await fetch('./config/config.json');
@@ -32,12 +32,12 @@ import broox from './lib/index';
     console.log('settings changed', settings);
     keyValue.setValue('blobs', 'settings', settings);
   };
-  const blobsController = new broox.mediaPlayer.BlobsController(document.body.clientWidth, document.body.clientHeight, false, onUpdate, () => {}, () => {}, () => {}, onSettingsChanged);
+  const blobsController = new BlobsController(document.body.clientWidth, document.body.clientHeight, true, false, onUpdate, () => {}, () => {}, () => {}, onSettingsChanged);
   blobsController.setKeyToOpenSettings('d');
-  const keyValue = new broox.mediaPlayer.KeyValue();
+  const keyValue = new KeyValue();
   const settings = keyValue.getValue('blobs', 'settings');
   console.log('stored settings', settings);
-  if(settings && settings !== {}) {
+  if(settings && settings != {}) {
     blobsController.setActiveArea(settings.activeArea.x, settings.activeArea.y, settings.activeArea.width, settings.activeArea.height);
     blobsController.setBlobsScale(settings.handScale, settings.blobScale);
     blobsController.setBlobsColor(settings.handColor, settings.blobColor);

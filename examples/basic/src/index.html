@@ -50,10 +50,10 @@
     </div>
     <pre id="info"></pre>
     <script type="module">
-      import broox from './broox.js';
+      import { KeyValue, getDeviceInfo, getMediaInfo, logAlarm } from './broox.js';
       
       let projectName = 'demo';
-      const keyValue = new broox.mediaPlayer.KeyValue();
+      const keyValue = new KeyValue();
       // store value in Media Player
       document.getElementById('setValueBtn').onclick = () => {
         const key = document.getElementById('setKey');
@@ -83,12 +83,12 @@
       };
       // get media information
       document.getElementById('getMediaBtn').onclick = () => {
-        const mediaInfo = broox.mediaPlayer.getMediaInfo();
+        const mediaInfo = getMediaInfo();
         info.innerHTML = JSON.stringify(mediaInfo, null, 2);
       };
       // get device information
       document.getElementById('getDeviceBtn').onclick = () => {
-        const deviceInfo = broox.mediaPlayer.getDeviceInfo();
+        const deviceInfo = getDeviceInfo();
         info.innerHTML = JSON.stringify(deviceInfo, null, 2);
       };
       // send alarm to Media Player
@@ -96,7 +96,7 @@
         const subject = document.getElementById('subject');
         const text = document.getElementById('text');
         if(subject.value && text.value) {
-          broox.mediaPlayer.logAlarm(subject.value, text.value);
+          logAlarm(subject.value, text.value);
           info.innerHTML = 'Alarm sent with subject "' + subject.value + '"" and text "' + text.value + '"';
           subject.value = '';
           text.value = '';
