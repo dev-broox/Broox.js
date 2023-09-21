@@ -8,6 +8,7 @@ Provides context to the apps executed within the Media Player.
 
 #### Usage
 <br/>
+
 ``` typescript
 import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
 ```
@@ -80,6 +81,7 @@ Provides classes and functions related to the rendering process of different med
 
 #### Usage
 <br/>
+
 ``` typescript
 import { Composition, startDevice } from './brooxMedia.js';
 ```
@@ -138,6 +140,7 @@ Provides logging options.
 
 #### Usage
 <br/>
+
 ``` typescript
 import { LogController } from './brooxLogger.js';
 ```
@@ -160,6 +163,7 @@ Provides functions to access analytics information.
 
 #### Usage
 <br/>
+
 ``` typescript
 import { getProfile, getAudiences } from './brooxAnalytics.js';
 ```

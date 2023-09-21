@@ -13,9 +13,9 @@
   <h4>Usage</h4>
 </a>
 <br/>
-``` typescript
-import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
-```
+
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">BlobsController</span><span class="hl-1">, </span><span class="hl-2">getMediaInfo</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;./brooxMediaPlayer.js&#39;</span><span class="hl-1">;</span>
+</code></pre>
 <br/>
 
 
@@ -23,7 +23,7 @@ import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
   <h4><a href="classes/mediaPlayer.BlobsController.html">BlobsController</a></h4>
 </a>
 <p> Parses tuio events recieved by apps and keeps track of the blobs.</p>
-<pre><code class="language-typescript"><span class="hl-0"> </span><span class="hl-1">// example</span><br/><span class="hl-0"> </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">blobsController</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">BlobsController</span><span class="hl-0">(</span><span class="hl-5">width</span><span class="hl-0">, </span><span class="hl-5">height</span><span class="hl-0">, </span><span class="hl-2">false</span><span class="hl-0">, () </span><span class="hl-2">=&gt;</span><span class="hl-0"> {...);</span><br/><span class="hl-0"> </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">skeletons</span><span class="hl-0"> = </span><span class="hl-5">blobsController</span><span class="hl-0">.</span><span class="hl-4">getSkeletons</span><span class="hl-0">();</span>
+<pre><code class="language-typescript"><span class="hl-1"> </span><span class="hl-4">// example</span><br/><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">blobsController</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">BlobsController</span><span class="hl-1">(</span><span class="hl-2">width</span><span class="hl-1">, </span><span class="hl-2">height</span><span class="hl-1">, </span><span class="hl-5">false</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> {...);</span><br/><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">skeletons</span><span class="hl-1"> = </span><span class="hl-2">blobsController</span><span class="hl-1">.</span><span class="hl-7">getSkeletons</span><span class="hl-1">();</span>
 </code></pre>
  <br/>
 
@@ -32,7 +32,7 @@ import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
   <h4><a href="classes/mediaPlayer.KeyValue.html">KeyValue</a></h4>
 </a>
 <p>Allows apps to persist json values associated to a project and a key.</p>
-<pre><code class="language-typescript"><span class="hl-1">// example</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">user</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-5">firstName:</span><span class="hl-0"> </span><span class="hl-6">&#39;John&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-5">lastName:</span><span class="hl-0"> </span><span class="hl-6">&#39;Doe&#39;</span><br/><span class="hl-0">};</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">keyValue</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">KeyValue</span><span class="hl-0">();</span><br/><span class="hl-5">keyValue</span><span class="hl-0">.</span><span class="hl-4">set</span><span class="hl-0">(</span><span class="hl-6">&#39;testApp&#39;</span><span class="hl-0">, </span><span class="hl-6">&#39;profile&#39;</span><span class="hl-0">, </span><span class="hl-5">user</span><span class="hl-0">);</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">profile</span><span class="hl-0"> = </span><span class="hl-5">keyValue</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">(</span><span class="hl-6">&#39;testApp&#39;</span><span class="hl-0">, </span><span class="hl-6">&#39;profile&#39;</span><span class="hl-0">);</span>
+<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-2">firstName:</span><span class="hl-1"> </span><span class="hl-3">&#39;John&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">lastName:</span><span class="hl-1"> </span><span class="hl-3">&#39;Doe&#39;</span><br/><span class="hl-1">};</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">keyValue</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">KeyValue</span><span class="hl-1">();</span><br/><span class="hl-2">keyValue</span><span class="hl-1">.</span><span class="hl-7">set</span><span class="hl-1">(</span><span class="hl-3">&#39;testApp&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;profile&#39;</span><span class="hl-1">, </span><span class="hl-2">user</span><span class="hl-1">);</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">profile</span><span class="hl-1"> = </span><span class="hl-2">keyValue</span><span class="hl-1">.</span><span class="hl-7">get</span><span class="hl-1">(</span><span class="hl-3">&#39;testApp&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;profile&#39;</span><span class="hl-1">);</span>
 </code></pre>
 <br/>
 
@@ -41,7 +41,7 @@ import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
   <h4><a href="classes/mediaPlayer.GestureHandler.html">GestureHandler</a></h4>
 </a>
 <p>Parses OSC events recieved by apps and allows to handle the different gestures.</p>
-<pre><code class="language-typescript"><span class="hl-1">// example</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">gestureHandler</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">GestureHandler</span><span class="hl-0">(</span><span class="hl-7">500</span><span class="hl-0">, </span><span class="hl-7">2</span><span class="hl-0">);</span><br/><span class="hl-5">gestureHandler</span><span class="hl-0">.</span><span class="hl-4">onPresence</span><span class="hl-0">(() </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-4">log</span><span class="hl-0">(</span><span class="hl-6">&#39;Presence&#39;</span><span class="hl-0">));</span>
+<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">gestureHandler</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">GestureHandler</span><span class="hl-1">(</span><span class="hl-8">500</span><span class="hl-1">, </span><span class="hl-8">2</span><span class="hl-1">);</span><br/><span class="hl-2">gestureHandler</span><span class="hl-1">.</span><span class="hl-7">onPresence</span><span class="hl-1">(() </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Presence&#39;</span><span class="hl-1">));</span>
 </code></pre>
 <br/>
 
@@ -50,7 +50,7 @@ import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
   <h4><a href="classes/mediaPlayer.OscListener.html">OscListener</a></h4>
 </a>
 <p>Listens to OSC events and executes callback functions.</p>
-<pre><code class="language-typescript"><span class="hl-1">// example</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">oscListener</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">OscListener</span><span class="hl-0">();</span><br/><span class="hl-5">oscListener</span><span class="hl-0">.</span><span class="hl-4">add</span><span class="hl-0">(</span><span class="hl-6">&#39;/start&#39;</span><span class="hl-0">, () </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-4">log</span><span class="hl-0">(</span><span class="hl-6">&#39;Start&#39;</span><span class="hl-0">));</span>
+<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">oscListener</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">OscListener</span><span class="hl-1">();</span><br/><span class="hl-2">oscListener</span><span class="hl-1">.</span><span class="hl-7">add</span><span class="hl-1">(</span><span class="hl-3">&#39;/start&#39;</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Start&#39;</span><span class="hl-1">));</span>
 </code></pre>
 <br/>
 
@@ -77,9 +77,9 @@ Logs an alarm.
   <h4>Usage</h4>
 </a>
 <br/>
-``` typescript
-import { Composition, startDevice } from './brooxMedia.js';
-```
+
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">Composition</span><span class="hl-1">, </span><span class="hl-2">startDevice</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;./brooxMedia.js&#39;</span><span class="hl-1">;</span>
+</code></pre>
 <br/>
 
 
@@ -87,11 +87,11 @@ import { Composition, startDevice } from './brooxMedia.js';
   <h4><a href="classes/media.Composition.html">Composition</a></h4>
 </a>
 <p>Allows to create an image based on many media objects (images, videos, etc.).</p>
-<pre><code class="language-typescript"><span class="hl-1">// example</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">composition</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">Composition</span><span class="hl-0">(</span><span class="hl-5">width</span><span class="hl-0">, </span><span class="hl-5">height</span><span class="hl-0">, </span><span class="hl-5">borderWidth</span><span class="hl-0">);</span><br/><span class="hl-5">composition</span><span class="hl-0">.</span><span class="hl-4">addElement</span><span class="hl-0">(</span><span class="hl-5">webcam</span><span class="hl-0">, </span><span class="hl-7">0</span><span class="hl-0">, </span><span class="hl-7">0</span><span class="hl-0">, </span><span class="hl-5">webcam</span><span class="hl-0">.</span><span class="hl-5">videoWidth</span><span class="hl-0">, </span><span class="hl-5">webcam</span><span class="hl-0">.</span><span class="hl-5">videoHeight</span><span class="hl-0">, </span><span class="hl-7">1</span><span class="hl-0">, </span><span class="hl-2">false</span><span class="hl-0">);</span><br/><span class="hl-5">composition</span><span class="hl-0">.</span><span class="hl-4">get</span><span class="hl-0">().</span><span class="hl-4">then</span><span class="hl-0">(</span><span class="hl-5">blob</span><span class="hl-0"> </span><span class="hl-2">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">   </span><span class="hl-5">image</span><span class="hl-0">.</span><span class="hl-5">src</span><span class="hl-0"> = </span><span class="hl-3">URL</span><span class="hl-0">.</span><span class="hl-4">createObjectURL</span><span class="hl-0">(</span><span class="hl-5">blob</span><span class="hl-0">);</span><br/><span class="hl-0">)};</span>
+<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">composition</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Composition</span><span class="hl-1">(</span><span class="hl-2">width</span><span class="hl-1">, </span><span class="hl-2">height</span><span class="hl-1">, </span><span class="hl-2">borderWidth</span><span class="hl-1">);</span><br/><span class="hl-2">composition</span><span class="hl-1">.</span><span class="hl-7">addElement</span><span class="hl-1">(</span><span class="hl-2">webcam</span><span class="hl-1">, </span><span class="hl-8">0</span><span class="hl-1">, </span><span class="hl-8">0</span><span class="hl-1">, </span><span class="hl-2">webcam</span><span class="hl-1">.</span><span class="hl-2">videoWidth</span><span class="hl-1">, </span><span class="hl-2">webcam</span><span class="hl-1">.</span><span class="hl-2">videoHeight</span><span class="hl-1">, </span><span class="hl-8">1</span><span class="hl-1">, </span><span class="hl-5">false</span><span class="hl-1">);</span><br/><span class="hl-2">composition</span><span class="hl-1">.</span><span class="hl-7">get</span><span class="hl-1">().</span><span class="hl-7">then</span><span class="hl-1">(</span><span class="hl-2">blob</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">   </span><span class="hl-2">image</span><span class="hl-1">.</span><span class="hl-2">src</span><span class="hl-1"> = </span><span class="hl-6">URL</span><span class="hl-1">.</span><span class="hl-7">createObjectURL</span><span class="hl-1">(</span><span class="hl-2">blob</span><span class="hl-1">);</span><br/><span class="hl-1">)};</span>
 </code></pre>
 <br/>
 
-<pre><code class="language-typescript"><span class="hl-1">// example</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">recorder</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">Recorder</span><span class="hl-0">(</span><span class="hl-5">stream</span><span class="hl-0">);</span><br/><span class="hl-5">recorder</span><span class="hl-0">.</span><span class="hl-4">start</span><span class="hl-0">();</span><br/><span class="hl-4">setTimeout</span><span class="hl-0">(() </span><span class="hl-2">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-5">recorder</span><span class="hl-0">.</span><span class="hl-4">stop</span><span class="hl-0">().</span><span class="hl-4">then</span><span class="hl-0">(</span><span class="hl-5">blob</span><span class="hl-0"> </span><span class="hl-2">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-4">log</span><span class="hl-0">(</span><span class="hl-5">blob</span><span class="hl-0">);</span><br/><span class="hl-0">  )};</span><br/><span class="hl-0">}, </span><span class="hl-7">10000</span><span class="hl-0">);</span>
+<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">recorder</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">Recorder</span><span class="hl-1">(</span><span class="hl-2">stream</span><span class="hl-1">);</span><br/><span class="hl-2">recorder</span><span class="hl-1">.</span><span class="hl-7">start</span><span class="hl-1">();</span><br/><span class="hl-7">setTimeout</span><span class="hl-1">(() </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">recorder</span><span class="hl-1">.</span><span class="hl-7">stop</span><span class="hl-1">().</span><span class="hl-7">then</span><span class="hl-1">(</span><span class="hl-2">blob</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-2">blob</span><span class="hl-1">);</span><br/><span class="hl-1">  )};</span><br/><span class="hl-1">}, </span><span class="hl-8">10000</span><span class="hl-1">);</span>
 </code></pre>
  <br/>
 
@@ -124,9 +124,9 @@ Converts a blob to an image.
   <h4>Usage</h4>
 </a>
 <br/>
-``` typescript
-import { LogController } from './brooxLogger.js';
-```
+
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">LogController</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;./brooxLogger.js&#39;</span><span class="hl-1">;</span>
+</code></pre>
 <br/>
 
 
@@ -134,7 +134,7 @@ import { LogController } from './brooxLogger.js';
   <h4><a href="classes/logger.LogController.html">LogController</a></h4>
 </a>
 <p> Enables or disables logs to console.</p>
-<pre><code class="language-typescript"><span class="hl-0"> </span><span class="hl-1">// example</span><br/><span class="hl-0"> </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">logController</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">LogController</span><span class="hl-0">(</span><span class="hl-2">true</span><span class="hl-0">, () </span><span class="hl-2">=&gt;</span><span class="hl-0"> {...);</span><br/><span class="hl-0"> </span><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-4">log</span><span class="hl-0">(</span><span class="hl-5">message</span><span class="hl-0">);</span>
+<pre><code class="language-typescript"><span class="hl-1"> </span><span class="hl-4">// example</span><br/><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">logController</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">LogController</span><span class="hl-1">(</span><span class="hl-5">true</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> {...);</span><br/><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">);</span>
 </code></pre>
 <br/>
 
@@ -148,9 +148,9 @@ import { LogController } from './brooxLogger.js';
   <h4>Usage</h4>
 </a>
 <br/>
-``` typescript
-import { getProfile, getAudiences } from './brooxAnalytics.js';
-```
+
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">getProfile</span><span class="hl-1">, </span><span class="hl-2">getAudiences</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;./brooxAnalytics.js&#39;</span><span class="hl-1">;</span>
+</code></pre>
 <br/>
 
 
