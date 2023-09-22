@@ -2,10 +2,10 @@
  * Provides context to the apps executed within the Media Player.
  * #### Usage
  *
-* ``` typescript
-* import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
-* ```
-* <br/>
+ * ``` typescript
+ * import { BlobsController, getMediaInfo } from './brooxMediaPlayer.js';
+ * ```
+ * <br/>
  *
  * #### {@link BlobsController}
  *

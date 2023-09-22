@@ -21,6 +21,7 @@
   "homepage": "https://github.com/dev-broox/Broox.js#readme",
   "dependencies": {
     "hex-to-rgba": "^2.0.1",
+    "moment": "^2.29.4",
     "parcel": "^2.2.1",
     "tweakpane": "^3.1.4",
     "typedoc": "^0.22.17"
@@ -39,24 +40,19 @@
       "source": "src/modules/mediaPlayer/MediaPlayer.module.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
-      "includeNodeModules": [
-        "hex-to-rgba",
-        "tweakpane"
-      ]
+      "includeNodeModules": [ "hex-to-rgba", "tweakpane" ]
     },
     "logger": {
       "source": "src/modules/logger/Logger.module.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
-      "includeNodeModules": [
-        "hex-to-rgba",
-        "tweakpane"
-      ]
+      "includeNodeModules": [ "hex-to-rgba", "tweakpane" ]
     },
     "analytics": {
       "source": "src/modules/analytics/Analytics.module.ts",
       "outputFormat": "esmodule",
-      "isLibrary": true
+      "isLibrary": true,
+      "includeNodeModules": [ "moment" ]
     }
   },
   "devDependencies": {
