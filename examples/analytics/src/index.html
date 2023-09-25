@@ -5,7 +5,7 @@
   </head>
   <body>
     <script type="module">
-      import { getProfile, getProduct, getAudiences, getByYear, getCollapsed } from './broox.js';
+      import { getProfile, getProduct, getAudiences, getByYear, getCollapsed } from './brooxAnalytics.js';
       
       getProfile({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(profile => console.log('profile', profile));
       getAudiences({}, 'broox-studio-development', '-NSz-07ZoZ3SGdpm3UBU', '87824394-bff9-4060-a764-e3f8c6084dc2').then(a => {

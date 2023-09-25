@@ -37,6 +37,6 @@
  */
 
 export { getProfile, getProduct, getAudiences, getClient, getCollapsed, getByYear, getByMonth, getByWeekday, getByHour } from './Report';
-export { Profile, Product, SingleValue } from './Result';
-export { Filter } from './Filter';
-export { Audience } from './Audience';
+export { type Profile, type Product, type By, type GroupValue, type SingleValue } from './Result';
+export { type Filter } from './Filter';
+export { type Audience } from './Audience';

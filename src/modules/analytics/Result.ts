@@ -1,5 +1,33 @@
 /**
- * Profile
+ * SingleValue.
+ */
+export interface SingleValue {
+  /**
+   * Label.
+   */
+  label: string,
+  /**
+   * Value.
+   */
+  value: number
+}
+
+/**
+ * GroupValue.
+ */
+export interface GroupValue {
+  /**
+   * Label.
+   */
+  label: string,
+  /**
+   * Values.
+   */
+  values: SingleValue[]
+}
+
+/**
+ * Profile.
  */
 export interface Profile {
   /**
@@ -55,24 +83,18 @@ export interface Product {
 }
 
 /**
- * SingleValue
+ * By.
  */
-export interface SingleValue {
-  /**
-   * Label.
-   */
-  label: string,
-  /**
-   * Value.
-   */
-  value: number
-}
-
-/**
- * GenderValue
- */
-export interface GenderValue {
-  label: string,
-  male: number,
-  female: number
+export interface By {
+  attention?: SingleValue[],
+  traffic?: SingleValue[],
+  views?: SingleValue[],
+  dwell?: SingleValue[],
+  liftInteractions?: SingleValue[],
+  liftTime?: SingleValue[],
+  placeInteractions?: SingleValue[],
+  placeTime?: SingleValue[],
+  gender?: GroupValue[],
+  age?: GroupValue[],
+  productDistribution?: GroupValue[]
 }

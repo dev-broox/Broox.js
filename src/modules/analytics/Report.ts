@@ -3,7 +3,7 @@ import { Category } from './Category';
 import { Day } from './Day';
 import { Filter } from './Filter';
 import { Month } from './Month';
-import { Product, Profile, SingleValue } from './Result';
+import { By, GroupValue, Product, Profile, SingleValue } from './Result';
 import { Audience } from './Audience';
 
 /**
@@ -116,7 +116,7 @@ export const getProduct = async (filter: Filter, categories: string[], audiences
  * }
  * ```
  */
-export const getByYear = async (filter: Filter, project: string, clientId: string, token: string) => {
+export const getByYear = async (filter: Filter, project: string, clientId: string, token: string): Promise<By> => {
   const parsedFilter = parseFilter(filter);
   // gender
   let f = { ...parsedFilter, _split0: 'year', _split1: 'target_gender' };
@@ -127,12 +127,13 @@ export const getByYear = async (filter: Filter, project: string, clientId: strin
     value[result.split[i].key[1]] = result.split[i].doc_count;
     genderMap.set(result.split[i].key[0], value);
   }
-  const genderData: any[] = [[], []];
-  for(const v of genderMap.values()) {
-    genderData[0].push(v.M);
-    genderData[1].push(v.f);
+  const gender: GroupValue[] = [];
+  for(let [key, value] of genderMap) {
+    gender.push({
+      label: key.toString(),
+      values: [{ label: 'Male', value: value.M }, { label: 'Female', value: value.F }]
+    });
   }
-  const gender = { data: genderData, labels: Array.from(genderMap.keys()) };
   // age
   f = { ...parsedFilter, _field_term: 'year', _field_ranges: 'target_age', _range1: '0-20',_range1_key: 'r1', _range2: '21-40', _range2_key: 'r2', _range3: '41-60', _range3_key: 'r3', _range4: '61-99', _range4_key: 'r4' };
   result = await get('multisplit_range', f, project, clientId, token);
@@ -145,34 +146,35 @@ export const getByYear = async (filter: Filter, project: string, clientId: strin
     year.r4 = result.split[i].split.buckets['r4'].doc_count;
     ageMap.set(result.split[i].key, year);
   }
-  const age = { data: [[], [], [], []], labels: [] };
-  for(const v of ageMap.values()) {
-    age.data[0].push(v.r1);
-    age.data[1].push(v.r2);
-    age.data[2].push(v.r3);
-    age.data[3].push(v.r4);
-    age.labels.push(v.name);
+  const age: GroupValue[] = [];
+  for(let [key, value] of ageMap) {
+    age.push({
+      label: key.toString(),
+      values: [{ label: f._range1_key, value: value.r1 }, { label: f._range2_key, value: value.r2 }, { label: f._range3_key, value: value.r3 }, { label: f._range4_key, value: value.r4 }]
+    });
   }
   // product distribution
   f = { ...parsedFilter, _split0: 'year', _split1: 'audience_id', _aggregate: 'avg', _aggregate_field: 'target_attention_time' };
   result = await get('multisplit', f, project, clientId, token);
   const productDistributionMap = new Map<number, any>();
   for(let i = 0; i < result.split.length; i++) {
-    const value = productDistributionMap.get(result.split[i].key[0]) || { name: result.split[i].key[0] };
-    value[result.split[i].key[1]] = f._aggregate === 'avg' ? result.split[i].avg.value : result.split[i].doc_count;
+    const value = productDistributionMap.get(result.split[i].key[0]) || {};
+    value[result.split[i].key[1]] = result.split[i].avg.value;
     productDistributionMap.set(result.split[i].key[0], value);
   }
-  const productDistribution = { data: {}, labels: [] };
-  for(const v of productDistributionMap.values()) {
-    for(const prop in v) {
-      if(prop === 'name') {
-        productDistribution.labels.push(v.name);    
-      }
-      else {
-        !productDistribution.data[prop] && (productDistribution.data[prop] = []);
-        productDistribution.data[prop].push(v[prop]);
-      }
+  const productDistribution: GroupValue[] = [];
+  for(let [key, value] of productDistributionMap) {
+    const groupValue: GroupValue = {
+      label: key.toString(),
+      values: []
+    };
+    for(let [k, v] of value) {
+      groupValue.values.push({
+        label: k.toString(),
+        value: v
+      })
     }
+    productDistribution.push(groupValue);
   }
   const main = await by(splitByYear, filter, project, clientId, token);
   return { ...main, gender, age, productDistribution };
@@ -192,7 +194,7 @@ export const getByYear = async (filter: Filter, project: string, clientId: strin
  * }
  * ```
  */
-export const getByMonth = async (filter: Filter, project: string, clientId: string, token: string) => {
+export const getByMonth = async (filter: Filter, project: string, clientId: string, token: string): Promise<By> => {
   const parsedFilter = parseFilter(filter);
   // gender
   const genderValues = new Map<string, any>();
@@ -226,7 +228,7 @@ export const getByMonth = async (filter: Filter, project: string, clientId: stri
  * }
  * ```
  */
-export const getByWeekday = async (filter: any, project: string, clientId: string, token: string) => {
+export const getByWeekday = async (filter: any, project: string, clientId: string, token: string): Promise<By> => {
   const parsedFilter = parseFilter(filter);
   // gender
   const genderValues = new Map<string, any>();
@@ -260,7 +262,7 @@ export const getByWeekday = async (filter: any, project: string, clientId: strin
  * }
  * ```
  */
-export const getByHour = async (filter: any, project: string, clientId: string, token: string) => {
+export const getByHour = async (filter: any, project: string, clientId: string, token: string): Promise<By> => {
   const parsedFilter = parseFilter(filter);
   // gender
   const genderValues = new Map<string, any>();
@@ -268,9 +270,9 @@ export const getByHour = async (filter: any, project: string, clientId: string, 
   const productDistributionValues = new Map<string, any>();
   for(let i = 0; i < 24; i++) {
     const n = i.toString().padStart(2, '0');
-    genderValues.set((n).toString(), { name: n.toString(), M: 0, F: 0 });
-    ageValues.set((n).toString(), { name: n.toString(), r1: 0, r2: 0, r3: 0, r4: 0 });
-    productDistributionValues.set((n).toString(), { name: n.toString() });
+    genderValues.set((n).toString(), { M: 0, F: 0 });
+    ageValues.set((n).toString(), { r1: 0, r2: 0, r3: 0, r4: 0 });
+    productDistributionValues.set((n).toString(), {});
   }
   const gender = await multisplitBy('hour', 'target_gender', genderValues, parsedFilter, project, clientId, token);
   const age = await ageBy('hour', ageValues, parsedFilter, project, clientId, token);
@@ -355,7 +357,7 @@ const parseFilter = (filter: Filter) => {
   return f;
 }
 
-const by = async (split: (filter: any, project: string, clientId: string, token: string) => Promise<any>, filter: any, project: string, clientId: string, token: string) => {
+const by = async (split: (filter: any, project: string, clientId: string, token: string) => Promise<any>, filter: any, project: string, clientId: string, token: string): Promise<By> => {
   // traffic
   let f = { ... filter, ev_action: 'in', ev_category: Category.Profile };
   const traffic = await split(f, project, clientId, token);
@@ -411,19 +413,20 @@ const get = async (report: string, filter: any, project: string, clientId: strin
   return await result.json();
 }
 
-const splitByYear = async (filter: any, project: string, clientId: string, token: string) => {
+const splitByYear = async (filter: any, project: string, clientId: string, token: string): Promise<SingleValue[]> => {
   const result = await get('split', { ...filter, _split: 'year' }, project, clientId, token);
   const sorted = result.split.sort((a: any, b: any) => (parseInt(a.key) > parseInt(b.key)) ? 1 : ((parseInt(b.key) > parseInt(a.key)) ? -1 : 0));
-  const data: number[] = [];
-  const labels: string[] = [];
+  const split: SingleValue[] = [];
   for(let i = 0; i < sorted.length; i++) {
-    labels.push(sorted[i].key);
-    data.push(filter._aggregate === 'avg' ? sorted[i].average.value : sorted[i].doc_count);
+    split.push({
+      label: sorted[i].key,
+      value: sorted[i].doc_count
+    });
   }
-  return { data, labels };
+  return split;
 }
 
-const splitByMonth = async (filter: any, project: string, clientId: string, token: string) => {
+const splitByMonth = async (filter: any, project: string, clientId: string, token: string): Promise<SingleValue[]> => {
   const values = new Map<string, any>();
   let i = 1;
   Object.values(Month).filter(m => typeof m === 'string').forEach(m => {
@@ -432,7 +435,7 @@ const splitByMonth = async (filter: any, project: string, clientId: string, toke
   return splitBy('month', values, filter, project, clientId, token);
 }
 
-const splitByWeekday = async (filter: any, project: string, clientId: string, token: string) => {
+const splitByWeekday = async (filter: any, project: string, clientId: string, token: string): Promise<SingleValue[]> => {
   const values = new Map<string, any>();
   let i = 1;
   Object.values(Day).filter(m => typeof m === 'string').forEach(m => {
@@ -441,7 +444,7 @@ const splitByWeekday = async (filter: any, project: string, clientId: string, to
   return await splitBy('weekday', values, filter, project, clientId, token);
 }
 
-const splitByHour = async (filter: any, project: string, clientId: string, token: string) => {
+const splitByHour = async (filter: any, project: string, clientId: string, token: string): Promise<SingleValue[]> => {
   const values = new Map<string, any>();
   for(let i = 0; i < 24; i++) {
     const n = i.toString().padStart(2, '0');
@@ -450,45 +453,44 @@ const splitByHour = async (filter: any, project: string, clientId: string, token
   return await splitBy('hour', values, filter, project, clientId, token);
 }
 
-const splitBy = async (name: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string) => {
+const splitBy = async (name: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string): Promise<SingleValue[]> => {
   const result = await get('split', { ...filter, _split: name }, project, clientId, token);
   for(let i = 0; i < result.split.length; i++) {
     const v = values.get(result.split[i].key);
     v.value = filter._aggregate === 'avg' ? result.split[i].average.value : result.split[i].doc_count;
   }
-  const data: any[] = [];
-  const labels: any[] = [];
-  for(const v of values.values()) {
-    data.push(v.value);
-    labels.push(v.name);
+  const split: SingleValue[] = [];
+  for(const [key, value] of values) {
+    split.push({ label: key, value: value });
   }
-  return { data, labels };
+  return split;
 }
 
-const multisplitBy = async (firstSplit: string, secondSplit: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string) => {
+const multisplitBy = async (firstSplit: string, secondSplit: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string): Promise<GroupValue[]> => {
   const result = await get('multisplit', { ...filter, _split0: firstSplit, _split1: secondSplit }, project, clientId, token);
   for(let i = 0; i < result.split.length; i++) {
     const first = values.get(result.split[i].key[0]);
     const second = result.split[i].key[1];
     first[second] = filter._aggregate === 'avg' ? result.split[i].avg.value : result.split[i].doc_count;
   }
-  const data = {};
-  const labels: any[] = [];
-  for(const v of values.values()) {
-    for(const prop in v) {
-      if(prop === 'name') {
-        labels.push(v.name);
-      }
-      else {
-        !data[prop] && (data[prop] = []);
-        data[prop].push(v[prop]);
-      }
+  const multisplit: GroupValue[] = [];
+  for(const [key, value] of values) {
+    const groupValue: GroupValue = {
+      label: key.toString(),
+      values: []
+    };
+    for(let [k, v] of value) {
+      groupValue.values.push({
+        label: k.toString(),
+        value: v
+      })
     }
+    multisplit.push(groupValue);
   }
-  return { data, labels };
+  return multisplit;
 }
 
-const ageBy = async (name: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string) => {
+const ageBy = async (name: string, values: Map<any, any>, filter: any, project: string, clientId: string, token: string): Promise<GroupValue[]> => {
   const f = { ...filter, _field_term: name, _field_ranges: 'target_age', _range1: '0-20',_range1_key: 'r1', _range2: '21-40', _range2_key: 'r2', _range3: '41-60', _range3_key: 'r3', _range4: '61-99', _range4_key: 'r4' };
   const result = await get('multisplit_range', f, project, clientId, token);
   for(let i = 0; i < result.split.length; i++) {
@@ -498,14 +500,12 @@ const ageBy = async (name: string, values: Map<any, any>, filter: any, project: 
     value.r3 = result.split[i].split.buckets['r3'].doc_count;
     value.r4 = result.split[i].split.buckets['r4'].doc_count;
   }
-  const data: any[] = [[], [], [], []];
-  const labels: any[] = [];
-  for(const v of values.values()) {
-    data[0].push(v.r1);
-    data[1].push(v.r2);
-    data[2].push(v.r3);
-    data[3].push(v.r4);
-    labels.push(v.name);
+  const age: GroupValue[] = [];
+  for(const [key, value] of values) {
+    age.push({
+      label: key,
+      values: [{ label: f._range1_key, value: value.r1 }, { label: f._range2_key, value: value.r2 }, { label: f._range3_key, value: value.r3 }, { label: f._range4_key, value: value.r4 }]
+    });
   }
-  return { data, labels };
+  return age;
 }
