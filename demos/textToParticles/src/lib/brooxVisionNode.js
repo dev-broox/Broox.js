@@ -1,323 +1,2256 @@
+var $parcel$global =
+typeof globalThis !== 'undefined'
+  ? globalThis
+  : typeof self !== 'undefined'
+  ? self
+  : typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+  ? global
+  : {};
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
-let $a43912e23e510d22$export$ff50662d7c6e93a2;
-(function($a43912e23e510d22$export$ff50662d7c6e93a2) {
-    $a43912e23e510d22$export$ff50662d7c6e93a2["LeftHandUp"] = 'left_hand_up';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["RightHandUp"] = 'right_hand_up';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["BothHandsUp"] = 'both_hands_up';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["PointsLeft"] = 'points_left';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["PointsRight"] = 'points_right';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["LeftHandOnChest"] = 'left_hand_on_chest';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["RightHandOnChest"] = 'right_hand_on_chest';
-    $a43912e23e510d22$export$ff50662d7c6e93a2["BothHandsOnChest"] = 'both_hands_on_chest';
-})($a43912e23e510d22$export$ff50662d7c6e93a2 || ($a43912e23e510d22$export$ff50662d7c6e93a2 = {
-}));
+var $parcel$modules = {};
+var $parcel$inits = {};
 
+var parcelRequire = $parcel$global["parcelRequirede3a"];
+if (parcelRequire == null) {
+  parcelRequire = function(id) {
+    if (id in $parcel$modules) {
+      return $parcel$modules[id].exports;
+    }
+    if (id in $parcel$inits) {
+      var init = $parcel$inits[id];
+      delete $parcel$inits[id];
+      var module = {id: id, exports: {}};
+      $parcel$modules[id] = module;
+      init.call(module.exports, module, module.exports);
+      return module.exports;
+    }
+    var err = new Error("Cannot find module '" + id + "'");
+    err.code = 'MODULE_NOT_FOUND';
+    throw err;
+  };
 
-class $46a461d2b2746f9d$export$61ce360501d38a6f {
-    /**
-   * Creates an instance of the Gesture class.
-   * @param types Gesture types.
-   * @param timestamp Timestamp.
-   */ constructor(types, timestamp){
-        this.types = [];
-        this.timestamp = 0;
-        this.types = types;
-        this.timestamp = timestamp;
-    }
-    /**
-   * Gets the types.
-   * @returns Gesture types.
-   */ getTypes() {
-        return this.types;
-    }
-    /**
-   * Gets the timestamp.
-   * @returns Timestamp.
-   */ getTimestamp() {
-        return this.timestamp;
-    }
+  parcelRequire.register = function register(id, init) {
+    $parcel$inits[id] = init;
+  };
+
+  $parcel$global["parcelRequirede3a"] = parcelRequire;
 }
+parcelRequire.register("jsHlH", function(module, exports) {
+/*******************************************************************************
+ * Copyright (c) 2013 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution.
+ *
+ * The Eclipse Public License is available at
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Andrew Banks - initial API and implementation and initial documentation
+ *******************************************************************************/ // Only expose a single object name in the global namespace.
+// Everything must go through this module. Global Paho module
+// only has a single public function, client, which returns
+// a Paho client object given connection details.
+/**
+ * Send and receive messages using web browsers.
+ * <p>
+ * This programming interface lets a JavaScript client application use the MQTT V3.1 or
+ * V3.1.1 protocol to connect to an MQTT-supporting messaging server.
+ *
+ * The function supported includes:
+ * <ol>
+ * <li>Connecting to and disconnecting from a server. The server is identified by its host name and port number.
+ * <li>Specifying options that relate to the communications link with the server,
+ * for example the frequency of keep-alive heartbeats, and whether SSL/TLS is required.
+ * <li>Subscribing to and receiving messages from MQTT Topics.
+ * <li>Publishing messages to MQTT Topics.
+ * </ol>
+ * <p>
+ * The API consists of two main objects:
+ * <dl>
+ * <dt><b>{@link Paho.Client}</b></dt>
+ * <dd>This contains methods that provide the functionality of the API,
+ * including provision of callbacks that notify the application when a message
+ * arrives from or is delivered to the messaging server,
+ * or when the status of its connection to the messaging server changes.</dd>
+ * <dt><b>{@link Paho.Message}</b></dt>
+ * <dd>This encapsulates the payload of the message along with various attributes
+ * associated with its delivery, in particular the destination to which it has
+ * been (or is about to be) sent.</dd>
+ * </dl>
+ * <p>
+ * The programming interface validates parameters passed to it, and will throw
+ * an Error containing an error message intended for developer use, if it detects
+ * an error with any parameter.
+ * <p>
+ * Example:
+ *
+ * <code><pre>
+var client = new Paho.MQTT.Client(location.hostname, Number(location.port), "clientId");
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+client.connect({onSuccess:onConnect});
 
-
-
-class $ca1057830a34181e$export$dfd4fa32db6567bf {
-    /**
-   * Creates an instance of the GestureHandler class.
-   * @param time Time lapse in milliseconds before accepting a gesture as such.
-   * @param delay Time lapse in seconds before listening to other gestures once a gesture is accepted.
-   */ constructor(time, delay){
-        this.listening = true;
-        this.gestures = [];
-        this.time = time;
-        this.delay = delay;
-        const self = this;
-        // listen osc events
-        window.addEventListener('message', (event)=>{
-            for(let i = 0; i < event.data.length; i++)if (event.data[i].address === '/de/person') self.add(event.data[i].args);
-        }, false);
-    }
-    /**
-   * Adds a potential gesture to be processed.
-   * @param args OSC event args.
-   */ add(args) {
-        if (this.listening) {
-            if (args[0] === 'id') this.presenceCallback && this.presenceCallback();
-            else if (args[0] === 'prop' && args[2] === 'poses') {
-                const types = args.slice(3);
-                if (types.length && types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.RightHandUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandOnChest) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.RightHandOnChest) >= 0 || types.indexOf($a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) >= 0) {
-                    const gesture = new $46a461d2b2746f9d$export$61ce360501d38a6f(types, new Date().getTime());
-                    this.gestures.push(gesture);
-                    this.check();
+function onConnect() {
+  // Once a connection has been made, make a subscription and send a message.
+  console.log("onConnect");
+  client.subscribe("/World");
+  var message = new Paho.MQTT.Message("Hello");
+  message.destinationName = "/World";
+  client.send(message);
+};
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0)
+	console.log("onConnectionLost:"+responseObject.errorMessage);
+};
+function onMessageArrived(message) {
+  console.log("onMessageArrived:"+message.payloadString);
+  client.disconnect();
+};
+ * </pre></code>
+ * @namespace Paho
+ */ /* jshint shadow:true */ (function ExportLibrary(root, factory) {
+    if (typeof exports === "object" && "object" === "object") module.exports = factory();
+    else if (typeof define === "function" && define.amd) define(factory);
+    else if (typeof exports === "object") exports = factory();
+    else //if (typeof root.Paho === "undefined"){
+    //	root.Paho = {};
+    //}
+    root.Paho = factory();
+})(this, function LibraryFactory() {
+    var PahoMQTT = function(global) {
+        // Private variables below, these are only visible inside the function closure
+        // which is used to define the module.
+        var version = "@VERSION@-@BUILDLEVEL@";
+        /**
+	 * @private
+	 */ var localStorage = global.localStorage || function() {
+            var data = {
+            };
+            return {
+                setItem: function(key, item) {
+                    data[key] = item;
+                },
+                getItem: function(key) {
+                    return data[key];
+                },
+                removeItem: function(key) {
+                    delete data[key];
+                }
+            };
+        }();
+        /**
+	 * Unique message type identifiers, with associated
+	 * associated integer values.
+	 * @private
+	 */ var MESSAGE_TYPE = {
+            CONNECT: 1,
+            CONNACK: 2,
+            PUBLISH: 3,
+            PUBACK: 4,
+            PUBREC: 5,
+            PUBREL: 6,
+            PUBCOMP: 7,
+            SUBSCRIBE: 8,
+            SUBACK: 9,
+            UNSUBSCRIBE: 10,
+            UNSUBACK: 11,
+            PINGREQ: 12,
+            PINGRESP: 13,
+            DISCONNECT: 14
+        };
+        // Collection of utility methods used to simplify module code
+        // and promote the DRY pattern.
+        /**
+	 * Validate an object's parameter names to ensure they
+	 * match a list of expected variables name for this option
+	 * type. Used to ensure option object passed into the API don't
+	 * contain erroneous parameters.
+	 * @param {Object} obj - User options object
+	 * @param {Object} keys - valid keys and types that may exist in obj.
+	 * @throws {Error} Invalid option parameter found.
+	 * @private
+	 */ var validate = function(obj, keys) {
+            for(var key in obj)if (obj.hasOwnProperty(key)) {
+                if (keys.hasOwnProperty(key)) {
+                    if (typeof obj[key] !== keys[key]) throw new Error(format(ERROR.INVALID_TYPE, [
+                        typeof obj[key],
+                        key
+                    ]));
+                } else {
+                    var errorStr = "Unknown property, " + key + ". Valid properties are:";
+                    for(var validKey in keys)if (keys.hasOwnProperty(validKey)) errorStr = errorStr + " " + validKey;
+                    throw new Error(errorStr);
                 }
             }
-        }
-    }
-    /**
-   * Adds a callback function for the "presence" gesture.
-   * @param callback Function that will be executed when the presence gesture is detected.
-   */ onPresence(callback) {
-        this.presenceCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "both hands up" gesture.
-   * @param callback Function that will be executed when the "both hands up" gesture is detected.
-   */ onBothHandsUp(callback) {
-        this.bothHandsUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "left hand up" gesture.
-   * @param callback Function that will be executed when the "left hand up" gesture is detected.
-   */ onLeftHandUp(callback) {
-        this.leftHandUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "right hand up" gesture.
-   * @param callback Function that will be executed when the "right hand up" gesture is detected.
-   */ onRightHandUp(callback) {
-        this.rightHandUpCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "both hands on chest" gesture.
-   * @param callback Function that will be executed when the "both hands on chest" gesture is detected.
-   */ onBothHandsOnChest(callback) {
-        this.bothHandsOnChestCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "left hand on chest" gesture.
-   * @param callback Function that will be executed when the "left hand on chest" gesture is detected.
-   */ onLeftHandOnChest(callback) {
-        this.leftHandOnChestCallback = callback;
-    }
-    /**
-   * Adds a callback function for the "right hand on chest" gesture.
-   * @param callback Function that will be executed when the "right hand on chest" gesture is detected.
-   */ onRightHandOnChest(callback) {
-        this.rightHandOnChestCallback = callback;
-    }
-    /**
-   * Checks whether a gesture was made. 
-   */ check() {
-        // get last gesture
-        const lastIndex = this.gestures.length - 1;
-        const lastGesture = this.gestures[lastIndex];
-        const lastGestureTypes = lastGesture.getTypes();
-        if (lastGestureTypes.length === 1) {
-            const type = lastGestureTypes[0];
-            // if gesture is BothHandsUp or BothHandsOnChest, send the event
-            if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp || type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) this.send(type);
-            else if (this.gestures.length > 1) {
-                const lastTimestamp = lastGesture.getTimestamp();
-                let i = lastIndex;
-                let gesture = null;
-                // find last gesture before the time lapse defined
-                while(!gesture && --i >= 0 && this.gestures[i].getTypes().indexOf(type) >= 0)if (lastTimestamp - this.gestures[i].getTimestamp() > this.time) gesture = this.gestures[i];
-                if (gesture) this.send(type);
+        };
+        /**
+	 * Return a new function which runs the user function bound
+	 * to a fixed scope.
+	 * @param {function} User function
+	 * @param {object} Function scope
+	 * @return {function} User function bound to another scope
+	 * @private
+	 */ var scope1 = function(f, scope) {
+            return function() {
+                return f.apply(scope, arguments);
+            };
+        };
+        /**
+	 * Unique message type identifiers, with associated
+	 * associated integer values.
+	 * @private
+	 */ var ERROR = {
+            OK: {
+                code: 0,
+                text: "AMQJSC0000I OK."
+            },
+            CONNECT_TIMEOUT: {
+                code: 1,
+                text: "AMQJSC0001E Connect timed out."
+            },
+            SUBSCRIBE_TIMEOUT: {
+                code: 2,
+                text: "AMQJS0002E Subscribe timed out."
+            },
+            UNSUBSCRIBE_TIMEOUT: {
+                code: 3,
+                text: "AMQJS0003E Unsubscribe timed out."
+            },
+            PING_TIMEOUT: {
+                code: 4,
+                text: "AMQJS0004E Ping timed out."
+            },
+            INTERNAL_ERROR: {
+                code: 5,
+                text: "AMQJS0005E Internal error. Error Message: {0}, Stack trace: {1}"
+            },
+            CONNACK_RETURNCODE: {
+                code: 6,
+                text: "AMQJS0006E Bad Connack return code:{0} {1}."
+            },
+            SOCKET_ERROR: {
+                code: 7,
+                text: "AMQJS0007E Socket error:{0}."
+            },
+            SOCKET_CLOSE: {
+                code: 8,
+                text: "AMQJS0008I Socket closed."
+            },
+            MALFORMED_UTF: {
+                code: 9,
+                text: "AMQJS0009E Malformed UTF data:{0} {1} {2}."
+            },
+            UNSUPPORTED: {
+                code: 10,
+                text: "AMQJS0010E {0} is not supported by this browser."
+            },
+            INVALID_STATE: {
+                code: 11,
+                text: "AMQJS0011E Invalid state {0}."
+            },
+            INVALID_TYPE: {
+                code: 12,
+                text: "AMQJS0012E Invalid type {0} for {1}."
+            },
+            INVALID_ARGUMENT: {
+                code: 13,
+                text: "AMQJS0013E Invalid argument {0} for {1}."
+            },
+            UNSUPPORTED_OPERATION: {
+                code: 14,
+                text: "AMQJS0014E Unsupported operation."
+            },
+            INVALID_STORED_DATA: {
+                code: 15,
+                text: "AMQJS0015E Invalid data in local storage key={0} value={1}."
+            },
+            INVALID_MQTT_MESSAGE_TYPE: {
+                code: 16,
+                text: "AMQJS0016E Invalid MQTT message type {0}."
+            },
+            MALFORMED_UNICODE: {
+                code: 17,
+                text: "AMQJS0017E Malformed Unicode string:{0} {1}."
+            },
+            BUFFER_FULL: {
+                code: 18,
+                text: "AMQJS0018E Message buffer is full, maximum buffer size: {0}."
             }
-        }
-    }
-    /**
-   * Executes a callback function based on the gesture made.
-   * @param type Gesture made.
-   */ send(type) {
-        console.log('Gesture ' + type + ' sent');
-        this.listening = false;
-        this.gestures = [];
-        setTimeout(()=>{
-            this.listening = true;
-        }, this.delay * 1000);
-        if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsUp) this.bothHandsUpCallback && this.bothHandsUpCallback();
-        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandUp) this.leftHandUpCallback && this.leftHandUpCallback();
-        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.RightHandUp) this.rightHandUpCallback && this.rightHandUpCallback();
-        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.BothHandsOnChest) this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
-        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.LeftHandOnChest) this.leftHandOnChestCallback && this.leftHandOnChestCallback();
-        else if (type === $a43912e23e510d22$export$ff50662d7c6e93a2.RightHandOnChest) this.rightHandOnChestCallback && this.rightHandOnChestCallback();
-    }
-}
-
-
-class $cde140d71bb91357$export$410db1ee4b845acb {
-    /**
-   * 
-   * @param writeJson Function to write a json
-   * @param readJson Function to read a json 
-   */ constructor(writeJson, readJson){
-        this.writeJson = writeJson;
-        this.readJson = readJson;
-    }
-    /**
-   * 
-   * @param name File name
-   * @param json Json content
-   */ write(name, json) {
-        this.writeJson(name, json);
-    }
-    /**
-    * 
-    * @param name File name
-    */ read(name) {
-        const content = this.readJson(name);
-        return content;
-    }
-}
-
-
-class $b994462a75fd2128$export$19fffca37ef3e106 {
-    /**
-   * 
-   * @param name File name
-   * @param content Json content
-   */ write(name, content) {
-        localStorage.setItem(name, JSON.stringify(content));
-    }
-    /**
-   * 
-   * @param name File name
-   * @returns Json content for the given project
-   */ read(name) {
-        const content = localStorage.getItem(name);
-        if (content) return JSON.parse(content);
-        return null;
-    }
-}
-
-
-class $8793b126ef6d35f3$export$cec157cbbbaf65c9 {
-    static inElectron() {
-        // @ts-ignore
-        return !!window.electron;
-    }
-    static writeJson(name, json) {
-        // @ts-ignore
-        return window.app && window.app.writeJson(name, json);
-    }
-    static readJson(name) {
-        // @ts-ignore
-        return window.app && window.app.readJson(name);
-    }
-    static downloadFile(url, name, onUpdate, onError, onSuccess) {
-        // @ts-ignore
-        return window.app && window.app.downloadFile && window.app.downloadFile(url, name, onUpdate, onError, onSuccess);
-    }
-    static getMediaInfo() {
-        // @ts-ignore
-        return window.app && window.app.media;
-    }
-    static getDeviceInfo() {
-        // @ts-ignore
-        return window.app && window.app.device;
-    }
-    static logAlarm(subject, text) {
-        //@ts-ignore
-        window.app && window.app.logAlarm(subject, text);
-    }
-}
-
-
-let $22049581978d5377$var$Message;
-(function(Message) {
-    Message["deviceNotFound"] = 'Device not found';
-    Message["forbiddenProjectName"] = 'Please use a different project name';
-})($22049581978d5377$var$Message || ($22049581978d5377$var$Message = {
-}));
-var $22049581978d5377$export$2e2bcd8739ae039 = $22049581978d5377$var$Message;
-
-
-class $22b34b762f136ae1$export$12b3cc2522c3bba5 {
-    /**
-   * Creates an instance of the KeyValue class.
-   */ constructor(){
-        this.contents = {
         };
-        if ($8793b126ef6d35f3$export$cec157cbbbaf65c9.inElectron()) this.storage = new $cde140d71bb91357$export$410db1ee4b845acb($8793b126ef6d35f3$export$cec157cbbbaf65c9.writeJson, $8793b126ef6d35f3$export$cec157cbbbaf65c9.readJson);
-        else this.storage = new $b994462a75fd2128$export$19fffca37ef3e106();
-    }
-    /**
-   * Sets a value in storage
-   * @param name File name
-   * @param key Key assigned to the value to store
-   * @param value Value to store
-   * ``` typescript
-   * // example
-   * const user = {
-   *   firstName: 'John',
-   *   lastName: 'Doe'
-   * };
-   * const keyValue = new broox.mediaPlayer.KeyValue();
-   * keyValue.set('testApp', 'profile', user);
-   * ```
-   */ setValue(name, key, value) {
-        if (name === 'config') {
-            console.error($22049581978d5377$export$2e2bcd8739ae039.forbiddenProjectName);
-            return;
-        }
-        // get storage
-        let content = this.getContent(name);
-        if (!content) content = {
+        /** CONNACK RC Meaning. */ var CONNACK_RC = {
+            0: "Connection Accepted",
+            1: "Connection Refused: unacceptable protocol version",
+            2: "Connection Refused: identifier rejected",
+            3: "Connection Refused: server unavailable",
+            4: "Connection Refused: bad user name or password",
+            5: "Connection Refused: not authorized"
         };
-        content[key] = value;
-        this.storage.write(name, content);
-    }
-    /**
-   * Gets a value from a content in storage
-   * @param name File name
-   * @param key Key
-   * @returns The value for the given key
-   * ``` typescript
-   * // example
-   * const keyValue = new broox.mediaPlayer.KeyValue();
-   * const user = keyValue.get('testApp', 'profile');
-   * console.log('User', user);
-   * ```
-   */ getValue(name, key) {
-        const storage = this.getContent(name);
-        return storage ? storage[key] : null;
-    }
-    /**
-   * Gets a content from memory or storage
-   * @param name File name
-   * @returns The content with the given name if exists, null otherwise
-   */ getContent(name) {
-        // get storage from memory
-        if (this.contents[name]) return this.contents[name];
-        else // get content from storage
-        try {
-            return this.storage.read(name);
-        } catch (error) {
-            // the content does not exist
-            return null;
+        /**
+	 * Format an error message text.
+	 * @private
+	 * @param {error} ERROR value above.
+	 * @param {substitutions} [array] substituted into the text.
+	 * @return the text with the substitutions made.
+	 */ var format = function(error, substitutions) {
+            var text = error.text;
+            if (substitutions) {
+                var field, start;
+                for(var i = 0; i < substitutions.length; i++){
+                    field = "{" + i + "}";
+                    start = text.indexOf(field);
+                    if (start > 0) {
+                        var part1 = text.substring(0, start);
+                        var part2 = text.substring(start + field.length);
+                        text = part1 + substitutions[i] + part2;
+                    }
+                }
+            }
+            return text;
+        };
+        //MQTT protocol and version          6    M    Q    I    s    d    p    3
+        var MqttProtoIdentifierv3 = [
+            0,
+            6,
+            77,
+            81,
+            73,
+            115,
+            100,
+            112,
+            3
+        ];
+        //MQTT proto/version for 311         4    M    Q    T    T    4
+        var MqttProtoIdentifierv4 = [
+            0,
+            4,
+            77,
+            81,
+            84,
+            84,
+            4
+        ];
+        /**
+	 * Construct an MQTT wire protocol message.
+	 * @param type MQTT packet type.
+	 * @param options optional wire message attributes.
+	 *
+	 * Optional properties
+	 *
+	 * messageIdentifier: message ID in the range [0..65535]
+	 * payloadMessage:	Application Message - PUBLISH only
+	 * connectStrings:	array of 0 or more Strings to be put into the CONNECT payload
+	 * topics:			array of strings (SUBSCRIBE, UNSUBSCRIBE)
+	 * requestQoS:		array of QoS values [0..2]
+	 *
+	 * "Flag" properties
+	 * cleanSession:	true if present / false if absent (CONNECT)
+	 * willMessage:  	true if present / false if absent (CONNECT)
+	 * isRetained:		true if present / false if absent (CONNECT)
+	 * userName:		true if present / false if absent (CONNECT)
+	 * password:		true if present / false if absent (CONNECT)
+	 * keepAliveInterval:	integer [0..65535]  (CONNECT)
+	 *
+	 * @private
+	 * @ignore
+	 */ var WireMessage = function(type, options) {
+            this.type = type;
+            for(var name in options)if (options.hasOwnProperty(name)) this[name] = options[name];
+        };
+        WireMessage.prototype.encode = function() {
+            // Compute the first byte of the fixed header
+            var first = (this.type & 15) << 4;
+            /*
+		 * Now calculate the length of the variable header + payload by adding up the lengths
+		 * of all the component parts
+		 */ var remLength = 0;
+            var topicStrLength = [];
+            var destinationNameLength = 0;
+            var willMessagePayloadBytes;
+            // if the message contains a messageIdentifier then we need two bytes for that
+            if (this.messageIdentifier !== undefined) remLength += 2;
+            switch(this.type){
+                // If this a Connect then we need to include 12 bytes for its header
+                case MESSAGE_TYPE.CONNECT:
+                    switch(this.mqttVersion){
+                        case 3:
+                            remLength += MqttProtoIdentifierv3.length + 3;
+                            break;
+                        case 4:
+                            remLength += MqttProtoIdentifierv4.length + 3;
+                            break;
+                    }
+                    remLength += UTF8Length(this.clientId) + 2;
+                    if (this.willMessage !== undefined) {
+                        remLength += UTF8Length(this.willMessage.destinationName) + 2;
+                        // Will message is always a string, sent as UTF-8 characters with a preceding length.
+                        willMessagePayloadBytes = this.willMessage.payloadBytes;
+                        if (!(willMessagePayloadBytes instanceof Uint8Array)) willMessagePayloadBytes = new Uint8Array(payloadBytes);
+                        remLength += willMessagePayloadBytes.byteLength + 2;
+                    }
+                    if (this.userName !== undefined) remLength += UTF8Length(this.userName) + 2;
+                    if (this.password !== undefined) remLength += UTF8Length(this.password) + 2;
+                    break;
+                // Subscribe, Unsubscribe can both contain topic strings
+                case MESSAGE_TYPE.SUBSCRIBE:
+                    first |= 2; // Qos = 1;
+                    for(var i = 0; i < this.topics.length; i++){
+                        topicStrLength[i] = UTF8Length(this.topics[i]);
+                        remLength += topicStrLength[i] + 2;
+                    }
+                    remLength += this.requestedQos.length; // 1 byte for each topic's Qos
+                    break;
+                case MESSAGE_TYPE.UNSUBSCRIBE:
+                    first |= 2; // Qos = 1;
+                    for(var i = 0; i < this.topics.length; i++){
+                        topicStrLength[i] = UTF8Length(this.topics[i]);
+                        remLength += topicStrLength[i] + 2;
+                    }
+                    break;
+                case MESSAGE_TYPE.PUBREL:
+                    first |= 2; // Qos = 1;
+                    break;
+                case MESSAGE_TYPE.PUBLISH:
+                    if (this.payloadMessage.duplicate) first |= 8;
+                    first = first |= this.payloadMessage.qos << 1;
+                    if (this.payloadMessage.retained) first |= 1;
+                    destinationNameLength = UTF8Length(this.payloadMessage.destinationName);
+                    remLength += destinationNameLength + 2;
+                    var payloadBytes = this.payloadMessage.payloadBytes;
+                    remLength += payloadBytes.byteLength;
+                    if (payloadBytes instanceof ArrayBuffer) payloadBytes = new Uint8Array(payloadBytes);
+                    else if (!(payloadBytes instanceof Uint8Array)) payloadBytes = new Uint8Array(payloadBytes.buffer);
+                    break;
+                case MESSAGE_TYPE.DISCONNECT:
+                    break;
+                default:
+                    break;
+            }
+            // Now we can allocate a buffer for the message
+            var mbi = encodeMBI(remLength); // Convert the length to MQTT MBI format
+            var pos = mbi.length + 1; // Offset of start of variable header
+            var buffer = new ArrayBuffer(remLength + pos);
+            var byteStream = new Uint8Array(buffer); // view it as a sequence of bytes
+            //Write the fixed header into the buffer
+            byteStream[0] = first;
+            byteStream.set(mbi, 1);
+            // If this is a PUBLISH then the variable header starts with a topic
+            if (this.type == MESSAGE_TYPE.PUBLISH) pos = writeString(this.payloadMessage.destinationName, destinationNameLength, byteStream, pos);
+            else if (this.type == MESSAGE_TYPE.CONNECT) {
+                switch(this.mqttVersion){
+                    case 3:
+                        byteStream.set(MqttProtoIdentifierv3, pos);
+                        pos += MqttProtoIdentifierv3.length;
+                        break;
+                    case 4:
+                        byteStream.set(MqttProtoIdentifierv4, pos);
+                        pos += MqttProtoIdentifierv4.length;
+                        break;
+                }
+                var connectFlags = 0;
+                if (this.cleanSession) connectFlags = 2;
+                if (this.willMessage !== undefined) {
+                    connectFlags |= 4;
+                    connectFlags |= this.willMessage.qos << 3;
+                    if (this.willMessage.retained) connectFlags |= 32;
+                }
+                if (this.userName !== undefined) connectFlags |= 128;
+                if (this.password !== undefined) connectFlags |= 64;
+                byteStream[pos++] = connectFlags;
+                pos = writeUint16(this.keepAliveInterval, byteStream, pos);
+            }
+            // Output the messageIdentifier - if there is one
+            if (this.messageIdentifier !== undefined) pos = writeUint16(this.messageIdentifier, byteStream, pos);
+            switch(this.type){
+                case MESSAGE_TYPE.CONNECT:
+                    pos = writeString(this.clientId, UTF8Length(this.clientId), byteStream, pos);
+                    if (this.willMessage !== undefined) {
+                        pos = writeString(this.willMessage.destinationName, UTF8Length(this.willMessage.destinationName), byteStream, pos);
+                        pos = writeUint16(willMessagePayloadBytes.byteLength, byteStream, pos);
+                        byteStream.set(willMessagePayloadBytes, pos);
+                        pos += willMessagePayloadBytes.byteLength;
+                    }
+                    if (this.userName !== undefined) pos = writeString(this.userName, UTF8Length(this.userName), byteStream, pos);
+                    if (this.password !== undefined) pos = writeString(this.password, UTF8Length(this.password), byteStream, pos);
+                    break;
+                case MESSAGE_TYPE.PUBLISH:
+                    // PUBLISH has a text or binary payload, if text do not add a 2 byte length field, just the UTF characters.
+                    byteStream.set(payloadBytes, pos);
+                    break;
+                //    	    case MESSAGE_TYPE.PUBREC:
+                //    	    case MESSAGE_TYPE.PUBREL:
+                //    	    case MESSAGE_TYPE.PUBCOMP:
+                //    	    	break;
+                case MESSAGE_TYPE.SUBSCRIBE:
+                    // SUBSCRIBE has a list of topic strings and request QoS
+                    for(var i = 0; i < this.topics.length; i++){
+                        pos = writeString(this.topics[i], topicStrLength[i], byteStream, pos);
+                        byteStream[pos++] = this.requestedQos[i];
+                    }
+                    break;
+                case MESSAGE_TYPE.UNSUBSCRIBE:
+                    // UNSUBSCRIBE has a list of topic strings
+                    for(var i = 0; i < this.topics.length; i++)pos = writeString(this.topics[i], topicStrLength[i], byteStream, pos);
+                    break;
+                default:
+            }
+            return buffer;
+        };
+        function decodeMessage(input, pos) {
+            var startingPos = pos;
+            var first = input[pos];
+            var type = first >> 4;
+            var messageInfo = first &= 15;
+            pos += 1;
+            // Decode the remaining length (MBI format)
+            var digit;
+            var remLength = 0;
+            var multiplier = 1;
+            do {
+                if (pos == input.length) return [
+                    null,
+                    startingPos
+                ];
+                digit = input[pos++];
+                remLength += (digit & 127) * multiplier;
+                multiplier *= 128;
+            }while ((digit & 128) !== 0)
+            var endPos = pos + remLength;
+            if (endPos > input.length) return [
+                null,
+                startingPos
+            ];
+            var wireMessage = new WireMessage(type);
+            switch(type){
+                case MESSAGE_TYPE.CONNACK:
+                    var connectAcknowledgeFlags = input[pos++];
+                    if (connectAcknowledgeFlags & 1) wireMessage.sessionPresent = true;
+                    wireMessage.returnCode = input[pos++];
+                    break;
+                case MESSAGE_TYPE.PUBLISH:
+                    var qos = messageInfo >> 1 & 3;
+                    var len = readUint16(input, pos);
+                    pos += 2;
+                    var topicName = parseUTF8(input, pos, len);
+                    pos += len;
+                    // If QoS 1 or 2 there will be a messageIdentifier
+                    if (qos > 0) {
+                        wireMessage.messageIdentifier = readUint16(input, pos);
+                        pos += 2;
+                    }
+                    var message = new Message(input.subarray(pos, endPos));
+                    if ((messageInfo & 1) == 1) message.retained = true;
+                    if ((messageInfo & 8) == 8) message.duplicate = true;
+                    message.qos = qos;
+                    message.destinationName = topicName;
+                    wireMessage.payloadMessage = message;
+                    break;
+                case MESSAGE_TYPE.PUBACK:
+                case MESSAGE_TYPE.PUBREC:
+                case MESSAGE_TYPE.PUBREL:
+                case MESSAGE_TYPE.PUBCOMP:
+                case MESSAGE_TYPE.UNSUBACK:
+                    wireMessage.messageIdentifier = readUint16(input, pos);
+                    break;
+                case MESSAGE_TYPE.SUBACK:
+                    wireMessage.messageIdentifier = readUint16(input, pos);
+                    pos += 2;
+                    wireMessage.returnCode = input.subarray(pos, endPos);
+                    break;
+                default:
+                    break;
+            }
+            return [
+                wireMessage,
+                endPos
+            ];
         }
-    }
-}
+        function writeUint16(input, buffer, offset) {
+            buffer[offset++] = input >> 8; //MSB
+            buffer[offset++] = input % 256; //LSB
+            return offset;
+        }
+        function writeString(input, utf8Length, buffer, offset) {
+            offset = writeUint16(utf8Length, buffer, offset);
+            stringToUTF8(input, buffer, offset);
+            return offset + utf8Length;
+        }
+        function readUint16(buffer, offset) {
+            return 256 * buffer[offset] + buffer[offset + 1];
+        }
+        /**
+	 * Encodes an MQTT Multi-Byte Integer
+	 * @private
+	 */ function encodeMBI(number) {
+            var output = new Array(1);
+            var numBytes = 0;
+            do {
+                var digit = number % 128;
+                number = number >> 7;
+                if (number > 0) digit |= 128;
+                output[numBytes++] = digit;
+            }while (number > 0 && numBytes < 4)
+            return output;
+        }
+        /**
+	 * Takes a String and calculates its length in bytes when encoded in UTF8.
+	 * @private
+	 */ function UTF8Length(input) {
+            var output = 0;
+            for(var i = 0; i < input.length; i++){
+                var charCode = input.charCodeAt(i);
+                if (charCode > 2047) {
+                    // Surrogate pair means its a 4 byte character
+                    if (55296 <= charCode && charCode <= 56319) {
+                        i++;
+                        output++;
+                    }
+                    output += 3;
+                } else if (charCode > 127) output += 2;
+                else output++;
+            }
+            return output;
+        }
+        /**
+	 * Takes a String and writes it into an array as UTF8 encoded bytes.
+	 * @private
+	 */ function stringToUTF8(input, output, start) {
+            var pos = start;
+            for(var i = 0; i < input.length; i++){
+                var charCode = input.charCodeAt(i);
+                // Check for a surrogate pair.
+                if (55296 <= charCode && charCode <= 56319) {
+                    var lowCharCode = input.charCodeAt(++i);
+                    if (isNaN(lowCharCode)) throw new Error(format(ERROR.MALFORMED_UNICODE, [
+                        charCode,
+                        lowCharCode
+                    ]));
+                    charCode = (charCode - 55296 << 10) + (lowCharCode - 56320) + 65536;
+                }
+                if (charCode <= 127) output[pos++] = charCode;
+                else if (charCode <= 2047) {
+                    output[pos++] = charCode >> 6 & 31 | 192;
+                    output[pos++] = charCode & 63 | 128;
+                } else if (charCode <= 65535) {
+                    output[pos++] = charCode >> 12 & 15 | 224;
+                    output[pos++] = charCode >> 6 & 63 | 128;
+                    output[pos++] = charCode & 63 | 128;
+                } else {
+                    output[pos++] = charCode >> 18 & 7 | 240;
+                    output[pos++] = charCode >> 12 & 63 | 128;
+                    output[pos++] = charCode >> 6 & 63 | 128;
+                    output[pos++] = charCode & 63 | 128;
+                }
+            }
+            return output;
+        }
+        function parseUTF8(input, offset, length) {
+            var output = "";
+            var utf16;
+            var pos = offset;
+            while(pos < offset + length){
+                var byte1 = input[pos++];
+                if (byte1 < 128) utf16 = byte1;
+                else {
+                    var byte2 = input[pos++] - 128;
+                    if (byte2 < 0) throw new Error(format(ERROR.MALFORMED_UTF, [
+                        byte1.toString(16),
+                        byte2.toString(16),
+                        ""
+                    ]));
+                    if (byte1 < 224) utf16 = 64 * (byte1 - 192) + byte2;
+                    else {
+                        var byte3 = input[pos++] - 128;
+                        if (byte3 < 0) throw new Error(format(ERROR.MALFORMED_UTF, [
+                            byte1.toString(16),
+                            byte2.toString(16),
+                            byte3.toString(16)
+                        ]));
+                        if (byte1 < 240) utf16 = 4096 * (byte1 - 224) + 64 * byte2 + byte3;
+                        else {
+                            var byte4 = input[pos++] - 128;
+                            if (byte4 < 0) throw new Error(format(ERROR.MALFORMED_UTF, [
+                                byte1.toString(16),
+                                byte2.toString(16),
+                                byte3.toString(16),
+                                byte4.toString(16)
+                            ]));
+                            if (byte1 < 248) utf16 = 262144 * (byte1 - 240) + 4096 * byte2 + 64 * byte3 + byte4;
+                            else throw new Error(format(ERROR.MALFORMED_UTF, [
+                                byte1.toString(16),
+                                byte2.toString(16),
+                                byte3.toString(16),
+                                byte4.toString(16)
+                            ]));
+                        }
+                    }
+                }
+                if (utf16 > 65535) {
+                    utf16 -= 65536;
+                    output += String.fromCharCode(55296 + (utf16 >> 10)); // lead character
+                    utf16 = 56320 + (utf16 & 1023); // trail character
+                }
+                output += String.fromCharCode(utf16);
+            }
+            return output;
+        }
+        /**
+	 * Repeat keepalive requests, monitor responses.
+	 * @ignore
+	 */ var Pinger = function(client, keepAliveInterval) {
+            this._client = client;
+            this._keepAliveInterval = keepAliveInterval * 1000;
+            this.isReset = false;
+            var pingReq = new WireMessage(MESSAGE_TYPE.PINGREQ).encode();
+            var doTimeout = function(pinger) {
+                return function() {
+                    return doPing.apply(pinger);
+                };
+            };
+            /** @ignore */ var doPing = function() {
+                if (!this.isReset) {
+                    this._client._trace("Pinger.doPing", "Timed out");
+                    this._client._disconnected(ERROR.PING_TIMEOUT.code, format(ERROR.PING_TIMEOUT));
+                } else {
+                    this.isReset = false;
+                    this._client._trace("Pinger.doPing", "send PINGREQ");
+                    this._client.socket.send(pingReq);
+                    this.timeout = setTimeout(doTimeout(this), this._keepAliveInterval);
+                }
+            };
+            this.reset = function() {
+                this.isReset = true;
+                clearTimeout(this.timeout);
+                if (this._keepAliveInterval > 0) this.timeout = setTimeout(doTimeout(this), this._keepAliveInterval);
+            };
+            this.cancel = function() {
+                clearTimeout(this.timeout);
+            };
+        };
+        /**
+	 * Monitor request completion.
+	 * @ignore
+	 */ var Timeout = function(client1, timeoutSeconds, action1, args1) {
+            if (!timeoutSeconds) timeoutSeconds = 30;
+            var doTimeout = function(action, client, args) {
+                return function() {
+                    return action.apply(client, args);
+                };
+            };
+            this.timeout = setTimeout(doTimeout(action1, client1, args1), timeoutSeconds * 1000);
+            this.cancel = function() {
+                clearTimeout(this.timeout);
+            };
+        };
+        /**
+	 * Internal implementation of the Websockets MQTT V3.1 client.
+	 *
+	 * @name Paho.ClientImpl @constructor
+	 * @param {String} host the DNS nameof the webSocket host.
+	 * @param {Number} port the port number for that host.
+	 * @param {String} clientId the MQ client identifier.
+	 */ var ClientImpl = function(uri, host, port, path, clientId) {
+            // Check dependencies are satisfied in this browser.
+            if (!("WebSocket" in global && global.WebSocket !== null)) throw new Error(format(ERROR.UNSUPPORTED, [
+                "WebSocket"
+            ]));
+            if (!("ArrayBuffer" in global && global.ArrayBuffer !== null)) throw new Error(format(ERROR.UNSUPPORTED, [
+                "ArrayBuffer"
+            ]));
+            this._trace("Paho.Client", uri, host, port, path, clientId);
+            this.host = host;
+            this.port = port;
+            this.path = path;
+            this.uri = uri;
+            this.clientId = clientId;
+            this._wsuri = null;
+            // Local storagekeys are qualified with the following string.
+            // The conditional inclusion of path in the key is for backward
+            // compatibility to when the path was not configurable and assumed to
+            // be /mqtt
+            this._localKey = host + ":" + port + (path != "/mqtt" ? ":" + path : "") + ":" + clientId + ":";
+            // Create private instance-only message queue
+            // Internal queue of messages to be sent, in sending order.
+            this._msg_queue = [];
+            this._buffered_msg_queue = [];
+            // Messages we have sent and are expecting a response for, indexed by their respective message ids.
+            this._sentMessages = {
+            };
+            // Messages we have received and acknowleged and are expecting a confirm message for
+            // indexed by their respective message ids.
+            this._receivedMessages = {
+            };
+            // Internal list of callbacks to be executed when messages
+            // have been successfully sent over web socket, e.g. disconnect
+            // when it doesn't have to wait for ACK, just message is dispatched.
+            this._notify_msg_sent = {
+            };
+            // Unique identifier for SEND messages, incrementing
+            // counter as messages are sent.
+            this._message_identifier = 1;
+            // Used to determine the transmission sequence of stored sent messages.
+            this._sequence = 0;
+            // Load the local state, if any, from the saved version, only restore state relevant to this client.
+            for(var key in localStorage)if (key.indexOf("Sent:" + this._localKey) === 0 || key.indexOf("Received:" + this._localKey) === 0) this.restore(key);
+        };
+        // Messaging Client public instance members.
+        ClientImpl.prototype.host = null;
+        ClientImpl.prototype.port = null;
+        ClientImpl.prototype.path = null;
+        ClientImpl.prototype.uri = null;
+        ClientImpl.prototype.clientId = null;
+        // Messaging Client private instance members.
+        ClientImpl.prototype.socket = null;
+        /* true once we have received an acknowledgement to a CONNECT packet. */ ClientImpl.prototype.connected = false;
+        /* The largest message identifier allowed, may not be larger than 2**16 but
+		 * if set smaller reduces the maximum number of outbound messages allowed.
+		 */ ClientImpl.prototype.maxMessageIdentifier = 65536;
+        ClientImpl.prototype.connectOptions = null;
+        ClientImpl.prototype.hostIndex = null;
+        ClientImpl.prototype.onConnected = null;
+        ClientImpl.prototype.onConnectionLost = null;
+        ClientImpl.prototype.onMessageDelivered = null;
+        ClientImpl.prototype.onMessageArrived = null;
+        ClientImpl.prototype.traceFunction = null;
+        ClientImpl.prototype._msg_queue = null;
+        ClientImpl.prototype._buffered_msg_queue = null;
+        ClientImpl.prototype._connectTimeout = null;
+        /* The sendPinger monitors how long we allow before we send data to prove to the server that we are alive. */ ClientImpl.prototype.sendPinger = null;
+        /* The receivePinger monitors how long we allow before we require evidence that the server is alive. */ ClientImpl.prototype.receivePinger = null;
+        ClientImpl.prototype._reconnectInterval = 1; // Reconnect Delay, starts at 1 second
+        ClientImpl.prototype._reconnecting = false;
+        ClientImpl.prototype._reconnectTimeout = null;
+        ClientImpl.prototype.disconnectedPublishing = false;
+        ClientImpl.prototype.disconnectedBufferSize = 5000;
+        ClientImpl.prototype.receiveBuffer = null;
+        ClientImpl.prototype._traceBuffer = null;
+        ClientImpl.prototype._MAX_TRACE_ENTRIES = 100;
+        ClientImpl.prototype.connect = function(connectOptions) {
+            var connectOptionsMasked = this._traceMask(connectOptions, "password");
+            this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
+            if (this.connected) throw new Error(format(ERROR.INVALID_STATE, [
+                "already connected"
+            ]));
+            if (this.socket) throw new Error(format(ERROR.INVALID_STATE, [
+                "already connected"
+            ]));
+            if (this._reconnecting) {
+                // connect() function is called while reconnect is in progress.
+                // Terminate the auto reconnect process to use new connect options.
+                this._reconnectTimeout.cancel();
+                this._reconnectTimeout = null;
+                this._reconnecting = false;
+            }
+            this.connectOptions = connectOptions;
+            this._reconnectInterval = 1;
+            this._reconnecting = false;
+            if (connectOptions.uris) {
+                this.hostIndex = 0;
+                this._doConnect(connectOptions.uris[0]);
+            } else this._doConnect(this.uri);
+        };
+        ClientImpl.prototype.subscribe = function(filter, subscribeOptions) {
+            this._trace("Client.subscribe", filter, subscribeOptions);
+            if (!this.connected) throw new Error(format(ERROR.INVALID_STATE, [
+                "not connected"
+            ]));
+            var wireMessage = new WireMessage(MESSAGE_TYPE.SUBSCRIBE);
+            wireMessage.topics = filter.constructor === Array ? filter : [
+                filter
+            ];
+            if (subscribeOptions.qos === undefined) subscribeOptions.qos = 0;
+            wireMessage.requestedQos = [];
+            for(var i = 0; i < wireMessage.topics.length; i++)wireMessage.requestedQos[i] = subscribeOptions.qos;
+            if (subscribeOptions.onSuccess) wireMessage.onSuccess = function(grantedQos) {
+                subscribeOptions.onSuccess({
+                    invocationContext: subscribeOptions.invocationContext,
+                    grantedQos: grantedQos
+                });
+            };
+            if (subscribeOptions.onFailure) wireMessage.onFailure = function(errorCode) {
+                subscribeOptions.onFailure({
+                    invocationContext: subscribeOptions.invocationContext,
+                    errorCode: errorCode,
+                    errorMessage: format(errorCode)
+                });
+            };
+            if (subscribeOptions.timeout) wireMessage.timeOut = new Timeout(this, subscribeOptions.timeout, subscribeOptions.onFailure, [
+                {
+                    invocationContext: subscribeOptions.invocationContext,
+                    errorCode: ERROR.SUBSCRIBE_TIMEOUT.code,
+                    errorMessage: format(ERROR.SUBSCRIBE_TIMEOUT)
+                }
+            ]);
+            // All subscriptions return a SUBACK.
+            this._requires_ack(wireMessage);
+            this._schedule_message(wireMessage);
+        };
+        /** @ignore */ ClientImpl.prototype.unsubscribe = function(filter, unsubscribeOptions) {
+            this._trace("Client.unsubscribe", filter, unsubscribeOptions);
+            if (!this.connected) throw new Error(format(ERROR.INVALID_STATE, [
+                "not connected"
+            ]));
+            var wireMessage = new WireMessage(MESSAGE_TYPE.UNSUBSCRIBE);
+            wireMessage.topics = filter.constructor === Array ? filter : [
+                filter
+            ];
+            if (unsubscribeOptions.onSuccess) wireMessage.callback = function() {
+                unsubscribeOptions.onSuccess({
+                    invocationContext: unsubscribeOptions.invocationContext
+                });
+            };
+            if (unsubscribeOptions.timeout) wireMessage.timeOut = new Timeout(this, unsubscribeOptions.timeout, unsubscribeOptions.onFailure, [
+                {
+                    invocationContext: unsubscribeOptions.invocationContext,
+                    errorCode: ERROR.UNSUBSCRIBE_TIMEOUT.code,
+                    errorMessage: format(ERROR.UNSUBSCRIBE_TIMEOUT)
+                }
+            ]);
+            // All unsubscribes return a SUBACK.
+            this._requires_ack(wireMessage);
+            this._schedule_message(wireMessage);
+        };
+        ClientImpl.prototype.send = function(message) {
+            this._trace("Client.send", message);
+            var wireMessage = new WireMessage(MESSAGE_TYPE.PUBLISH);
+            wireMessage.payloadMessage = message;
+            if (this.connected) {
+                // Mark qos 1 & 2 message as "ACK required"
+                // For qos 0 message, invoke onMessageDelivered callback if there is one.
+                // Then schedule the message.
+                if (message.qos > 0) this._requires_ack(wireMessage);
+                else if (this.onMessageDelivered) this._notify_msg_sent[wireMessage] = this.onMessageDelivered(wireMessage.payloadMessage);
+                this._schedule_message(wireMessage);
+            } else {
+                // Currently disconnected, will not schedule this message
+                // Check if reconnecting is in progress and disconnected publish is enabled.
+                if (this._reconnecting && this.disconnectedPublishing) {
+                    // Check the limit which include the "required ACK" messages
+                    var messageCount = Object.keys(this._sentMessages).length + this._buffered_msg_queue.length;
+                    if (messageCount > this.disconnectedBufferSize) throw new Error(format(ERROR.BUFFER_FULL, [
+                        this.disconnectedBufferSize
+                    ]));
+                    else if (message.qos > 0) // Mark this message as "ACK required"
+                    this._requires_ack(wireMessage);
+                    else {
+                        wireMessage.sequence = ++this._sequence;
+                        // Add messages in fifo order to array, by adding to start
+                        this._buffered_msg_queue.unshift(wireMessage);
+                    }
+                } else throw new Error(format(ERROR.INVALID_STATE, [
+                    "not connected"
+                ]));
+            }
+        };
+        ClientImpl.prototype.disconnect = function() {
+            this._trace("Client.disconnect");
+            if (this._reconnecting) {
+                // disconnect() function is called while reconnect is in progress.
+                // Terminate the auto reconnect process.
+                this._reconnectTimeout.cancel();
+                this._reconnectTimeout = null;
+                this._reconnecting = false;
+            }
+            if (!this.socket) throw new Error(format(ERROR.INVALID_STATE, [
+                "not connecting or connected"
+            ]));
+            var wireMessage = new WireMessage(MESSAGE_TYPE.DISCONNECT);
+            // Run the disconnected call back as soon as the message has been sent,
+            // in case of a failure later on in the disconnect processing.
+            // as a consequence, the _disconected call back may be run several times.
+            this._notify_msg_sent[wireMessage] = scope1(this._disconnected, this);
+            this._schedule_message(wireMessage);
+        };
+        ClientImpl.prototype.getTraceLog = function() {
+            if (this._traceBuffer !== null) {
+                this._trace("Client.getTraceLog", new Date());
+                this._trace("Client.getTraceLog in flight messages", this._sentMessages.length);
+                for(var key in this._sentMessages)this._trace("_sentMessages ", key, this._sentMessages[key]);
+                for(var key in this._receivedMessages)this._trace("_receivedMessages ", key, this._receivedMessages[key]);
+                return this._traceBuffer;
+            }
+        };
+        ClientImpl.prototype.startTrace = function() {
+            if (this._traceBuffer === null) this._traceBuffer = [];
+            this._trace("Client.startTrace", new Date(), version);
+        };
+        ClientImpl.prototype.stopTrace = function() {
+            delete this._traceBuffer;
+        };
+        ClientImpl.prototype._doConnect = function(wsurl) {
+            // When the socket is open, this client will send the CONNECT WireMessage using the saved parameters.
+            if (this.connectOptions.useSSL) {
+                var uriParts = wsurl.split(":");
+                uriParts[0] = "wss";
+                wsurl = uriParts.join(":");
+            }
+            this._wsuri = wsurl;
+            this.connected = false;
+            if (this.connectOptions.mqttVersion < 4) this.socket = new WebSocket(wsurl, [
+                "mqttv3.1"
+            ]);
+            else this.socket = new WebSocket(wsurl, [
+                "mqtt"
+            ]);
+            this.socket.binaryType = "arraybuffer";
+            this.socket.onopen = scope1(this._on_socket_open, this);
+            this.socket.onmessage = scope1(this._on_socket_message, this);
+            this.socket.onerror = scope1(this._on_socket_error, this);
+            this.socket.onclose = scope1(this._on_socket_close, this);
+            this.sendPinger = new Pinger(this, this.connectOptions.keepAliveInterval);
+            this.receivePinger = new Pinger(this, this.connectOptions.keepAliveInterval);
+            if (this._connectTimeout) {
+                this._connectTimeout.cancel();
+                this._connectTimeout = null;
+            }
+            this._connectTimeout = new Timeout(this, this.connectOptions.timeout, this._disconnected, [
+                ERROR.CONNECT_TIMEOUT.code,
+                format(ERROR.CONNECT_TIMEOUT)
+            ]);
+        };
+        // Schedule a new message to be sent over the WebSockets
+        // connection. CONNECT messages cause WebSocket connection
+        // to be started. All other messages are queued internally
+        // until this has happened. When WS connection starts, process
+        // all outstanding messages.
+        ClientImpl.prototype._schedule_message = function(message) {
+            // Add messages in fifo order to array, by adding to start
+            this._msg_queue.unshift(message);
+            // Process outstanding messages in the queue if we have an  open socket, and have received CONNACK.
+            if (this.connected) this._process_queue();
+        };
+        ClientImpl.prototype.store = function(prefix, wireMessage) {
+            var storedMessage = {
+                type: wireMessage.type,
+                messageIdentifier: wireMessage.messageIdentifier,
+                version: 1
+            };
+            switch(wireMessage.type){
+                case MESSAGE_TYPE.PUBLISH:
+                    if (wireMessage.pubRecReceived) storedMessage.pubRecReceived = true;
+                    // Convert the payload to a hex string.
+                    storedMessage.payloadMessage = {
+                    };
+                    var hex = "";
+                    var messageBytes = wireMessage.payloadMessage.payloadBytes;
+                    for(var i = 0; i < messageBytes.length; i++)if (messageBytes[i] <= 15) hex = hex + "0" + messageBytes[i].toString(16);
+                    else hex = hex + messageBytes[i].toString(16);
+                    storedMessage.payloadMessage.payloadHex = hex;
+                    storedMessage.payloadMessage.qos = wireMessage.payloadMessage.qos;
+                    storedMessage.payloadMessage.destinationName = wireMessage.payloadMessage.destinationName;
+                    if (wireMessage.payloadMessage.duplicate) storedMessage.payloadMessage.duplicate = true;
+                    if (wireMessage.payloadMessage.retained) storedMessage.payloadMessage.retained = true;
+                    // Add a sequence number to sent messages.
+                    if (prefix.indexOf("Sent:") === 0) {
+                        if (wireMessage.sequence === undefined) wireMessage.sequence = ++this._sequence;
+                        storedMessage.sequence = wireMessage.sequence;
+                    }
+                    break;
+                default:
+                    throw Error(format(ERROR.INVALID_STORED_DATA, [
+                        prefix + this._localKey + wireMessage.messageIdentifier,
+                        storedMessage
+                    ]));
+            }
+            localStorage.setItem(prefix + this._localKey + wireMessage.messageIdentifier, JSON.stringify(storedMessage));
+        };
+        ClientImpl.prototype.restore = function(key) {
+            var value = localStorage.getItem(key);
+            var storedMessage = JSON.parse(value);
+            var wireMessage = new WireMessage(storedMessage.type, storedMessage);
+            switch(storedMessage.type){
+                case MESSAGE_TYPE.PUBLISH:
+                    // Replace the payload message with a Message object.
+                    var hex = storedMessage.payloadMessage.payloadHex;
+                    var buffer = new ArrayBuffer(hex.length / 2);
+                    var byteStream = new Uint8Array(buffer);
+                    var i = 0;
+                    while(hex.length >= 2){
+                        var x = parseInt(hex.substring(0, 2), 16);
+                        hex = hex.substring(2, hex.length);
+                        byteStream[i++] = x;
+                    }
+                    var payloadMessage = new Message(byteStream);
+                    payloadMessage.qos = storedMessage.payloadMessage.qos;
+                    payloadMessage.destinationName = storedMessage.payloadMessage.destinationName;
+                    if (storedMessage.payloadMessage.duplicate) payloadMessage.duplicate = true;
+                    if (storedMessage.payloadMessage.retained) payloadMessage.retained = true;
+                    wireMessage.payloadMessage = payloadMessage;
+                    break;
+                default:
+                    throw Error(format(ERROR.INVALID_STORED_DATA, [
+                        key,
+                        value
+                    ]));
+            }
+            if (key.indexOf("Sent:" + this._localKey) === 0) {
+                wireMessage.payloadMessage.duplicate = true;
+                this._sentMessages[wireMessage.messageIdentifier] = wireMessage;
+            } else if (key.indexOf("Received:" + this._localKey) === 0) this._receivedMessages[wireMessage.messageIdentifier] = wireMessage;
+        };
+        ClientImpl.prototype._process_queue = function() {
+            var message = null;
+            // Send all queued messages down socket connection
+            while(message = this._msg_queue.pop()){
+                this._socket_send(message);
+                // Notify listeners that message was successfully sent
+                if (this._notify_msg_sent[message]) {
+                    this._notify_msg_sent[message]();
+                    delete this._notify_msg_sent[message];
+                }
+            }
+        };
+        /**
+	 * Expect an ACK response for this message. Add message to the set of in progress
+	 * messages and set an unused identifier in this message.
+	 * @ignore
+	 */ ClientImpl.prototype._requires_ack = function(wireMessage) {
+            var messageCount = Object.keys(this._sentMessages).length;
+            if (messageCount > this.maxMessageIdentifier) throw Error("Too many messages:" + messageCount);
+            while(this._sentMessages[this._message_identifier] !== undefined)this._message_identifier++;
+            wireMessage.messageIdentifier = this._message_identifier;
+            this._sentMessages[wireMessage.messageIdentifier] = wireMessage;
+            if (wireMessage.type === MESSAGE_TYPE.PUBLISH) this.store("Sent:", wireMessage);
+            if (this._message_identifier === this.maxMessageIdentifier) this._message_identifier = 1;
+        };
+        /**
+	 * Called when the underlying websocket has been opened.
+	 * @ignore
+	 */ ClientImpl.prototype._on_socket_open = function() {
+            // Create the CONNECT message object.
+            var wireMessage = new WireMessage(MESSAGE_TYPE.CONNECT, this.connectOptions);
+            wireMessage.clientId = this.clientId;
+            this._socket_send(wireMessage);
+        };
+        /**
+	 * Called when the underlying websocket has received a complete packet.
+	 * @ignore
+	 */ ClientImpl.prototype._on_socket_message = function(event) {
+            this._trace("Client._on_socket_message", event.data);
+            var messages = this._deframeMessages(event.data);
+            for(var i = 0; i < messages.length; i += 1)this._handleMessage(messages[i]);
+        };
+        ClientImpl.prototype._deframeMessages = function(data) {
+            var byteArray = new Uint8Array(data);
+            var messages = [];
+            if (this.receiveBuffer) {
+                var newData = new Uint8Array(this.receiveBuffer.length + byteArray.length);
+                newData.set(this.receiveBuffer);
+                newData.set(byteArray, this.receiveBuffer.length);
+                byteArray = newData;
+                delete this.receiveBuffer;
+            }
+            try {
+                var offset = 0;
+                while(offset < byteArray.length){
+                    var result = decodeMessage(byteArray, offset);
+                    var wireMessage = result[0];
+                    offset = result[1];
+                    if (wireMessage !== null) messages.push(wireMessage);
+                    else break;
+                }
+                if (offset < byteArray.length) this.receiveBuffer = byteArray.subarray(offset);
+            } catch (error) {
+                var errorStack = error.hasOwnProperty("stack") == "undefined" ? error.stack.toString() : "No Error Stack Available";
+                this._disconnected(ERROR.INTERNAL_ERROR.code, format(ERROR.INTERNAL_ERROR, [
+                    error.message,
+                    errorStack
+                ]));
+                return;
+            }
+            return messages;
+        };
+        ClientImpl.prototype._handleMessage = function(wireMessage) {
+            this._trace("Client._handleMessage", wireMessage);
+            try {
+                switch(wireMessage.type){
+                    case MESSAGE_TYPE.CONNACK:
+                        this._connectTimeout.cancel();
+                        if (this._reconnectTimeout) this._reconnectTimeout.cancel();
+                        // If we have started using clean session then clear up the local state.
+                        if (this.connectOptions.cleanSession) {
+                            for(var key in this._sentMessages){
+                                var sentMessage = this._sentMessages[key];
+                                localStorage.removeItem("Sent:" + this._localKey + sentMessage.messageIdentifier);
+                            }
+                            this._sentMessages = {
+                            };
+                            for(var key in this._receivedMessages){
+                                var receivedMessage = this._receivedMessages[key];
+                                localStorage.removeItem("Received:" + this._localKey + receivedMessage.messageIdentifier);
+                            }
+                            this._receivedMessages = {
+                            };
+                        }
+                        // Client connected and ready for business.
+                        if (wireMessage.returnCode === 0) {
+                            this.connected = true;
+                            // Jump to the end of the list of uris and stop looking for a good host.
+                            if (this.connectOptions.uris) this.hostIndex = this.connectOptions.uris.length;
+                        } else {
+                            this._disconnected(ERROR.CONNACK_RETURNCODE.code, format(ERROR.CONNACK_RETURNCODE, [
+                                wireMessage.returnCode,
+                                CONNACK_RC[wireMessage.returnCode]
+                            ]));
+                            break;
+                        }
+                        // Resend messages.
+                        var sequencedMessages = [];
+                        for(var msgId in this._sentMessages)if (this._sentMessages.hasOwnProperty(msgId)) sequencedMessages.push(this._sentMessages[msgId]);
+                        // Also schedule qos 0 buffered messages if any
+                        if (this._buffered_msg_queue.length > 0) {
+                            var msg = null;
+                            while(msg = this._buffered_msg_queue.pop()){
+                                sequencedMessages.push(msg);
+                                if (this.onMessageDelivered) this._notify_msg_sent[msg] = this.onMessageDelivered(msg.payloadMessage);
+                            }
+                        }
+                        // Sort sentMessages into the original sent order.
+                        var sequencedMessages = sequencedMessages.sort(function(a, b) {
+                            return a.sequence - b.sequence;
+                        });
+                        for(var i = 0, len = sequencedMessages.length; i < len; i++){
+                            var sentMessage = sequencedMessages[i];
+                            if (sentMessage.type == MESSAGE_TYPE.PUBLISH && sentMessage.pubRecReceived) {
+                                var pubRelMessage = new WireMessage(MESSAGE_TYPE.PUBREL, {
+                                    messageIdentifier: sentMessage.messageIdentifier
+                                });
+                                this._schedule_message(pubRelMessage);
+                            } else this._schedule_message(sentMessage);
+                        }
+                        // Execute the connectOptions.onSuccess callback if there is one.
+                        // Will also now return if this connection was the result of an automatic
+                        // reconnect and which URI was successfully connected to.
+                        if (this.connectOptions.onSuccess) this.connectOptions.onSuccess({
+                            invocationContext: this.connectOptions.invocationContext
+                        });
+                        var reconnected = false;
+                        if (this._reconnecting) {
+                            reconnected = true;
+                            this._reconnectInterval = 1;
+                            this._reconnecting = false;
+                        }
+                        // Execute the onConnected callback if there is one.
+                        this._connected(reconnected, this._wsuri);
+                        // Process all queued messages now that the connection is established.
+                        this._process_queue();
+                        break;
+                    case MESSAGE_TYPE.PUBLISH:
+                        this._receivePublish(wireMessage);
+                        break;
+                    case MESSAGE_TYPE.PUBACK:
+                        var sentMessage = this._sentMessages[wireMessage.messageIdentifier];
+                        // If this is a re flow of a PUBACK after we have restarted receivedMessage will not exist.
+                        if (sentMessage) {
+                            delete this._sentMessages[wireMessage.messageIdentifier];
+                            localStorage.removeItem("Sent:" + this._localKey + wireMessage.messageIdentifier);
+                            if (this.onMessageDelivered) this.onMessageDelivered(sentMessage.payloadMessage);
+                        }
+                        break;
+                    case MESSAGE_TYPE.PUBREC:
+                        var sentMessage = this._sentMessages[wireMessage.messageIdentifier];
+                        // If this is a re flow of a PUBREC after we have restarted receivedMessage will not exist.
+                        if (sentMessage) {
+                            sentMessage.pubRecReceived = true;
+                            var pubRelMessage = new WireMessage(MESSAGE_TYPE.PUBREL, {
+                                messageIdentifier: wireMessage.messageIdentifier
+                            });
+                            this.store("Sent:", sentMessage);
+                            this._schedule_message(pubRelMessage);
+                        }
+                        break;
+                    case MESSAGE_TYPE.PUBREL:
+                        var receivedMessage = this._receivedMessages[wireMessage.messageIdentifier];
+                        localStorage.removeItem("Received:" + this._localKey + wireMessage.messageIdentifier);
+                        // If this is a re flow of a PUBREL after we have restarted receivedMessage will not exist.
+                        if (receivedMessage) {
+                            this._receiveMessage(receivedMessage);
+                            delete this._receivedMessages[wireMessage.messageIdentifier];
+                        }
+                        // Always flow PubComp, we may have previously flowed PubComp but the server lost it and restarted.
+                        var pubCompMessage = new WireMessage(MESSAGE_TYPE.PUBCOMP, {
+                            messageIdentifier: wireMessage.messageIdentifier
+                        });
+                        this._schedule_message(pubCompMessage);
+                        break;
+                    case MESSAGE_TYPE.PUBCOMP:
+                        var sentMessage = this._sentMessages[wireMessage.messageIdentifier];
+                        delete this._sentMessages[wireMessage.messageIdentifier];
+                        localStorage.removeItem("Sent:" + this._localKey + wireMessage.messageIdentifier);
+                        if (this.onMessageDelivered) this.onMessageDelivered(sentMessage.payloadMessage);
+                        break;
+                    case MESSAGE_TYPE.SUBACK:
+                        var sentMessage = this._sentMessages[wireMessage.messageIdentifier];
+                        if (sentMessage) {
+                            if (sentMessage.timeOut) sentMessage.timeOut.cancel();
+                            // This will need to be fixed when we add multiple topic support
+                            if (wireMessage.returnCode[0] === 128) {
+                                if (sentMessage.onFailure) sentMessage.onFailure(wireMessage.returnCode);
+                            } else if (sentMessage.onSuccess) sentMessage.onSuccess(wireMessage.returnCode);
+                            delete this._sentMessages[wireMessage.messageIdentifier];
+                        }
+                        break;
+                    case MESSAGE_TYPE.UNSUBACK:
+                        var sentMessage = this._sentMessages[wireMessage.messageIdentifier];
+                        if (sentMessage) {
+                            if (sentMessage.timeOut) sentMessage.timeOut.cancel();
+                            if (sentMessage.callback) sentMessage.callback();
+                            delete this._sentMessages[wireMessage.messageIdentifier];
+                        }
+                        break;
+                    case MESSAGE_TYPE.PINGRESP:
+                        /* The sendPinger or receivePinger may have sent a ping, the receivePinger has already been reset. */ this.sendPinger.reset();
+                        break;
+                    case MESSAGE_TYPE.DISCONNECT:
+                        // Clients do not expect to receive disconnect packets.
+                        this._disconnected(ERROR.INVALID_MQTT_MESSAGE_TYPE.code, format(ERROR.INVALID_MQTT_MESSAGE_TYPE, [
+                            wireMessage.type
+                        ]));
+                        break;
+                    default:
+                        this._disconnected(ERROR.INVALID_MQTT_MESSAGE_TYPE.code, format(ERROR.INVALID_MQTT_MESSAGE_TYPE, [
+                            wireMessage.type
+                        ]));
+                }
+            } catch (error) {
+                var errorStack = error.hasOwnProperty("stack") == "undefined" ? error.stack.toString() : "No Error Stack Available";
+                this._disconnected(ERROR.INTERNAL_ERROR.code, format(ERROR.INTERNAL_ERROR, [
+                    error.message,
+                    errorStack
+                ]));
+                return;
+            }
+        };
+        /** @ignore */ ClientImpl.prototype._on_socket_error = function(error) {
+            if (!this._reconnecting) this._disconnected(ERROR.SOCKET_ERROR.code, format(ERROR.SOCKET_ERROR, [
+                error.data
+            ]));
+        };
+        /** @ignore */ ClientImpl.prototype._on_socket_close = function() {
+            if (!this._reconnecting) this._disconnected(ERROR.SOCKET_CLOSE.code, format(ERROR.SOCKET_CLOSE));
+        };
+        /** @ignore */ ClientImpl.prototype._socket_send = function(wireMessage) {
+            if (wireMessage.type == 1) {
+                var wireMessageMasked = this._traceMask(wireMessage, "password");
+                this._trace("Client._socket_send", wireMessageMasked);
+            } else this._trace("Client._socket_send", wireMessage);
+            this.socket.send(wireMessage.encode());
+            /* We have proved to the server we are alive. */ this.sendPinger.reset();
+        };
+        /** @ignore */ ClientImpl.prototype._receivePublish = function(wireMessage) {
+            switch(wireMessage.payloadMessage.qos){
+                case "undefined":
+                case 0:
+                    this._receiveMessage(wireMessage);
+                    break;
+                case 1:
+                    var pubAckMessage = new WireMessage(MESSAGE_TYPE.PUBACK, {
+                        messageIdentifier: wireMessage.messageIdentifier
+                    });
+                    this._schedule_message(pubAckMessage);
+                    this._receiveMessage(wireMessage);
+                    break;
+                case 2:
+                    this._receivedMessages[wireMessage.messageIdentifier] = wireMessage;
+                    this.store("Received:", wireMessage);
+                    var pubRecMessage = new WireMessage(MESSAGE_TYPE.PUBREC, {
+                        messageIdentifier: wireMessage.messageIdentifier
+                    });
+                    this._schedule_message(pubRecMessage);
+                    break;
+                default:
+                    throw Error("Invaild qos=" + wireMessage.payloadMessage.qos);
+            }
+        };
+        /** @ignore */ ClientImpl.prototype._receiveMessage = function(wireMessage) {
+            if (this.onMessageArrived) this.onMessageArrived(wireMessage.payloadMessage);
+        };
+        /**
+	 * Client has connected.
+	 * @param {reconnect} [boolean] indicate if this was a result of reconnect operation.
+	 * @param {uri} [string] fully qualified WebSocket URI of the server.
+	 */ ClientImpl.prototype._connected = function(reconnect, uri) {
+            // Execute the onConnected callback if there is one.
+            if (this.onConnected) this.onConnected(reconnect, uri);
+        };
+        /**
+	 * Attempts to reconnect the client to the server.
+   * For each reconnect attempt, will double the reconnect interval
+   * up to 128 seconds.
+	 */ ClientImpl.prototype._reconnect = function() {
+            this._trace("Client._reconnect");
+            if (!this.connected) {
+                this._reconnecting = true;
+                this.sendPinger.cancel();
+                this.receivePinger.cancel();
+                if (this._reconnectInterval < 128) this._reconnectInterval = this._reconnectInterval * 2;
+                if (this.connectOptions.uris) {
+                    this.hostIndex = 0;
+                    this._doConnect(this.connectOptions.uris[0]);
+                } else this._doConnect(this.uri);
+            }
+        };
+        /**
+	 * Client has disconnected either at its own request or because the server
+	 * or network disconnected it. Remove all non-durable state.
+	 * @param {errorCode} [number] the error number.
+	 * @param {errorText} [string] the error text.
+	 * @ignore
+	 */ ClientImpl.prototype._disconnected = function(errorCode, errorText) {
+            this._trace("Client._disconnected", errorCode, errorText);
+            if (errorCode !== undefined && this._reconnecting) {
+                //Continue automatic reconnect process
+                this._reconnectTimeout = new Timeout(this, this._reconnectInterval, this._reconnect);
+                return;
+            }
+            this.sendPinger.cancel();
+            this.receivePinger.cancel();
+            if (this._connectTimeout) {
+                this._connectTimeout.cancel();
+                this._connectTimeout = null;
+            }
+            // Clear message buffers.
+            this._msg_queue = [];
+            this._buffered_msg_queue = [];
+            this._notify_msg_sent = {
+            };
+            if (this.socket) {
+                // Cancel all socket callbacks so that they cannot be driven again by this socket.
+                this.socket.onopen = null;
+                this.socket.onmessage = null;
+                this.socket.onerror = null;
+                this.socket.onclose = null;
+                if (this.socket.readyState === 1) this.socket.close();
+                delete this.socket;
+            }
+            if (this.connectOptions.uris && this.hostIndex < this.connectOptions.uris.length - 1) {
+                // Try the next host.
+                this.hostIndex++;
+                this._doConnect(this.connectOptions.uris[this.hostIndex]);
+            } else {
+                if (errorCode === undefined) {
+                    errorCode = ERROR.OK.code;
+                    errorText = format(ERROR.OK);
+                }
+                // Run any application callbacks last as they may attempt to reconnect and hence create a new socket.
+                if (this.connected) {
+                    this.connected = false;
+                    // Execute the connectionLostCallback if there is one, and we were connected.
+                    if (this.onConnectionLost) this.onConnectionLost({
+                        errorCode: errorCode,
+                        errorMessage: errorText,
+                        reconnect: this.connectOptions.reconnect,
+                        uri: this._wsuri
+                    });
+                    if (errorCode !== ERROR.OK.code && this.connectOptions.reconnect) {
+                        // Start automatic reconnect process for the very first time since last successful connect.
+                        this._reconnectInterval = 1;
+                        this._reconnect();
+                        return;
+                    }
+                } else {
+                    // Otherwise we never had a connection, so indicate that the connect has failed.
+                    if (this.connectOptions.mqttVersion === 4 && this.connectOptions.mqttVersionExplicit === false) {
+                        this._trace("Failed to connect V4, dropping back to V3");
+                        this.connectOptions.mqttVersion = 3;
+                        if (this.connectOptions.uris) {
+                            this.hostIndex = 0;
+                            this._doConnect(this.connectOptions.uris[0]);
+                        } else this._doConnect(this.uri);
+                    } else if (this.connectOptions.onFailure) this.connectOptions.onFailure({
+                        invocationContext: this.connectOptions.invocationContext,
+                        errorCode: errorCode,
+                        errorMessage: errorText
+                    });
+                }
+            }
+        };
+        /** @ignore */ ClientImpl.prototype._trace = function() {
+            // Pass trace message back to client's callback function
+            if (this.traceFunction) {
+                var args = Array.prototype.slice.call(arguments);
+                for(var i in args)if (typeof args[i] !== "undefined") args.splice(i, 1, JSON.stringify(args[i]));
+                var record = args.join("");
+                this.traceFunction({
+                    severity: "Debug",
+                    message: record
+                });
+            }
+            //buffer style trace
+            if (this._traceBuffer !== null) for(var i = 0, max = arguments.length; i < max; i++){
+                if (this._traceBuffer.length == this._MAX_TRACE_ENTRIES) this._traceBuffer.shift();
+                if (i === 0) this._traceBuffer.push(arguments[i]);
+                else if (typeof arguments[i] === "undefined") this._traceBuffer.push(arguments[i]);
+                else this._traceBuffer.push("  " + JSON.stringify(arguments[i]));
+            }
+        };
+        /** @ignore */ ClientImpl.prototype._traceMask = function(traceObject, masked) {
+            var traceObjectMasked = {
+            };
+            for(var attr in traceObject)if (traceObject.hasOwnProperty(attr)) {
+                if (attr == masked) traceObjectMasked[attr] = "******";
+                else traceObjectMasked[attr] = traceObject[attr];
+            }
+            return traceObjectMasked;
+        };
+        // ------------------------------------------------------------------------
+        // Public Programming interface.
+        // ------------------------------------------------------------------------
+        /**
+	 * The JavaScript application communicates to the server using a {@link Paho.Client} object.
+	 * <p>
+	 * Most applications will create just one Client object and then call its connect() method,
+	 * however applications can create more than one Client object if they wish.
+	 * In this case the combination of host, port and clientId attributes must be different for each Client object.
+	 * <p>
+	 * The send, subscribe and unsubscribe methods are implemented as asynchronous JavaScript methods
+	 * (even though the underlying protocol exchange might be synchronous in nature).
+	 * This means they signal their completion by calling back to the application,
+	 * via Success or Failure callback functions provided by the application on the method in question.
+	 * Such callbacks are called at most once per method invocation and do not persist beyond the lifetime
+	 * of the script that made the invocation.
+	 * <p>
+	 * In contrast there are some callback functions, most notably <i>onMessageArrived</i>,
+	 * that are defined on the {@link Paho.Client} object.
+	 * These may get called multiple times, and aren't directly related to specific method invocations made by the client.
+	 *
+	 * @name Paho.Client
+	 *
+	 * @constructor
+	 *
+	 * @param {string} host - the address of the messaging server, as a fully qualified WebSocket URI, as a DNS name or dotted decimal IP address.
+	 * @param {number} port - the port number to connect to - only required if host is not a URI
+	 * @param {string} path - the path on the host to connect to - only used if host is not a URI. Default: '/mqtt'.
+	 * @param {string} clientId - the Messaging client identifier, between 1 and 23 characters in length.
+	 *
+	 * @property {string} host - <i>read only</i> the server's DNS hostname or dotted decimal IP address.
+	 * @property {number} port - <i>read only</i> the server's port.
+	 * @property {string} path - <i>read only</i> the server's path.
+	 * @property {string} clientId - <i>read only</i> used when connecting to the server.
+	 * @property {function} onConnectionLost - called when a connection has been lost.
+	 *                            after a connect() method has succeeded.
+	 *                            Establish the call back used when a connection has been lost. The connection may be
+	 *                            lost because the client initiates a disconnect or because the server or network
+	 *                            cause the client to be disconnected. The disconnect call back may be called without
+	 *                            the connectionComplete call back being invoked if, for example the client fails to
+	 *                            connect.
+	 *                            A single response object parameter is passed to the onConnectionLost callback containing the following fields:
+	 *                            <ol>
+	 *                            <li>errorCode
+	 *                            <li>errorMessage
+	 *                            </ol>
+	 * @property {function} onMessageDelivered - called when a message has been delivered.
+	 *                            All processing that this Client will ever do has been completed. So, for example,
+	 *                            in the case of a Qos=2 message sent by this client, the PubComp flow has been received from the server
+	 *                            and the message has been removed from persistent storage before this callback is invoked.
+	 *                            Parameters passed to the onMessageDelivered callback are:
+	 *                            <ol>
+	 *                            <li>{@link Paho.Message} that was delivered.
+	 *                            </ol>
+	 * @property {function} onMessageArrived - called when a message has arrived in this Paho.client.
+	 *                            Parameters passed to the onMessageArrived callback are:
+	 *                            <ol>
+	 *                            <li>{@link Paho.Message} that has arrived.
+	 *                            </ol>
+	 * @property {function} onConnected - called when a connection is successfully made to the server.
+	 *                                  after a connect() method.
+	 *                                  Parameters passed to the onConnected callback are:
+	 *                                  <ol>
+	 *                                  <li>reconnect (boolean) - If true, the connection was the result of a reconnect.</li>
+	 *                                  <li>URI (string) - The URI used to connect to the server.</li>
+	 *                                  </ol>
+	 * @property {boolean} disconnectedPublishing - if set, will enable disconnected publishing in
+	 *                                            in the event that the connection to the server is lost.
+	 * @property {number} disconnectedBufferSize - Used to set the maximum number of messages that the disconnected
+	 *                                             buffer will hold before rejecting new messages. Default size: 5000 messages
+	 * @property {function} trace - called whenever trace is called. TODO
+	 */ var Client = function(host1, port1, path, clientId) {
+            var uri;
+            if (typeof host1 !== "string") throw new Error(format(ERROR.INVALID_TYPE, [
+                typeof host1,
+                "host"
+            ]));
+            if (arguments.length == 2) {
+                // host: must be full ws:// uri
+                // port: clientId
+                clientId = port1;
+                uri = host1;
+                var match = uri.match(/^(wss?):\/\/((\[(.+)\])|([^\/]+?))(:(\d+))?(\/.*)$/);
+                if (match) {
+                    host1 = match[4] || match[2];
+                    port1 = parseInt(match[7]);
+                    path = match[8];
+                } else throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                    host1,
+                    "host"
+                ]));
+            } else {
+                if (arguments.length == 3) {
+                    clientId = path;
+                    path = "/mqtt";
+                }
+                if (typeof port1 !== "number" || port1 < 0) throw new Error(format(ERROR.INVALID_TYPE, [
+                    typeof port1,
+                    "port"
+                ]));
+                if (typeof path !== "string") throw new Error(format(ERROR.INVALID_TYPE, [
+                    typeof path,
+                    "path"
+                ]));
+                var ipv6AddSBracket = host1.indexOf(":") !== -1 && host1.slice(0, 1) !== "[" && host1.slice(-1) !== "]";
+                uri = "ws://" + (ipv6AddSBracket ? "[" + host1 + "]" : host1) + ":" + port1 + path;
+            }
+            var clientIdLength = 0;
+            for(var i1 = 0; i1 < clientId.length; i1++){
+                var charCode = clientId.charCodeAt(i1);
+                if (55296 <= charCode && charCode <= 56319) i1++; // Surrogate pair.
+                clientIdLength++;
+            }
+            if (typeof clientId !== "string" || clientIdLength > 65535) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                clientId,
+                "clientId"
+            ]));
+            var client = new ClientImpl(uri, host1, port1, path, clientId);
+            //Public Properties
+            Object.defineProperties(this, {
+                "host": {
+                    get: function() {
+                        return host1;
+                    },
+                    set: function() {
+                        throw new Error(format(ERROR.UNSUPPORTED_OPERATION));
+                    }
+                },
+                "port": {
+                    get: function() {
+                        return port1;
+                    },
+                    set: function() {
+                        throw new Error(format(ERROR.UNSUPPORTED_OPERATION));
+                    }
+                },
+                "path": {
+                    get: function() {
+                        return path;
+                    },
+                    set: function() {
+                        throw new Error(format(ERROR.UNSUPPORTED_OPERATION));
+                    }
+                },
+                "uri": {
+                    get: function() {
+                        return uri;
+                    },
+                    set: function() {
+                        throw new Error(format(ERROR.UNSUPPORTED_OPERATION));
+                    }
+                },
+                "clientId": {
+                    get: function() {
+                        return client.clientId;
+                    },
+                    set: function() {
+                        throw new Error(format(ERROR.UNSUPPORTED_OPERATION));
+                    }
+                },
+                "onConnected": {
+                    get: function() {
+                        return client.onConnected;
+                    },
+                    set: function(newOnConnected) {
+                        if (typeof newOnConnected === "function") client.onConnected = newOnConnected;
+                        else throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof newOnConnected,
+                            "onConnected"
+                        ]));
+                    }
+                },
+                "disconnectedPublishing": {
+                    get: function() {
+                        return client.disconnectedPublishing;
+                    },
+                    set: function(newDisconnectedPublishing) {
+                        client.disconnectedPublishing = newDisconnectedPublishing;
+                    }
+                },
+                "disconnectedBufferSize": {
+                    get: function() {
+                        return client.disconnectedBufferSize;
+                    },
+                    set: function(newDisconnectedBufferSize) {
+                        client.disconnectedBufferSize = newDisconnectedBufferSize;
+                    }
+                },
+                "onConnectionLost": {
+                    get: function() {
+                        return client.onConnectionLost;
+                    },
+                    set: function(newOnConnectionLost) {
+                        if (typeof newOnConnectionLost === "function") client.onConnectionLost = newOnConnectionLost;
+                        else throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof newOnConnectionLost,
+                            "onConnectionLost"
+                        ]));
+                    }
+                },
+                "onMessageDelivered": {
+                    get: function() {
+                        return client.onMessageDelivered;
+                    },
+                    set: function(newOnMessageDelivered) {
+                        if (typeof newOnMessageDelivered === "function") client.onMessageDelivered = newOnMessageDelivered;
+                        else throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof newOnMessageDelivered,
+                            "onMessageDelivered"
+                        ]));
+                    }
+                },
+                "onMessageArrived": {
+                    get: function() {
+                        return client.onMessageArrived;
+                    },
+                    set: function(newOnMessageArrived) {
+                        if (typeof newOnMessageArrived === "function") client.onMessageArrived = newOnMessageArrived;
+                        else throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof newOnMessageArrived,
+                            "onMessageArrived"
+                        ]));
+                    }
+                },
+                "trace": {
+                    get: function() {
+                        return client.traceFunction;
+                    },
+                    set: function(trace) {
+                        if (typeof trace === "function") client.traceFunction = trace;
+                        else throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof trace,
+                            "onTrace"
+                        ]));
+                    }
+                }
+            });
+            /**
+		 * Connect this Messaging client to its server.
+		 *
+		 * @name Paho.Client#connect
+		 * @function
+		 * @param {object} connectOptions - Attributes used with the connection.
+		 * @param {number} connectOptions.timeout - If the connect has not succeeded within this
+		 *                    number of seconds, it is deemed to have failed.
+		 *                    The default is 30 seconds.
+		 * @param {string} connectOptions.userName - Authentication username for this connection.
+		 * @param {string} connectOptions.password - Authentication password for this connection.
+		 * @param {Paho.Message} connectOptions.willMessage - sent by the server when the client
+		 *                    disconnects abnormally.
+		 * @param {number} connectOptions.keepAliveInterval - the server disconnects this client if
+		 *                    there is no activity for this number of seconds.
+		 *                    The default value of 60 seconds is assumed if not set.
+		 * @param {boolean} connectOptions.cleanSession - if true(default) the client and server
+		 *                    persistent state is deleted on successful connect.
+		 * @param {boolean} connectOptions.useSSL - if present and true, use an SSL Websocket connection.
+		 * @param {object} connectOptions.invocationContext - passed to the onSuccess callback or onFailure callback.
+		 * @param {function} connectOptions.onSuccess - called when the connect acknowledgement
+		 *                    has been received from the server.
+		 * A single response object parameter is passed to the onSuccess callback containing the following fields:
+		 * <ol>
+		 * <li>invocationContext as passed in to the onSuccess method in the connectOptions.
+		 * </ol>
+	 * @param {function} connectOptions.onFailure - called when the connect request has failed or timed out.
+		 * A single response object parameter is passed to the onFailure callback containing the following fields:
+		 * <ol>
+		 * <li>invocationContext as passed in to the onFailure method in the connectOptions.
+		 * <li>errorCode a number indicating the nature of the error.
+		 * <li>errorMessage text describing the error.
+		 * </ol>
+	 * @param {array} connectOptions.hosts - If present this contains either a set of hostnames or fully qualified
+		 * WebSocket URIs (ws://iot.eclipse.org:80/ws), that are tried in order in place
+		 * of the host and port paramater on the construtor. The hosts are tried one at at time in order until
+		 * one of then succeeds.
+	 * @param {array} connectOptions.ports - If present the set of ports matching the hosts. If hosts contains URIs, this property
+		 * is not used.
+	 * @param {boolean} connectOptions.reconnect - Sets whether the client will automatically attempt to reconnect
+	 * to the server if the connection is lost.
+	 *<ul>
+	 *<li>If set to false, the client will not attempt to automatically reconnect to the server in the event that the
+	 * connection is lost.</li>
+	 *<li>If set to true, in the event that the connection is lost, the client will attempt to reconnect to the server.
+	 * It will initially wait 1 second before it attempts to reconnect, for every failed reconnect attempt, the delay
+	 * will double until it is at 2 minutes at which point the delay will stay at 2 minutes.</li>
+	 *</ul>
+	 * @param {number} connectOptions.mqttVersion - The version of MQTT to use to connect to the MQTT Broker.
+	 *<ul>
+	 *<li>3 - MQTT V3.1</li>
+	 *<li>4 - MQTT V3.1.1</li>
+	 *</ul>
+	 * @param {boolean} connectOptions.mqttVersionExplicit - If set to true, will force the connection to use the
+	 * selected MQTT Version or will fail to connect.
+	 * @param {array} connectOptions.uris - If present, should contain a list of fully qualified WebSocket uris
+	 * (e.g. ws://iot.eclipse.org:80/ws), that are tried in order in place of the host and port parameter of the construtor.
+	 * The uris are tried one at a time in order until one of them succeeds. Do not use this in conjunction with hosts as
+	 * the hosts array will be converted to uris and will overwrite this property.
+		 * @throws {InvalidState} If the client is not in disconnected state. The client must have received connectionLost
+		 * or disconnected before calling connect for a second or subsequent time.
+		 */ this.connect = function(connectOptions) {
+                connectOptions = connectOptions || {
+                };
+                validate(connectOptions, {
+                    timeout: "number",
+                    userName: "string",
+                    password: "string",
+                    willMessage: "object",
+                    keepAliveInterval: "number",
+                    cleanSession: "boolean",
+                    useSSL: "boolean",
+                    invocationContext: "object",
+                    onSuccess: "function",
+                    onFailure: "function",
+                    hosts: "object",
+                    ports: "object",
+                    reconnect: "boolean",
+                    mqttVersion: "number",
+                    mqttVersionExplicit: "boolean",
+                    uris: "object"
+                });
+                // If no keep alive interval is set, assume 60 seconds.
+                if (connectOptions.keepAliveInterval === undefined) connectOptions.keepAliveInterval = 60;
+                if (connectOptions.mqttVersion > 4 || connectOptions.mqttVersion < 3) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                    connectOptions.mqttVersion,
+                    "connectOptions.mqttVersion"
+                ]));
+                if (connectOptions.mqttVersion === undefined) {
+                    connectOptions.mqttVersionExplicit = false;
+                    connectOptions.mqttVersion = 4;
+                } else connectOptions.mqttVersionExplicit = true;
+                //Check that if password is set, so is username
+                if (connectOptions.password !== undefined && connectOptions.userName === undefined) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                    connectOptions.password,
+                    "connectOptions.password"
+                ]));
+                if (connectOptions.willMessage) {
+                    if (!(connectOptions.willMessage instanceof Message)) throw new Error(format(ERROR.INVALID_TYPE, [
+                        connectOptions.willMessage,
+                        "connectOptions.willMessage"
+                    ]));
+                    // The will message must have a payload that can be represented as a string.
+                    // Cause the willMessage to throw an exception if this is not the case.
+                    connectOptions.willMessage.stringPayload = null;
+                    if (typeof connectOptions.willMessage.destinationName === "undefined") throw new Error(format(ERROR.INVALID_TYPE, [
+                        typeof connectOptions.willMessage.destinationName,
+                        "connectOptions.willMessage.destinationName"
+                    ]));
+                }
+                if (typeof connectOptions.cleanSession === "undefined") connectOptions.cleanSession = true;
+                if (connectOptions.hosts) {
+                    if (!(connectOptions.hosts instanceof Array)) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                        connectOptions.hosts,
+                        "connectOptions.hosts"
+                    ]));
+                    if (connectOptions.hosts.length < 1) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                        connectOptions.hosts,
+                        "connectOptions.hosts"
+                    ]));
+                    var usingURIs = false;
+                    for(var i = 0; i < connectOptions.hosts.length; i++){
+                        if (typeof connectOptions.hosts[i] !== "string") throw new Error(format(ERROR.INVALID_TYPE, [
+                            typeof connectOptions.hosts[i],
+                            "connectOptions.hosts[" + i + "]"
+                        ]));
+                        if (/^(wss?):\/\/((\[(.+)\])|([^\/]+?))(:(\d+))?(\/.*)$/.test(connectOptions.hosts[i])) {
+                            if (i === 0) usingURIs = true;
+                            else if (!usingURIs) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                                connectOptions.hosts[i],
+                                "connectOptions.hosts[" + i + "]"
+                            ]));
+                        } else if (usingURIs) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            connectOptions.hosts[i],
+                            "connectOptions.hosts[" + i + "]"
+                        ]));
+                    }
+                    if (!usingURIs) {
+                        if (!connectOptions.ports) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            connectOptions.ports,
+                            "connectOptions.ports"
+                        ]));
+                        if (!(connectOptions.ports instanceof Array)) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            connectOptions.ports,
+                            "connectOptions.ports"
+                        ]));
+                        if (connectOptions.hosts.length !== connectOptions.ports.length) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            connectOptions.ports,
+                            "connectOptions.ports"
+                        ]));
+                        connectOptions.uris = [];
+                        for(var i = 0; i < connectOptions.hosts.length; i++){
+                            if (typeof connectOptions.ports[i] !== "number" || connectOptions.ports[i] < 0) throw new Error(format(ERROR.INVALID_TYPE, [
+                                typeof connectOptions.ports[i],
+                                "connectOptions.ports[" + i + "]"
+                            ]));
+                            var host = connectOptions.hosts[i];
+                            var port = connectOptions.ports[i];
+                            var ipv6 = host.indexOf(":") !== -1;
+                            uri = "ws://" + (ipv6 ? "[" + host + "]" : host) + ":" + port + path;
+                            connectOptions.uris.push(uri);
+                        }
+                    } else connectOptions.uris = connectOptions.hosts;
+                }
+                client.connect(connectOptions);
+            };
+            /**
+		 * Subscribe for messages, request receipt of a copy of messages sent to the destinations described by the filter.
+		 *
+		 * @name Paho.Client#subscribe
+		 * @function
+		 * @param {string} filter describing the destinations to receive messages from.
+		 * <br>
+		 * @param {object} subscribeOptions - used to control the subscription
+		 *
+		 * @param {number} subscribeOptions.qos - the maximum qos of any publications sent
+		 *                                  as a result of making this subscription.
+		 * @param {object} subscribeOptions.invocationContext - passed to the onSuccess callback
+		 *                                  or onFailure callback.
+		 * @param {function} subscribeOptions.onSuccess - called when the subscribe acknowledgement
+		 *                                  has been received from the server.
+		 *                                  A single response object parameter is passed to the onSuccess callback containing the following fields:
+		 *                                  <ol>
+		 *                                  <li>invocationContext if set in the subscribeOptions.
+		 *                                  </ol>
+		 * @param {function} subscribeOptions.onFailure - called when the subscribe request has failed or timed out.
+		 *                                  A single response object parameter is passed to the onFailure callback containing the following fields:
+		 *                                  <ol>
+		 *                                  <li>invocationContext - if set in the subscribeOptions.
+		 *                                  <li>errorCode - a number indicating the nature of the error.
+		 *                                  <li>errorMessage - text describing the error.
+		 *                                  </ol>
+		 * @param {number} subscribeOptions.timeout - which, if present, determines the number of
+		 *                                  seconds after which the onFailure calback is called.
+		 *                                  The presence of a timeout does not prevent the onSuccess
+		 *                                  callback from being called when the subscribe completes.
+		 * @throws {InvalidState} if the client is not in connected state.
+		 */ this.subscribe = function(filter, subscribeOptions) {
+                if (typeof filter !== "string" && filter.constructor !== Array) throw new Error("Invalid argument:" + filter);
+                subscribeOptions = subscribeOptions || {
+                };
+                validate(subscribeOptions, {
+                    qos: "number",
+                    invocationContext: "object",
+                    onSuccess: "function",
+                    onFailure: "function",
+                    timeout: "number"
+                });
+                if (subscribeOptions.timeout && !subscribeOptions.onFailure) throw new Error("subscribeOptions.timeout specified with no onFailure callback.");
+                if (typeof subscribeOptions.qos !== "undefined" && !(subscribeOptions.qos === 0 || subscribeOptions.qos === 1 || subscribeOptions.qos === 2)) throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                    subscribeOptions.qos,
+                    "subscribeOptions.qos"
+                ]));
+                client.subscribe(filter, subscribeOptions);
+            };
+            /**
+		 * Unsubscribe for messages, stop receiving messages sent to destinations described by the filter.
+		 *
+		 * @name Paho.Client#unsubscribe
+		 * @function
+		 * @param {string} filter - describing the destinations to receive messages from.
+		 * @param {object} unsubscribeOptions - used to control the subscription
+		 * @param {object} unsubscribeOptions.invocationContext - passed to the onSuccess callback
+											  or onFailure callback.
+		 * @param {function} unsubscribeOptions.onSuccess - called when the unsubscribe acknowledgement has been received from the server.
+		 *                                    A single response object parameter is passed to the
+		 *                                    onSuccess callback containing the following fields:
+		 *                                    <ol>
+		 *                                    <li>invocationContext - if set in the unsubscribeOptions.
+		 *                                    </ol>
+		 * @param {function} unsubscribeOptions.onFailure called when the unsubscribe request has failed or timed out.
+		 *                                    A single response object parameter is passed to the onFailure callback containing the following fields:
+		 *                                    <ol>
+		 *                                    <li>invocationContext - if set in the unsubscribeOptions.
+		 *                                    <li>errorCode - a number indicating the nature of the error.
+		 *                                    <li>errorMessage - text describing the error.
+		 *                                    </ol>
+		 * @param {number} unsubscribeOptions.timeout - which, if present, determines the number of seconds
+		 *                                    after which the onFailure callback is called. The presence of
+		 *                                    a timeout does not prevent the onSuccess callback from being
+		 *                                    called when the unsubscribe completes
+		 * @throws {InvalidState} if the client is not in connected state.
+		 */ this.unsubscribe = function(filter, unsubscribeOptions) {
+                if (typeof filter !== "string" && filter.constructor !== Array) throw new Error("Invalid argument:" + filter);
+                unsubscribeOptions = unsubscribeOptions || {
+                };
+                validate(unsubscribeOptions, {
+                    invocationContext: "object",
+                    onSuccess: "function",
+                    onFailure: "function",
+                    timeout: "number"
+                });
+                if (unsubscribeOptions.timeout && !unsubscribeOptions.onFailure) throw new Error("unsubscribeOptions.timeout specified with no onFailure callback.");
+                client.unsubscribe(filter, unsubscribeOptions);
+            };
+            /**
+		 * Send a message to the consumers of the destination in the Message.
+		 *
+		 * @name Paho.Client#send
+		 * @function
+		 * @param {string|Paho.Message} topic - <b>mandatory</b> The name of the destination to which the message is to be sent.
+		 * 					   - If it is the only parameter, used as Paho.Message object.
+		 * @param {String|ArrayBuffer} payload - The message data to be sent.
+		 * @param {number} qos The Quality of Service used to deliver the message.
+		 * 		<dl>
+		 * 			<dt>0 Best effort (default).
+		 *     			<dt>1 At least once.
+		 *     			<dt>2 Exactly once.
+		 * 		</dl>
+		 * @param {Boolean} retained If true, the message is to be retained by the server and delivered
+		 *                     to both current and future subscriptions.
+		 *                     If false the server only delivers the message to current subscribers, this is the default for new Messages.
+		 *                     A received message has the retained boolean set to true if the message was published
+		 *                     with the retained boolean set to true
+		 *                     and the subscrption was made after the message has been published.
+		 * @throws {InvalidState} if the client is not connected.
+		 */ this.send = function(topic, payload, qos, retained) {
+                var message;
+                if (arguments.length === 0) throw new Error("Invalid argument.length");
+                else if (arguments.length == 1) {
+                    if (!(topic instanceof Message) && typeof topic !== "string") throw new Error("Invalid argument:" + typeof topic);
+                    message = topic;
+                    if (typeof message.destinationName === "undefined") throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                        message.destinationName,
+                        "Message.destinationName"
+                    ]));
+                    client.send(message);
+                } else {
+                    //parameter checking in Message object
+                    message = new Message(payload);
+                    message.destinationName = topic;
+                    if (arguments.length >= 3) message.qos = qos;
+                    if (arguments.length >= 4) message.retained = retained;
+                    client.send(message);
+                }
+            };
+            /**
+		 * Publish a message to the consumers of the destination in the Message.
+		 * Synonym for Paho.Mqtt.Client#send
+		 *
+		 * @name Paho.Client#publish
+		 * @function
+		 * @param {string|Paho.Message} topic - <b>mandatory</b> The name of the topic to which the message is to be published.
+		 * 					   - If it is the only parameter, used as Paho.Message object.
+		 * @param {String|ArrayBuffer} payload - The message data to be published.
+		 * @param {number} qos The Quality of Service used to deliver the message.
+		 * 		<dl>
+		 * 			<dt>0 Best effort (default).
+		 *     			<dt>1 At least once.
+		 *     			<dt>2 Exactly once.
+		 * 		</dl>
+		 * @param {Boolean} retained If true, the message is to be retained by the server and delivered
+		 *                     to both current and future subscriptions.
+		 *                     If false the server only delivers the message to current subscribers, this is the default for new Messages.
+		 *                     A received message has the retained boolean set to true if the message was published
+		 *                     with the retained boolean set to true
+		 *                     and the subscrption was made after the message has been published.
+		 * @throws {InvalidState} if the client is not connected.
+		 */ this.publish = function(topic, payload, qos, retained) {
+                var message;
+                if (arguments.length === 0) throw new Error("Invalid argument.length");
+                else if (arguments.length == 1) {
+                    if (!(topic instanceof Message) && typeof topic !== "string") throw new Error("Invalid argument:" + typeof topic);
+                    message = topic;
+                    if (typeof message.destinationName === "undefined") throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                        message.destinationName,
+                        "Message.destinationName"
+                    ]));
+                    client.send(message);
+                } else {
+                    //parameter checking in Message object
+                    message = new Message(payload);
+                    message.destinationName = topic;
+                    if (arguments.length >= 3) message.qos = qos;
+                    if (arguments.length >= 4) message.retained = retained;
+                    client.send(message);
+                }
+            };
+            /**
+		 * Normal disconnect of this Messaging client from its server.
+		 *
+		 * @name Paho.Client#disconnect
+		 * @function
+		 * @throws {InvalidState} if the client is already disconnected.
+		 */ this.disconnect = function() {
+                client.disconnect();
+            };
+            /**
+		 * Get the contents of the trace log.
+		 *
+		 * @name Paho.Client#getTraceLog
+		 * @function
+		 * @return {Object[]} tracebuffer containing the time ordered trace records.
+		 */ this.getTraceLog = function() {
+                return client.getTraceLog();
+            };
+            /**
+		 * Start tracing.
+		 *
+		 * @name Paho.Client#startTrace
+		 * @function
+		 */ this.startTrace = function() {
+                client.startTrace();
+            };
+            /**
+		 * Stop tracing.
+		 *
+		 * @name Paho.Client#stopTrace
+		 * @function
+		 */ this.stopTrace = function() {
+                client.stopTrace();
+            };
+            this.isConnected = function() {
+                return client.connected;
+            };
+        };
+        /**
+	 * An application message, sent or received.
+	 * <p>
+	 * All attributes may be null, which implies the default values.
+	 *
+	 * @name Paho.Message
+	 * @constructor
+	 * @param {String|ArrayBuffer} payload The message data to be sent.
+	 * <p>
+	 * @property {string} payloadString <i>read only</i> The payload as a string if the payload consists of valid UTF-8 characters.
+	 * @property {ArrayBuffer} payloadBytes <i>read only</i> The payload as an ArrayBuffer.
+	 * <p>
+	 * @property {string} destinationName <b>mandatory</b> The name of the destination to which the message is to be sent
+	 *                    (for messages about to be sent) or the name of the destination from which the message has been received.
+	 *                    (for messages received by the onMessage function).
+	 * <p>
+	 * @property {number} qos The Quality of Service used to deliver the message.
+	 * <dl>
+	 *     <dt>0 Best effort (default).
+	 *     <dt>1 At least once.
+	 *     <dt>2 Exactly once.
+	 * </dl>
+	 * <p>
+	 * @property {Boolean} retained If true, the message is to be retained by the server and delivered
+	 *                     to both current and future subscriptions.
+	 *                     If false the server only delivers the message to current subscribers, this is the default for new Messages.
+	 *                     A received message has the retained boolean set to true if the message was published
+	 *                     with the retained boolean set to true
+	 *                     and the subscrption was made after the message has been published.
+	 * <p>
+	 * @property {Boolean} duplicate <i>read only</i> If true, this message might be a duplicate of one which has already been received.
+	 *                     This is only set on messages received from the server.
+	 *
+	 */ var Message = function(newPayload) {
+            var payload;
+            if (typeof newPayload === "string" || newPayload instanceof ArrayBuffer || ArrayBuffer.isView(newPayload) && !(newPayload instanceof DataView)) payload = newPayload;
+            else throw format(ERROR.INVALID_ARGUMENT, [
+                newPayload,
+                "newPayload"
+            ]);
+            var destinationName;
+            var qos = 0;
+            var retained = false;
+            var duplicate = false;
+            Object.defineProperties(this, {
+                "payloadString": {
+                    enumerable: true,
+                    get: function() {
+                        if (typeof payload === "string") return payload;
+                        else return parseUTF8(payload, 0, payload.length);
+                    }
+                },
+                "payloadBytes": {
+                    enumerable: true,
+                    get: function() {
+                        if (typeof payload === "string") {
+                            var buffer = new ArrayBuffer(UTF8Length(payload));
+                            var byteStream = new Uint8Array(buffer);
+                            stringToUTF8(payload, byteStream, 0);
+                            return byteStream;
+                        } else return payload;
+                    }
+                },
+                "destinationName": {
+                    enumerable: true,
+                    get: function() {
+                        return destinationName;
+                    },
+                    set: function(newDestinationName) {
+                        if (typeof newDestinationName === "string") destinationName = newDestinationName;
+                        else throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            newDestinationName,
+                            "newDestinationName"
+                        ]));
+                    }
+                },
+                "qos": {
+                    enumerable: true,
+                    get: function() {
+                        return qos;
+                    },
+                    set: function(newQos) {
+                        if (newQos === 0 || newQos === 1 || newQos === 2) qos = newQos;
+                        else throw new Error("Invalid argument:" + newQos);
+                    }
+                },
+                "retained": {
+                    enumerable: true,
+                    get: function() {
+                        return retained;
+                    },
+                    set: function(newRetained) {
+                        if (typeof newRetained === "boolean") retained = newRetained;
+                        else throw new Error(format(ERROR.INVALID_ARGUMENT, [
+                            newRetained,
+                            "newRetained"
+                        ]));
+                    }
+                },
+                "topic": {
+                    enumerable: true,
+                    get: function() {
+                        return destinationName;
+                    },
+                    set: function(newTopic) {
+                        destinationName = newTopic;
+                    }
+                },
+                "duplicate": {
+                    enumerable: true,
+                    get: function() {
+                        return duplicate;
+                    },
+                    set: function(newDuplicate) {
+                        duplicate = newDuplicate;
+                    }
+                }
+            });
+        };
+        // Module contents.
+        return {
+            Client: Client,
+            Message: Message
+        };
+    // eslint-disable-next-line no-nested-ternary
+    }(typeof $parcel$global !== "undefined" ? $parcel$global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {
+    });
+    return PahoMQTT;
+});
 
+});
 
-var $9cf2c14da0873913$exports = {};
+var $7290a84254f9152a$exports = {};
 "use strict";
-var $9cf2c14da0873913$var$removeHash = function removeHash(hex) {
+var $7290a84254f9152a$var$removeHash = function removeHash(hex) {
     return hex.charAt(0) === '#' ? hex.slice(1) : hex;
 };
-var $9cf2c14da0873913$var$parseHex = function parseHex(nakedHex) {
+var $7290a84254f9152a$var$parseHex = function parseHex(nakedHex) {
     var isShort = nakedHex.length === 3 || nakedHex.length === 4;
     var twoDigitHexR = isShort ? "".concat(nakedHex.slice(0, 1)).concat(nakedHex.slice(0, 1)) : nakedHex.slice(0, 2);
     var twoDigitHexG = isShort ? "".concat(nakedHex.slice(1, 2)).concat(nakedHex.slice(1, 2)) : nakedHex.slice(2, 4);
@@ -330,24 +2263,24 @@ var $9cf2c14da0873913$var$parseHex = function parseHex(nakedHex) {
         a: twoDigitHexA
     };
 };
-var $9cf2c14da0873913$var$hexToDecimal = function hexToDecimal(hex) {
+var $7290a84254f9152a$var$hexToDecimal = function hexToDecimal(hex) {
     return parseInt(hex, 16);
 };
-var $9cf2c14da0873913$var$hexesToDecimals = function hexesToDecimals(_ref) {
+var $7290a84254f9152a$var$hexesToDecimals = function hexesToDecimals(_ref) {
     var r = _ref.r, g = _ref.g, b = _ref.b, a = _ref.a;
     return {
-        r: $9cf2c14da0873913$var$hexToDecimal(r),
-        g: $9cf2c14da0873913$var$hexToDecimal(g),
-        b: $9cf2c14da0873913$var$hexToDecimal(b),
-        a: +($9cf2c14da0873913$var$hexToDecimal(a) / 255).toFixed(2)
+        r: $7290a84254f9152a$var$hexToDecimal(r),
+        g: $7290a84254f9152a$var$hexToDecimal(g),
+        b: $7290a84254f9152a$var$hexToDecimal(b),
+        a: +($7290a84254f9152a$var$hexToDecimal(a) / 255).toFixed(2)
     };
 };
-var $9cf2c14da0873913$var$isNumeric = function isNumeric(n) {
+var $7290a84254f9152a$var$isNumeric = function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }; // eslint-disable-line no-restricted-globals, max-len
-var $9cf2c14da0873913$var$formatRgb = function formatRgb(decimalObject, parameterA) {
+var $7290a84254f9152a$var$formatRgb = function formatRgb(decimalObject, parameterA) {
     var r = decimalObject.r, g = decimalObject.g, b = decimalObject.b, parsedA = decimalObject.a;
-    var a = $9cf2c14da0873913$var$isNumeric(parameterA) ? parameterA : parsedA;
+    var a = $7290a84254f9152a$var$isNumeric(parameterA) ? parameterA : parsedA;
     return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
 };
 /**
@@ -358,388 +2291,72 @@ var $9cf2c14da0873913$var$formatRgb = function formatRgb(decimalObject, paramete
  * @param The hex value to convert. ('123456'. '#123456', ''123', '#123')
  * @param An alpha value to apply. (optional) ('0.5', '0.25')
  * @return An rgb or rgba value. ('rgb(11, 22, 33)'. 'rgba(11, 22, 33, 0.5)')
- */ var $9cf2c14da0873913$var$hexToRgba = function hexToRgba(hex, a) {
-    var hashlessHex = $9cf2c14da0873913$var$removeHash(hex);
-    var hexObject = $9cf2c14da0873913$var$parseHex(hashlessHex);
-    var decimalObject = $9cf2c14da0873913$var$hexesToDecimals(hexObject);
-    return $9cf2c14da0873913$var$formatRgb(decimalObject, a);
+ */ var $7290a84254f9152a$var$hexToRgba = function hexToRgba(hex, a) {
+    var hashlessHex = $7290a84254f9152a$var$removeHash(hex);
+    var hexObject = $7290a84254f9152a$var$parseHex(hashlessHex);
+    var decimalObject = $7290a84254f9152a$var$hexesToDecimals(hexObject);
+    return $7290a84254f9152a$var$formatRgb(decimalObject, a);
 };
-$9cf2c14da0873913$exports = $9cf2c14da0873913$var$hexToRgba;
+$7290a84254f9152a$exports = $7290a84254f9152a$var$hexToRgba;
 
 
-let $7682ffceaf95de26$export$189c6ba3eaa96ac2;
-(function($7682ffceaf95de26$export$189c6ba3eaa96ac2) {
-    $7682ffceaf95de26$export$189c6ba3eaa96ac2["object"] = '/tuio/2Dobj';
-    $7682ffceaf95de26$export$189c6ba3eaa96ac2["cursor"] = '/tuio/2Dcur';
-    $7682ffceaf95de26$export$189c6ba3eaa96ac2["blob"] = '/tuio/2Dblb';
-    $7682ffceaf95de26$export$189c6ba3eaa96ac2["marker"] = '/tuio/broox_markers';
-    $7682ffceaf95de26$export$189c6ba3eaa96ac2["skel"] = '/tuio/skel';
-})($7682ffceaf95de26$export$189c6ba3eaa96ac2 || ($7682ffceaf95de26$export$189c6ba3eaa96ac2 = {
-}));
-
-
-
-class $33781b20cc40af3a$var$SingleBlob {
-    constructor(id, classId = ''){
-        this.id = id;
-        this.classId = classId;
-    }
-    update(x, y, width, height, rotation = 0, velocityX = null, velocityY = null, timeAlive = 0) {
-        this.rect = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
-        };
-        this.rotation = rotation;
-        this.timeAlive = timeAlive;
-        if (velocityX === null && velocityY === null && this.rect.x !== null && this.rect.y !== null) {
-            this.velocityX = x - this.rect.x;
-            this.velocityY = y - this.rect.y;
-        } else {
-            this.velocityX = velocityX;
-            this.velocityY = velocityY;
-        }
-    }
-    get() {
-        return {
-            id: this.id,
-            classId: this.classId,
-            rect: this.rect,
-            rotation: this.rotation,
-            timeAlive: this.timeAlive,
-            velocityX: this.velocityX,
-            velocityY: this.velocityY
-        };
-    }
-}
-var $33781b20cc40af3a$export$2e2bcd8739ae039 = $33781b20cc40af3a$var$SingleBlob;
-
-
-class $70b36441bac09780$var$SkeletonBlob {
+class $b361dac4ff58c895$export$8f31e4c4a37b8e9c {
     constructor(id){
-        this.leftHand = {
-            x: -1,
-            y: -1,
-            width: 0,
-            height: 0,
-            id: ''
-        };
-        this.rightHand = {
-            x: -1,
-            y: -1,
-            width: 0,
-            height: 0,
-            id: ''
-        };
         this.id = id;
-        this.leftHand.id = id + '_left_hand';
-        this.rightHand.id = id + '_right_hand';
-    }
-    update(leftHand, rightHand, scale) {
-        this.leftHand.x = leftHand.x;
-        this.leftHand.y = leftHand.y;
-        this.leftHand.width = leftHand.width;
-        this.leftHand.height = leftHand.height;
-        this.rightHand.x = rightHand.x;
-        this.rightHand.y = rightHand.y;
-        this.rightHand.width = rightHand.width;
-        this.rightHand.height = rightHand.height;
-        this.scale = scale;
-    }
-    get() {
-        return {
-            id: this.id,
-            leftHand: this.leftHand,
-            rightHand: this.rightHand,
-            scale: this.scale
-        };
-    }
-}
-var $70b36441bac09780$export$2e2bcd8739ae039 = $70b36441bac09780$var$SkeletonBlob;
-
-
-const $240353ca4ec1a540$var$mouseBlobId = 'mouse';
-const $240353ca4ec1a540$var$randomBlobId = 'random';
-class $240353ca4ec1a540$export$b6c32681ca39b455 {
-    constructor(type, width, height, scale, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated){
-        this.blobs = new Map();
-        this.mouseEnabled = false;
-        this.calculateBlobTimeAlive = true;
-        this.randomBlobsEnabled = false;
-        this.randomBlobsTimeout = null;
-        this.randomBlobsCounter = 0;
-        this.scale = 1;
-        this.type = type;
-        this.activeArea = {
+        this.timestamp = Date.now();
+        this.body = {
             x: 0,
             y: 0,
-            width: width,
-            height: height
+            width: 0,
+            height: 0
         };
-        this.scale = scale;
-        this.onUpdateCallback = onUpdate;
-        this.onBlobAddedCallback = onBlobAdded;
-        this.onBlobDeletedCallback = onBlobDeleted;
-        this.onFrameUpdatedCallback = onFrameUpdated;
-    }
-    getBlobs() {
-        return this.blobs;
-    }
-    setScale(scale) {
-        this.scale = scale;
-    }
-    setActiveArea(x, y, width, height) {
-        this.activeArea = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
+        this.leftHand = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+        };
+        this.rightHand = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
         };
     }
-    enableMouseBlob(enabled) {
-        this.mouseEnabled = enabled;
-        const f = (evt)=>{
-            const blobData = {
-                x: evt.pageX / document.body.clientWidth * this.activeArea.width + this.activeArea.x,
-                y: evt.pageY / document.body.clientHeight * this.activeArea.height + this.activeArea.y,
-                width: 20,
-                height: 20
-            };
-            this.updateBlob($240353ca4ec1a540$var$mouseBlobId, blobData.x, blobData.y, blobData.width, blobData.height, 0, 0, 0, 0, '');
-        };
-        if (enabled) window.addEventListener('mousemove', f, false);
-        else {
-            this.updateBlobsAlive([]);
-            window.removeEventListener('mousemove', f, false);
-        }
+    setBody(body) {
+        this.body = body;
     }
-    enableRandomBlobs(enabled) {
-        this.randomBlobsEnabled = enabled;
-        if (this.randomBlobsTimeout !== null) {
-            clearTimeout(this.randomBlobsTimeout);
-            this.randomBlobsTimeout = null;
-        }
-        this.randomBlobsCounter = 0;
-        enabled && this.createRandomBlob();
+    setLeftHand(hand) {
+        this.leftHand = hand;
     }
-    isMouseEnabled() {
-        return this.mouseEnabled;
+    setRightHand(hand) {
+        this.rightHand = hand;
     }
-    areRandomBlobsEnabled() {
-        return this.randomBlobsEnabled;
+    setTimestamp(timestamp) {
+        this.timestamp = timestamp;
     }
-    killBlobs() {
-        this.updateBlobsAlive([]);
+    getBody() {
+        return this.body;
     }
-    update() {
-        if (this.randomBlobsEnabled) {
-            let idsToRemove = [];
-            for (let [id, blob] of this.blobs)if (id.includes($240353ca4ec1a540$var$randomBlobId)) {
-                if (this.isBlobInBounds(blob)) {
-                    const b = blob.get();
-                    blob.update(b.x + b.velocityX, b.y + b.velocityY, 10, 10, 0, b.velocityX, b.velocityY);
-                } else {
-                    this.onBlobDeletedCallback(id);
-                    idsToRemove.push(id);
-                }
-            }
-            for (let id1 of idsToRemove)this.blobs.delete(id1);
-        }
+    getLeftHand() {
+        return this.leftHand;
     }
-    onOSCMessage(json) {
-        for(var i in json){
-            var args = json[i].args;
-            if (args == undefined) continue;
-            var address = json[i].address;
-            if (address !== this.type) continue;
-            switch(args[0]){
-                case 'fseq':
-                    if (args.length > 1) this.onFrameUpdatedCallback && this.onFrameUpdatedCallback(args[1]);
-                    break;
-                case 'set':
-                    const blobData = this.parseBlobData(json[i].address, args);
-                    if (blobData == null) continue;
-                    this.updateBlobWithData(address, blobData);
-                    this.onUpdateCallback && this.onUpdateCallback();
-                    break;
-                case 'alive':
-                    this.updateBlobsAlive(args);
-                    this.onUpdateCallback && this.onUpdateCallback();
-                    break;
-                default:
-                    break;
-            }
-        }
+    getRightHand() {
+        return this.rightHand;
     }
-    parseBlobData(address, args) {
-        if (address === $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel) return this.parseBlobSkeletonData(address, args);
-        var blobData = {
-        };
-        blobData.id = args[1].toString();
-        switch(address){
-            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.blob:
-                if (!this.checkBlobDataFormat(args, 13)) return null;
-                blobData.x = args[2];
-                blobData.y = args[3];
-                blobData.rotation = args[4];
-                blobData.width = args[5];
-                blobData.height = args[6];
-                blobData.velocityX = args[8];
-                blobData.velocityY = args[9];
-                blobData.timeAlive = args[12];
-                break;
-            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.object:
-                if (!this.checkBlobDataFormat(args, 11)) return null;
-                blobData.classId = args[2];
-                blobData.x = args[3];
-                blobData.y = args[4];
-                blobData.rotation = args[5];
-                break;
-            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.cursor:
-                if (!this.checkBlobDataFormat(args, 7)) return null;
-                blobData.x = args[2];
-                blobData.y = args[3];
-                blobData.width = 60 / this.activeArea.width;
-                blobData.height = blobData.width;
-                break;
-            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.marker:
-                blobData.classId = args[2];
-                blobData.x = args[3];
-                blobData.y = args[4];
-                blobData.rotation = args[5];
-                blobData.width = args[6];
-                break;
-        }
-        let corrected = blobData;
-        blobData.x = corrected.x * this.activeArea.width + this.activeArea.x;
-        blobData.y = corrected.y * this.activeArea.height + this.activeArea.y;
-        blobData.width *= this.activeArea.width * this.scale;
-        blobData.height *= this.activeArea.height * this.scale;
-        return blobData;
-    }
-    parseBlobSkeletonData(address, args) {
-        if (address !== $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel) {
-            console.log('Wrong address, expected ' + $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel + ' but got ' + address);
-            return null;
-        }
-        let blobData = {
-        };
-        blobData.id = args[1].toString();
-        const scale = args[6];
-        blobData.leftHand = {
-            x: args[2],
-            y: args[3],
-            width: scale * this.activeArea.width * this.scale,
-            height: scale * this.activeArea.height * this.scale
-        };
-        blobData.rightHand = {
-            x: args[4],
-            y: args[5],
-            width: scale * this.activeArea.width * this.scale,
-            height: scale * this.activeArea.height * this.scale
-        };
-        blobData.scale = scale;
-        if (this.isSkeletonJointDetected(blobData.leftHand)) {
-            blobData.leftHand.x = blobData.leftHand.x * this.activeArea.width + this.activeArea.x;
-            blobData.leftHand.y = blobData.leftHand.y * this.activeArea.height + this.activeArea.y;
-        }
-        if (this.isSkeletonJointDetected(blobData.rightHand)) {
-            blobData.rightHand.x = blobData.rightHand.x * this.activeArea.width + this.activeArea.x;
-            blobData.rightHand.y = blobData.rightHand.y * this.activeArea.height + this.activeArea.y;
-        }
-        return blobData;
-    }
-    isSkeletonJointDetected(joint) {
-        return joint.x >= 0 && joint.y >= 0;
-    }
-    checkBlobDataFormat(args, length) {
-        if (args.length !== length) {
-            console.log('Wrong Tuio set format. Supposed to have length ' + length + ' and has length ' + args.length);
-            return false;
-        }
-        return true;
-    }
-    updateBlobWithData(type, blobData) {
-        switch(type){
-            case $7682ffceaf95de26$export$189c6ba3eaa96ac2.skel:
-                let id = blobData.id;
-                if (!this.blobs.has(id)) {
-                    const blob = new $70b36441bac09780$export$2e2bcd8739ae039(id);
-                    this.blobs.set(id, blob);
-                    blob.update(blobData.leftHand, blobData.rightHand, blobData.scale);
-                    this.onBlobAddedCallback && this.onBlobAddedCallback(id, 0, 0);
-                } else {
-                    const blob = this.blobs.get(id);
-                    blob.update(blobData.leftHand, blobData.rightHand, blobData.scale);
-                }
-                break;
-            default:
-                this.updateBlob(blobData.id, blobData.x, blobData.y, blobData.width, blobData.height, blobData.rotation, blobData.velocityX, blobData.velocityY, blobData.timeAlive, blobData.classId);
-        }
-    }
-    updateBlob(id, x, y, width, height, rotation, velocityX, velocityY, timeAlive = 0, classId = '') {
-        if (!this.blobs.has(id)) {
-            const blob = new $33781b20cc40af3a$export$2e2bcd8739ae039(id, classId);
-            this.blobs.set(id, blob);
-            blob.update(x, y, width, height, rotation, velocityX, velocityY, timeAlive);
-            this.onBlobAddedCallback && this.onBlobAddedCallback(id, x, y);
-        } else {
-            const blob = this.blobs.get(id);
-            let blobTimeAlive = timeAlive;
-            if (this.calculateBlobTimeAlive && blobTimeAlive <= 0) blobTimeAlive = blob.timeAlive + 0.01;
-            blob.update(x, y, width, height, rotation, velocityX, velocityY, blobTimeAlive);
-        }
-        this.onUpdateCallback && this.onUpdateCallback();
-    }
-    updateBlobsAlive(idsAlive) {
-        const idsToRemove = [];
-        if (!idsAlive || idsAlive.length === 0) this.blobs.clear();
-        else {
-            for (let [id, blob] of this.blobs){
-                let isAlive = false;
-                for (let aliveItem of idsAlive){
-                    isAlive = aliveItem === id;
-                    if (isAlive) break;
-                }
-                if (!isAlive) {
-                    this.onBlobDeletedCallback && this.onBlobDeletedCallback(id);
-                    idsToRemove.push(id);
-                }
-            }
-            for (let id2 of idsToRemove)this.blobs.delete(id2);
-        }
-    }
-    createRandomBlob() {
-        if (!this.randomBlobsEnabled) return;
-        const fromTopOrBottom = Math.random() <= 0.5;
-        const dirX = Math.random() <= 0.5 ? 1 : -1;
-        const dirY = Math.random() <= 0.5 ? 1 : -1;
-        const minVelX = fromTopOrBottom ? 0 : 0.5;
-        const minVelY = fromTopOrBottom ? 0.5 : 0;
-        const velocityX = (Math.random() * 2 + minVelX) * dirX;
-        const velocityY = (Math.random() * 2 + minVelY) * dirY;
-        const x = fromTopOrBottom ? this.activeArea.width * Math.random() + this.activeArea.x : velocityX > 0 ? this.activeArea.x : this.activeArea.width + this.activeArea.x;
-        const y = fromTopOrBottom ? velocityY > 0 ? this.activeArea.y : this.activeArea.height + this.activeArea.y : this.activeArea.height * Math.random() + this.activeArea.y;
-        this.updateBlob('random_' + this.randomBlobsCounter, x, y, 10, 10, 0, velocityX, velocityY);
-        this.randomBlobsCounter++;
-        this.randomBlobsTimeout = setTimeout(()=>{
-            this.createRandomBlob();
-        }, Math.random() * 3000 + 1000);
-    }
-    isBlobInBounds(blob) {
-        return !(blob.x < -9 + this.activeArea.x || blob.x > this.activeArea.width + this.activeArea.x || blob.y < -this.activeArea.height * 0.5 + this.activeArea.y || blob.y > this.activeArea.height + this.activeArea.y);
+    getTimestamp() {
+        return this.timestamp;
     }
 }
 
 
-var $f4c70f265695a3d5$exports = {};
+var $2c73cfb2b22824f7$exports = {};
 /*! Tweakpane 3.1.4 (c) 2016 cocopon, licensed under the MIT license. */ (function(global, factory) {
-    typeof $f4c70f265695a3d5$exports === 'object' && "object" !== 'undefined' ? factory($f4c70f265695a3d5$exports) : typeof define === 'function' && define.amd ? define([
+    typeof $2c73cfb2b22824f7$exports === 'object' && "object" !== 'undefined' ? factory($2c73cfb2b22824f7$exports) : typeof define === 'function' && define.amd ? define([
         'exports'
     ], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Tweakpane = {
     }));
-})($f4c70f265695a3d5$exports, function(exports) {
+})($2c73cfb2b22824f7$exports, function(exports) {
     'use strict';
     /***
      * A simple semantic versioning perser.
@@ -7788,9 +9405,9 @@ var $f4c70f265695a3d5$exports = {};
 });
 
 
-class $f888c10c3e512a5e$export$c72f6eaae7b9adff {
+class $2e2f149111861b23$export$508ce7ea6c05352e {
     open(settings, maxWidth, maxHeight, onChange, onKill, onClose) {
-        this.pane = new $f4c70f265695a3d5$exports.Pane();
+        this.pane = new $2c73cfb2b22824f7$exports.Pane();
         this.pane.addInput(settings, 'activeArea', {
             label: 'X / Y',
             x: {
@@ -7819,6 +9436,11 @@ class $f888c10c3e512a5e$export$c72f6eaae7b9adff {
         handFolder.addInput(settings, 'showHand', {
             label: 'Show'
         });
+        handFolder.addInput(settings, 'handSize', {
+            label: 'Hand Size',
+            min: 0,
+            step: 1
+        });
         handFolder.addInput(settings, 'handScale', {
             label: 'Hand Scale',
             min: 0,
@@ -7828,30 +9450,30 @@ class $f888c10c3e512a5e$export$c72f6eaae7b9adff {
         handFolder.addInput(settings, 'handColor', {
             label: 'Hand Color'
         });
-        const blobFolder = this.pane.addFolder({
-            title: 'Blob',
+        const bodyFolder = this.pane.addFolder({
+            title: 'Body',
             expanded: true
         });
-        blobFolder.addInput(settings, 'showBlob', {
+        bodyFolder.addInput(settings, 'showBody', {
             label: 'Show'
         });
-        blobFolder.addInput(settings, 'blobScale', {
-            label: 'Blob Scale',
+        bodyFolder.addInput(settings, 'bodyScale', {
+            label: 'Body Scale',
             min: 0,
             max: 2,
             step: 0.1
         });
-        blobFolder.addInput(settings, 'blobColor', {
-            label: 'Blob Color'
+        bodyFolder.addInput(settings, 'bodyColor', {
+            label: 'Body Color'
         });
-        blobFolder.addInput(settings, 'simulate', {
+        bodyFolder.addInput(settings, 'simulateBody', {
             label: 'Simulate with mouse'
         });
         this.pane.on('change', ()=>{
             onChange(this.pane.exportPreset());
         });
         const killBtn = this.pane.addButton({
-            title: 'Kill blobs'
+            title: 'Kill skeletons'
         });
         killBtn.on('click', ()=>{
             onKill();
@@ -7871,83 +9493,88 @@ class $f888c10c3e512a5e$export$c72f6eaae7b9adff {
 }
 
 
-class $5f964503c3de6edd$export$64c1e2689525a052 {
-    /**
-   * 
-   * @param width Active area width.
-   * @param height Active area height.
-   * * @param simulate Value indicating whether to show the settings panel.
-   * @param simulate Value indicating whether to sumulate a blob with the mouse pointer.
-   * @param onUpdate On update callback.
-   * @param onBlobAdded On blob added callback.
-   * @param onBlobDeleted  On blob deleted callback.
-   * @param onFrameUpdated On frame udpated callback.
-   * @param onSettingsChanged On settings changed callback.
-   */ constructor(width, height, showSettingsPanel, simulate, onUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated, onSettingsChanged){
-        this.simulate = false;
-        this.showBlob = true;
+class $3770175ebe933327$export$3d291c804b17ab69 {
+    constructor(width, height, onUpdate, onSettingsChanged){
+        this.skeletons = new Map();
+        this.showBody = true;
         this.showHand = true;
         this.keyToOpenSettings = 's';
-        this.settingsOpened = false;
         this.debug = false;
-        this.simulate = simulate;
+        this.simulateBody = false;
+        this.handSize = 10;
+        this.width = width;
+        this.height = height;
+        this.onUpdateCallback = onUpdate;
+        this.onSettingsChangedCallback = onSettingsChanged;
         this.activeArea = {
             x: 0,
             y: 0,
             width: width,
             height: height
         };
-        this.blobScale = 1;
-        this.blobColor = '#0000FF';
+        this.bodyScale = 1;
+        this.bodyColor = '#0000FF';
         this.handScale = 1;
         this.handColor = '#FF0000';
-        this.onSettingsChangedCallback = onSettingsChanged;
-        const onBlobsUpdate = ()=>{
-            onUpdate && onUpdate();
-            this.onUpdate();
-        };
-        this.skeletonBlobs = new $240353ca4ec1a540$export$b6c32681ca39b455($7682ffceaf95de26$export$189c6ba3eaa96ac2.skel, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
-        this.singleBlobs = new $240353ca4ec1a540$export$b6c32681ca39b455($7682ffceaf95de26$export$189c6ba3eaa96ac2.blob, width, height, 1, onBlobsUpdate, onBlobAdded, onBlobDeleted, onFrameUpdated);
-        this.simulate && this.singleBlobs.enableMouseBlob(true);
-        this.maxWidth = width;
-        this.maxHeight = height;
-        this.settings = new $f888c10c3e512a5e$export$c72f6eaae7b9adff();
         window.addEventListener('message', (event)=>{
-            this.singleBlobs.onOSCMessage(event.data);
-            this.skeletonBlobs.onOSCMessage(event.data);
+            this.parseEvent(event.data);
         }, false);
-        if (showSettingsPanel) {
-            window.addEventListener('keydown', (event)=>{
-                if (event.key === this.keyToOpenSettings) {
-                    console.log('opening settings...', event.key);
-                    this.settingsOpened ? this.closeSettings() : this.openSettings();
-                }
-            });
-            // create canvas and context for debugging purposes
-            const canvas = document.createElement('canvas');
-            canvas.style.position = 'absolute';
-            canvas.style.left = '0';
-            canvas.style.top = '0';
-            canvas.width = width;
-            canvas.height = height;
-            document.body.appendChild(canvas);
-            this.debugContext = canvas.getContext('2d');
-        }
+        this.settings = new $2e2f149111861b23$export$508ce7ea6c05352e();
+        window.addEventListener('keydown', (event)=>{
+            if (event.key === this.keyToOpenSettings) this.debug ? this.closeSettings() : this.openSettings();
+        });
+        // create canvas and context for debugging purposes
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'absolute';
+        canvas.style.left = '0';
+        canvas.style.top = '0';
+        canvas.width = this.width;
+        canvas.height = this.height;
+        document.body.appendChild(canvas);
+        this.debugContext = canvas.getContext('2d');
+    }
+    getSkeletons() {
+        return Array.from(this.skeletons.values());
     }
     /**
-   * Gets skeleton blobs.
-   * @returns Skeleton blobs.
-   */ getSkeletons() {
-        return this.skeletonBlobs.getBlobs();
+   * Opens a panel to set the blobs settings.
+   */ openSettings() {
+        this.debug = true;
+        let settings = {
+            activeArea: {
+                ...this.activeArea
+            },
+            showHand: this.showHand,
+            handScale: this.handScale,
+            handSize: this.handSize,
+            handColor: this.handColor,
+            showBody: this.showBody,
+            bodyScale: this.bodyScale,
+            bodyColor: this.bodyColor,
+            simulateBody: this.simulateBody
+        };
+        this.settings.open(settings, this.maxWidth, this.maxHeight, (newSettings)=>{
+            this.setActiveArea(newSettings.activeArea.x, newSettings.activeArea.y, newSettings.activeArea.width, newSettings.activeArea.height);
+            this.setHandSize(newSettings.handSize);
+            this.setScale(newSettings.handScale, newSettings.bodyScale);
+            this.showBody = newSettings.showBody;
+            this.showHand = newSettings.showHand;
+            this.setColor(newSettings.handColor, newSettings.bodyColor);
+            this.simulateBody = newSettings.simulateBody;
+            this.onSettingsChangedCallback && this.onSettingsChangedCallback(newSettings);
+        }, ()=>this.killBlobs
+        , ()=>{
+            this.debug = false;
+        });
     }
     /**
-   * Gets single blobs.
-   * @returns Single blobs.
-   */ getSingleBlobs() {
-        return this.singleBlobs.getBlobs();
+   * Closes the blobs settings panel.
+   */ closeSettings() {
+        this.debug = false;
+        this.settings.close();
     }
     /**
-   * Sets the blobs active area.
+   * Sets the skeletons active area.
    * @param x Left offset.
    * @param y Top offset.
    * @param width Width.
@@ -7959,83 +9586,28 @@ class $5f964503c3de6edd$export$64c1e2689525a052 {
             width: width,
             height: height
         };
-        this.skeletonBlobs.setActiveArea(x, y, width, height);
-        this.singleBlobs.setActiveArea(x, y, width, height);
     }
     /**
-   * Sets blobs scale.
-   * @param handScale Skeleton hands scale.
-   * @param blobScale Single blob scale.
-   */ setBlobsScale(handScale, blobScale) {
+   * Sets scale.
+   * @param handScale Hands scale.
+   * @param bodyScale Body scale.
+   */ setScale(handScale, bodyScale) {
         this.handScale = handScale;
-        this.blobScale = blobScale;
-        this.skeletonBlobs.setScale(handScale);
-        this.singleBlobs.setScale(blobScale);
+        this.bodyScale = bodyScale;
     }
     /**
-   * Sets blobs colors.
-   * @param handColor Skeleton hands color.
-   * @param blobColor Single blob color.
-   */ setBlobsColor(handColor, blobColor) {
+   * Sets color.
+   * @param handColor Hand color.
+   * @param bodyColor Body color.
+   */ setColor(handColor, bodyColor) {
         this.handColor = handColor;
-        this.blobColor = blobColor;
+        this.bodyColor = bodyColor;
     }
     /**
-   * Simulates single blob with the mouse pointer.
-   * @param value Value indicating whether to simulate a single blob with the mouse pointer.
-   */ setSimulate(value) {
-        this.simulate = value;
-        this.singleBlobs.enableMouseBlob(value);
-    }
-    /**
-   * Sets debug mode.
-   * @param value Value indicating whether to start the debug mode.
-   */ setDebug(value) {
-        this.debug = value;
-    }
-    /**
-   * Kilss active blobs.
-   */ killBlobs() {
-        this.skeletonBlobs.killBlobs();
-        this.singleBlobs.killBlobs();
-    }
-    /**
-   * Opens a panel to set the blobs settings.
-   */ openSettings() {
-        this.settingsOpened = true;
-        this.debug = true;
-        let settings = {
-            activeArea: {
-                ...this.activeArea
-            },
-            showHand: this.showHand,
-            handScale: this.handScale,
-            handColor: this.handColor,
-            showBlob: this.showBlob,
-            blobScale: this.blobScale,
-            blobColor: this.blobColor,
-            simulate: this.simulate
-        };
-        this.settings.open(settings, this.maxWidth, this.maxHeight, (newSettings)=>{
-            this.setActiveArea(newSettings.activeArea.x, newSettings.activeArea.y, newSettings.activeArea.width, newSettings.activeArea.height);
-            this.setBlobsScale(newSettings.handScale, newSettings.blobScale);
-            this.showBlob = newSettings.showBlob;
-            this.blobColor = newSettings.blobColor;
-            this.showHand = newSettings.showHand;
-            this.handColor = newSettings.handColor;
-            this.setSimulate(newSettings.simulate);
-            this.onSettingsChangedCallback && this.onSettingsChangedCallback(newSettings);
-        }, ()=>this.killBlobs
-        , ()=>{
-            this.settingsOpened = false;
-            this.debug = false;
-        });
-    }
-    /**
-   * Closes the blobs settings panel.
-   */ closeSettings() {
-        this.settingsOpened = false;
-        this.settings.close();
+   * Sets hand size.
+   * @param size Hand size.
+   */ setHandSize(size) {
+        this.handSize = size;
     }
     /**
    * Sets the key to open the settings panel when pressed.
@@ -8043,25 +9615,54 @@ class $5f964503c3de6edd$export$64c1e2689525a052 {
    */ setKeyToOpenSettings(key) {
         this.keyToOpenSettings = key;
     }
-    onUpdate() {
+    parseEvent(event) {
         this.debugContext && this.debugContext.clearRect(0, 0, this.debugContext.canvas.width, this.debugContext.canvas.height);
-        if (this.debug) {
-            this.drawActiveArea();
-            if (this.showBlob) {
-                const singleBlobs = this.getSingleBlobs();
-                for (let blob of singleBlobs.values() || []){
-                    const b = blob.get();
-                    this.drawBlob(b.rect, this.blobColor);
-                }
+        this.debug && this.drawActiveArea();
+        if (event.type === 'person') {
+            if (event.action === 'drop') {
+                console.log('skeleton dropped', event.id);
+                this.skeletons.delete(event.id);
+                this.onUpdateCallback, this.onUpdateCallback();
+                return;
             }
-            if (this.showHand) {
-                const skeletons = this.getSkeletons();
-                for (let skeleton of skeletons.values() || []){
-                    const s = skeleton.get();
-                    this.drawBlob(s.leftHand, this.handColor);
-                    this.drawBlob(s.rightHand, this.handColor);
-                }
+            let skeleton = this.skeletons.get(event.id);
+            if (!skeleton) {
+                skeleton = new $b361dac4ff58c895$export$8f31e4c4a37b8e9c(event.id);
+                this.skeletons.set(event.id, skeleton);
             }
+            if (event.bbox) {
+                const body = {
+                    x: this.activeArea.x + event.bbox[0] * this.activeArea.width,
+                    y: this.activeArea.y + event.bbox[1] * this.activeArea.height,
+                    width: event.bbox[2] * this.activeArea.width * this.bodyScale,
+                    height: event.bbox[3] * this.activeArea.height * this.bodyScale
+                };
+                skeleton.setBody(body);
+                this.debug && this.showBody && this.drawRect(body, this.bodyColor);
+            }
+            if (event.hands && event.hands.leftxy) {
+                const scale = (event.hands.scale > 0 ? event.hands.scale : 1) * this.handScale;
+                const hand = {
+                    x: this.activeArea.x + event.hands.leftxy[0] * this.activeArea.width,
+                    y: this.activeArea.y + event.hands.leftxy[1] * this.activeArea.height,
+                    width: this.handSize * scale,
+                    height: this.handSize * scale
+                };
+                skeleton.setLeftHand(hand);
+                this.debug && this.showHand && this.drawRect(hand, this.handColor);
+            }
+            if (event.hands && event.hands.rightxy) {
+                const scale = (event.hands.scale > 0 ? event.hands.scale : 1) * this.handScale;
+                const hand = {
+                    x: this.activeArea.x + event.hands.rightxy[0] * this.activeArea.width,
+                    y: this.activeArea.y + event.hands.rightxy[1] * this.activeArea.height,
+                    width: this.handSize * scale,
+                    height: this.handSize * scale
+                };
+                skeleton.setRightHand(hand);
+                this.debug && this.showHand && this.drawRect(hand, this.handColor);
+            }
+            this.onUpdateCallback, this.onUpdateCallback();
         }
     }
     drawActiveArea() {
@@ -8071,72 +9672,350 @@ class $5f964503c3de6edd$export$64c1e2689525a052 {
         this.debugContext.rect(this.activeArea.x, this.activeArea.y, this.activeArea.width, this.activeArea.height);
         this.debugContext.stroke();
     }
-    drawBlob(blob, color) {
-        this.debugContext.beginPath();
-        this.debugContext.lineWidth = 2;
-        this.debugContext.rect(blob.x - blob.width / 2, blob.y - blob.height / 2, blob.width, blob.height);
-        this.debugContext.fillStyle = (/*@__PURE__*/$parcel$interopDefault($9cf2c14da0873913$exports))(color, 0.2);
-        this.debugContext.fill();
-        this.debugContext.strokeStyle = (/*@__PURE__*/$parcel$interopDefault($9cf2c14da0873913$exports))(color);
-        this.debugContext.stroke();
+    drawRect(rect, color) {
+        if (rect.x > 0 && rect.y > 0) {
+            this.debugContext.beginPath();
+            this.debugContext.lineWidth = 2;
+            this.debugContext.rect(rect.x, rect.y, rect.width, rect.height);
+            this.debugContext.fillStyle = (/*@__PURE__*/$parcel$interopDefault($7290a84254f9152a$exports))(color, 0.2);
+            this.debugContext.fill();
+            this.debugContext.strokeStyle = (/*@__PURE__*/$parcel$interopDefault($7290a84254f9152a$exports))(color);
+            this.debugContext.stroke();
+        }
     }
 }
 
 
-
-class $d1c10740c6e30151$export$bf5acd943326457 {
+class $6db29b1b65334d8d$export$410db1ee4b845acb {
     /**
-   * Creates an instance of the OscListener class.
+   * 
+   * @param writeJson Function to write a json
+   * @param readJson Function to read a json 
+   */ constructor(writeJson, readJson){
+        this.writeJson = writeJson;
+        this.readJson = readJson;
+    }
+    /**
+   * 
+   * @param name File name
+   * @param json Json content
+   */ write(name, json) {
+        this.writeJson(name, json);
+    }
+    /**
+    * 
+    * @param name File name
+    */ read(name) {
+        const content = this.readJson(name);
+        return content;
+    }
+}
+
+
+class $6ec607019daadc0e$export$19fffca37ef3e106 {
+    /**
+   * 
+   * @param name File name
+   * @param content Json content
+   */ write(name, content) {
+        localStorage.setItem(name, JSON.stringify(content));
+    }
+    /**
+   * 
+   * @param name File name
+   * @returns Json content for the given project
+   */ read(name) {
+        const content = localStorage.getItem(name);
+        if (content) return JSON.parse(content);
+        return null;
+    }
+}
+
+
+class $50f70f6146996d62$export$cec157cbbbaf65c9 {
+    static inElectron() {
+        // @ts-ignore
+        return !!window.electron;
+    }
+    static writeJson(name, json) {
+        // @ts-ignore
+        return window.app && window.app.writeJson(name, json);
+    }
+    static readJson(name) {
+        // @ts-ignore
+        return window.app && window.app.readJson(name);
+    }
+    static downloadFile(url, name, onUpdate, onError, onSuccess) {
+        // @ts-ignore
+        return window.app && window.app.downloadFile && window.app.downloadFile(url, name, onUpdate, onError, onSuccess);
+    }
+    static getMediaInfo() {
+        // @ts-ignore
+        return window.app && window.app.media;
+    }
+    static getDeviceInfo() {
+        // @ts-ignore
+        return window.app && window.app.device;
+    }
+    static logAlarm(subject, text) {
+        //@ts-ignore
+        window.app && window.app.logAlarm(subject, text);
+    }
+}
+
+
+let $d730cefd4995cd16$var$Message;
+(function(Message) {
+    Message["deviceNotFound"] = 'Device not found';
+    Message["forbiddenProjectName"] = 'Please use a different project name';
+})($d730cefd4995cd16$var$Message || ($d730cefd4995cd16$var$Message = {
+}));
+var $d730cefd4995cd16$export$2e2bcd8739ae039 = $d730cefd4995cd16$var$Message;
+
+
+class $1d232d6f53298d52$export$12b3cc2522c3bba5 {
+    /**
+   * Creates an instance of the KeyValue class.
    */ constructor(){
-        this.events = new Map();
+        this.contents = {
+        };
+        if ($50f70f6146996d62$export$cec157cbbbaf65c9.inElectron()) this.storage = new $6db29b1b65334d8d$export$410db1ee4b845acb($50f70f6146996d62$export$cec157cbbbaf65c9.writeJson, $50f70f6146996d62$export$cec157cbbbaf65c9.readJson);
+        else this.storage = new $6ec607019daadc0e$export$19fffca37ef3e106();
+    }
+    /**
+   * Sets a value in storage
+   * @param name File name
+   * @param key Key assigned to the value to store
+   * @param value Value to store
+   * ``` typescript
+   * // example
+   * const user = {
+   *   firstName: 'John',
+   *   lastName: 'Doe'
+   * };
+   * const keyValue = new broox.mediaPlayer.KeyValue();
+   * keyValue.set('testApp', 'profile', user);
+   * ```
+   */ setValue(name, key, value) {
+        if (name === 'config') {
+            console.error($d730cefd4995cd16$export$2e2bcd8739ae039.forbiddenProjectName);
+            return;
+        }
+        // get storage
+        let content = this.getContent(name);
+        if (!content) content = {
+        };
+        content[key] = value;
+        this.storage.write(name, content);
+    }
+    /**
+   * Gets a value from a content in storage
+   * @param name File name
+   * @param key Key
+   * @returns The value for the given key
+   * ``` typescript
+   * // example
+   * const keyValue = new broox.mediaPlayer.KeyValue();
+   * const user = keyValue.get('testApp', 'profile');
+   * console.log('User', user);
+   * ```
+   */ getValue(name, key) {
+        const storage = this.getContent(name);
+        return storage ? storage[key] : null;
+    }
+    /**
+   * Gets a content from memory or storage
+   * @param name File name
+   * @returns The content with the given name if exists, null otherwise
+   */ getContent(name) {
+        // get storage from memory
+        if (this.contents[name]) return this.contents[name];
+        else // get content from storage
+        try {
+            return this.storage.read(name);
+        } catch (error) {
+            // the content does not exist
+            return null;
+        }
+    }
+}
+
+
+let $9ee8d1e4b992a82a$export$ff50662d7c6e93a2;
+(function($9ee8d1e4b992a82a$export$ff50662d7c6e93a2) {
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["LeftHandUp"] = 'left_hand_up';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["RightHandUp"] = 'right_hand_up';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["BothHandsUp"] = 'both_hands_up';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["PointsLeft"] = 'points_left';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["PointsRight"] = 'points_right';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["LeftHandOnChest"] = 'left_hand_on_chest';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["RightHandOnChest"] = 'right_hand_on_chest';
+    $9ee8d1e4b992a82a$export$ff50662d7c6e93a2["BothHandsOnChest"] = 'both_hands_on_chest';
+})($9ee8d1e4b992a82a$export$ff50662d7c6e93a2 || ($9ee8d1e4b992a82a$export$ff50662d7c6e93a2 = {
+}));
+
+
+class $ce40448578812b6e$export$dfd4fa32db6567bf {
+    /**
+   * Creates an instance of the GestureHandler class.
+   * @param time Time lapse in milliseconds before accepting a gesture as such.
+   * @param delay Time lapse in seconds before listening to other gestures once a gesture is accepted.
+   */ constructor(time, delay){
+        this.listening = true;
+        this.gestures = [];
+        this.availableTypes = Object.values($9ee8d1e4b992a82a$export$ff50662d7c6e93a2);
+        this.time = time;
+        this.delay = delay;
         const self = this;
         // listen osc events
         window.addEventListener('message', (event)=>{
-            for(let i = 0; i < event.data.length; i++){
-                const e = event.data[i].address;
-                if (self.events.has(e)) {
-                    const callback = self.events.get(e);
-                    callback();
-                }
-            }
+            this.parseEvent(event.data);
         }, false);
     }
     /**
-   * Adds a callback function to the given event.
-   * @param event Event name to listen to.
-   * @param callback Function to execute when the event is recieved.
-   */ add(event, callback) {
-        this.events.set(event, callback);
+   * Adds a callback function for the "presence" gesture.
+   * @param callback Function that will be executed when the presence gesture is detected.
+   */ onPresence(callback) {
+        this.presenceCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "both hands up" gesture.
+   * @param callback Function that will be executed when the "both hands up" gesture is detected.
+   */ onBothHandsUp(callback) {
+        this.bothHandsUpCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "left hand up" gesture.
+   * @param callback Function that will be executed when the "left hand up" gesture is detected.
+   */ onLeftHandUp(callback) {
+        this.leftHandUpCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "right hand up" gesture.
+   * @param callback Function that will be executed when the "right hand up" gesture is detected.
+   */ onRightHandUp(callback) {
+        this.rightHandUpCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "both hands on chest" gesture.
+   * @param callback Function that will be executed when the "both hands on chest" gesture is detected.
+   */ onBothHandsOnChest(callback) {
+        this.bothHandsOnChestCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "left hand on chest" gesture.
+   * @param callback Function that will be executed when the "left hand on chest" gesture is detected.
+   */ onLeftHandOnChest(callback) {
+        this.leftHandOnChestCallback = callback;
+    }
+    /**
+   * Adds a callback function for the "right hand on chest" gesture.
+   * @param callback Function that will be executed when the "right hand on chest" gesture is detected.
+   */ onRightHandOnChest(callback) {
+        this.rightHandOnChestCallback = callback;
+    }
+    /**
+   * Adds a potential gesture to be processed.
+   * @param args OSC event args.
+   */ add(gesture) {
+        if (this.listening) {
+            this.presenceCallback && this.presenceCallback();
+            this.gestures.push(gesture);
+            this.check();
+        }
+    }
+    /**
+   * Checks whether a gesture was made. 
+   */ check() {
+        // get last gesture
+        const lastIndex = this.gestures.length - 1;
+        const lastGesture = this.gestures[lastIndex];
+        const lastGestureTypes = lastGesture.types;
+        if (lastGestureTypes.length === 1) {
+            const type = lastGestureTypes[0];
+            // if gesture is BothHandsUp or BothHandsOnChest, send the event
+            if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.BothHandsUp || type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.BothHandsOnChest) this.send(type);
+            else if (this.gestures.length > 1) {
+                const lastTimestamp = lastGesture.timestamp;
+                let i = lastIndex;
+                let gesture = null;
+                // find last gesture before the time lapse defined
+                while(!gesture && --i >= 0 && this.gestures[i].types.indexOf(type) >= 0)if (lastTimestamp - this.gestures[i].timestamp > this.time) gesture = this.gestures[i];
+                if (gesture) this.send(type);
+            }
+        }
+    }
+    /**
+   * Executes a callback function based on the gesture made.
+   * @param type Gesture made.
+   */ send(type) {
+        console.log('Gesture ' + type + ' sent');
+        this.listening = false;
+        this.gestures = [];
+        setTimeout(()=>{
+            this.listening = true;
+        }, this.delay * 1000);
+        if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.BothHandsUp) this.bothHandsUpCallback && this.bothHandsUpCallback();
+        else if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.LeftHandUp) this.leftHandUpCallback && this.leftHandUpCallback();
+        else if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.RightHandUp) this.rightHandUpCallback && this.rightHandUpCallback();
+        else if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.BothHandsOnChest) this.bothHandsOnChestCallback && this.bothHandsOnChestCallback();
+        else if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.LeftHandOnChest) this.leftHandOnChestCallback && this.leftHandOnChestCallback();
+        else if (type === $9ee8d1e4b992a82a$export$ff50662d7c6e93a2.RightHandOnChest) this.rightHandOnChestCallback && this.rightHandOnChestCallback();
+    }
+    /**
+   * Parses an MQTT event.
+   * @param event MQTT event.
+   */ parseEvent(event) {
+        if (event.type === 'person') {
+            const types = (event.poses || []).filter((p)=>this.availableTypes.includes(p)
+            );
+            if (types.length) {
+                const gesture = {
+                    id: event.id,
+                    types: types,
+                    timestamp: Date.now()
+                };
+                this.add(gesture);
+            }
+        }
     }
 }
 
 
 
-const $d713032d8a3debc9$export$498ecf32d8e5038b = ()=>{
-    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.getMediaInfo();
-};
-const $d713032d8a3debc9$export$a5202107d3e3cdb0 = ()=>{
-    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.getDeviceInfo();
-};
+var $jsHlH = parcelRequire("jsHlH");
+class $30ff8ca36e66cfc4$export$1475203b71d760bc {
+    constructor(host, port){
+        this.client = new (/*@__PURE__*/$parcel$interopDefault($jsHlH)).Client(host, port, 'clientjs');
+        // set callback handlers
+        this.client.onConnectionLost = ()=>{
+            console.log('MQTT connection lost');
+            this.connect();
+        };
+        this.client.onMessageArrived = (message)=>{
+            this.onMessageCallback && this.onMessageCallback(JSON.parse(message.payloadString));
+        };
+    }
+    connect() {
+        this.client.connect({
+            onSuccess: ()=>{
+                console.log('MQTT connected');
+                this.client.subscribe('#');
+            },
+            onFailure: ()=>{
+                setTimeout(()=>{
+                    this.connect();
+                }, 5000);
+            }
+        });
+    }
+    onMessage(callback) {
+        this.onMessageCallback = callback;
+    }
+}
 
 
 
-const $0c7a49d86b49a02e$export$4b2634a642f10d54 = (subject, text)=>{
-    return $8793b126ef6d35f3$export$cec157cbbbaf65c9.logAlarm(subject, text);
-};
 
-
-
-const $4167c5b92e36a342$export$bb3b75778e3e272 = (url, name, onUpdate)=>{
-    return new Promise((resolve, reject)=>{
-        $8793b126ef6d35f3$export$cec157cbbbaf65c9.inElectron() ? $8793b126ef6d35f3$export$cec157cbbbaf65c9.downloadFile(url, name, onUpdate, (error)=>reject(error)
-        , (path)=>resolve(path)
-        ) : resolve(url);
-    });
-};
-
-
-
-
-export {$a43912e23e510d22$export$ff50662d7c6e93a2 as GestureType, $ca1057830a34181e$export$dfd4fa32db6567bf as GestureHandler, $22b34b762f136ae1$export$12b3cc2522c3bba5 as KeyValue, $5f964503c3de6edd$export$64c1e2689525a052 as BlobsController, $7682ffceaf95de26$export$189c6ba3eaa96ac2 as AddressType, $d1c10740c6e30151$export$bf5acd943326457 as OscListener, $d713032d8a3debc9$export$498ecf32d8e5038b as getMediaInfo, $d713032d8a3debc9$export$a5202107d3e3cdb0 as getDeviceInfo, $0c7a49d86b49a02e$export$4b2634a642f10d54 as logAlarm, $4167c5b92e36a342$export$bb3b75778e3e272 as downloadFile};
-//# sourceMappingURL=broox.js.map
+export {$3770175ebe933327$export$3d291c804b17ab69 as SkeletonController, $1d232d6f53298d52$export$12b3cc2522c3bba5 as KeyValue, $ce40448578812b6e$export$dfd4fa32db6567bf as GestureHandler, $30ff8ca36e66cfc4$export$1475203b71d760bc as MqttClient};
+//# sourceMappingURL=brooxVisionNode.js.map

@@ -157,42 +157,61 @@ import { LogController } from './brooxLogger.js';
  ```
 <br/>
 
-## {@link analytics | Analytics}
+## {@link visionNode | Vision Node}
 
-Provides functions to access analytics information.
-
+Provides context to communicate with Vision Node.
 #### Usage
-<br/>
 
 ``` typescript
-import { getProfile, getAudiences } from './brooxAnalytics.js';
+import { SkeletonController } from './brooxVisionNode.js';
 ```
 <br/>
 
-#### Functions
-- {@link getProfile}
-  <br/>
-  Gets profile information.
-- {@link getProduct}
-  <br/>
-  Gets product information.
-- {@link getAudiences}
-  <br/>
-  Gets audiences.
-- {@link getCollapsed}
-  <br/>
-  Gets stores with installations, campaigns and categories.
-- {@link getByYear}
-  <br/>
-  Gets information grouped by year.
-- {@link getByMonth}
-  <br/>
-  Gets information grouped by month.
-- {@link getByWeekday}
-  <br/>
-  Gets information grouped by weekday.
-- {@link getByHour}
-  br/>
-  Gets information grouped by hour.
+#### {@link SkeletonController}
 
-  br/>
+Parses MQTT events sent by Vision Node and keeps track of the skeletons.
+
+``` typescript
+// example
+const skeletonController = new SkeletonController(width, height, () => {...);
+const skeletons = blobsController.getSkeletons();
+```
+<br/>
+
+#### {@link GestureHandler}
+
+Parses MQTT events sent by Vision Node and allows to handle the different gestures.
+
+``` typescript
+// example
+const gestureHandler = new GestureHandler(500, 2);
+gestureHandler.onPresence(() => console.log('Presence'));
+```
+<br/>
+
+#### {@link KeyValue}
+
+Allows apps to persist json values associated to a project and a key.
+
+``` typescript
+// example
+const user = {
+  firstName: 'John',
+  lastName: 'Doe'
+};
+const keyValue = new KeyValue();
+keyValue.set('testApp', 'profile', user);
+const profile = keyValue.get('testApp', 'profile');
+```
+<br/>
+
+#### {@link MqttClient}
+
+MQTT client.
+
+``` typescript
+// example
+const client = new MqttClient('localhost', 1884);
+client.onMessage(() => console.log(message));
+```
+<br/>

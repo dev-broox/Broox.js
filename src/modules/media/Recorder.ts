@@ -2,7 +2,7 @@
  * Creates a video based on a stream.
  * ``` typescript
  * // example
- * const recorder = new broox.media.Recorder(stream);
+ * const recorder = new Recorder(stream);
  * recorder.start();
  * setTimeout(() => {
  *   recorder.stop().then(blob => {

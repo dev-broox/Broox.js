@@ -3,7 +3,7 @@
  * @returns Promise with the resulting image.
  * ``` typescript
  * // example
- * broox.media.blobToImage(blobg).then(image => {});
+ * blobToImage(blobg).then(image => {});
  * ```
  */
  export const blobToImage = (blob: Blob) => {

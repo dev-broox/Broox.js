@@ -1,11 +1,11 @@
-import Message from '../../Message';
+import Message from '../common/Message';
 
 /**
  * Gets all available devices.
  * @returns Promise with list of available devices.
  * ``` typescript
  * // example
- * broox.media.getAvailableDevices().then(devices => {});
+ * getAvailableDevices().then(devices => {});
  * ```
  */
 export const getAvailableDevices = (): Promise<any[]> => {
@@ -32,8 +32,8 @@ export const getAvailableDevices = (): Promise<any[]> => {
  * @returns Promise with device id if found. Error otherwise.
  * ``` typescript
  * // example
- * broox.media.getDeviceId('OBS Virtual Camera').then(id => {
- *   broox.media.start(id, 1080, 1920).then(stream => {});
+ * getDeviceId('OBS Virtual Camera').then(id => {
+ *   startDevice(id, 1080, 1920).then(stream => {});
  * });
  * ```
  */
@@ -63,8 +63,8 @@ export const getDeviceId = (name: string): Promise<string> => {
  * @returns MediaStream object to display webcam content.
  * ``` typescript
  * // example
- * broox.media.getDeviceId('OBS Virtual Camera').then(id => {
- *   broox.media.start(id, 1080, 1920).then(stream => {});
+ * getDeviceId('OBS Virtual Camera').then(id => {
+ *   startDevice(id, 1080, 1920).then(stream => {});
  * });
  * ```
  */

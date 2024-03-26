@@ -34,13 +34,13 @@ const $0fc4256b6f990a00$export$586746d88f07c896 = (element, context, cutToScale,
 };
 
 
-let $bdd15a8450b5991c$var$Message;
+let $d91ab03411335cda$var$Message;
 (function(Message) {
     Message["deviceNotFound"] = 'Device not found';
     Message["forbiddenProjectName"] = 'Please use a different project name';
-})($bdd15a8450b5991c$var$Message || ($bdd15a8450b5991c$var$Message = {
+})($d91ab03411335cda$var$Message || ($d91ab03411335cda$var$Message = {
 }));
-var $bdd15a8450b5991c$export$2e2bcd8739ae039 = $bdd15a8450b5991c$var$Message;
+var $d91ab03411335cda$export$2e2bcd8739ae039 = $d91ab03411335cda$var$Message;
 
 
 const $2e840864c1780a35$export$13a2ac54ef3e3802 = ()=>{
@@ -65,7 +65,7 @@ const $2e840864c1780a35$export$be262d700bd1c696 = (name)=>{
                 resolve(devices[i].deviceId);
                 return;
             }
-            reject($bdd15a8450b5991c$export$2e2bcd8739ae039.deviceNotFound);
+            reject($d91ab03411335cda$export$2e2bcd8739ae039.deviceNotFound);
         }).catch((error)=>{
             reject(error.message);
         });
@@ -197,4 +197,4 @@ class $58e589c3f3dd3888$export$336a011955157f9a {
 
 
 export {$0fc4256b6f990a00$export$ea631e88b0322146 as drawElement, $0fc4256b6f990a00$export$586746d88f07c896 as drawPartOfElement, $0fc4256b6f990a00$export$fa3373cf5ebce5bf as drawVideo, $2e840864c1780a35$export$13a2ac54ef3e3802 as getAvailableDevices, $2e840864c1780a35$export$be262d700bd1c696 as getDeviceId, $2e840864c1780a35$export$b04c27f4306c4f03 as startDevice, $059c0856fe58e2bf$export$408b3c1884176160 as blobToImage, $4f2a169968c7adf0$export$d955f48b7132ae28 as Composition, $58e589c3f3dd3888$export$336a011955157f9a as Recorder};
-//# sourceMappingURL=broox.js.map
+//# sourceMappingURL=brooxMedia.js.map

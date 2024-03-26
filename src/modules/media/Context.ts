@@ -14,7 +14,7 @@
  * canvas.height = height;
  * const context = canvas.getContext('2d');
  * const video = document.getElementById('video')
- * broox.media.drawElement(video, context, width, height, 0, 0, false);
+ * drawElement(video, context, width, height, 0, 0, false);
  * ```
  */
 export const drawVideo = (video: HTMLVideoElement, context: CanvasRenderingContext2D, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) => {
@@ -39,7 +39,7 @@ export const drawVideo = (video: HTMLVideoElement, context: CanvasRenderingConte
  * canvas.height = height;
  * const context = canvas.getContext('2d');
  * const element = document.getElementById('img')
- * broox.media.drawElement(element, context, element.width, element.height, width, height, 0, 0, false);
+ * drawElement(element, context, element.width, element.height, width, height, 0, 0, false);
  * ```
  */
 export const drawElement = (element: CanvasImageSource, context: CanvasRenderingContext2D, sourceWidth: number, sourceHeight: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) => {
@@ -66,7 +66,7 @@ export const drawElement = (element: CanvasImageSource, context: CanvasRendering
  * canvas.height = height;
  * const context = canvas.getContext('2d');
  * const element = document.getElementById('img')
- * broox.media.drawPartOfElement(element, context, false, element.width, element.height, 0, 0, width, height, 0, 0, false);
+ * drawPartOfElement(element, context, false, element.width, element.height, 0, 0, width, height, 0, 0, false);
  * ```
  */
  export const drawPartOfElement = (element: CanvasImageSource, context: CanvasRenderingContext2D, cutToScale: boolean, sourceWidth: number, sourceHeight: number, sourceX: number, sourceY: number, destinationWidth: number, destinationHeight: number, destinationX: number, destinationY: number, mirror = false) => {

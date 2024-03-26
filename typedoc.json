@@ -3,7 +3,7 @@
     "./src/modules/media/Media.module.ts",
     "./src/modules/mediaPlayer/MediaPlayer.module.ts",
     "./src/modules/logger/Logger.module.ts",
-    "./src/modules/analytics/Analytics.module.ts"
+    "./src/modules/visionNode/VisionNode.module.ts"
   ],
   "entryPointStrategy" :"expand",
   "out": "docs",

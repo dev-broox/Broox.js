@@ -76,7 +76,7 @@
  */
 export { GestureType } from './gesture/GestureType';
 export { GestureHandler } from './gesture/GestureHandler';
-export { KeyValue } from './keyValue/KeyValue';
+export { KeyValue } from '../common/keyValue/KeyValue';
 export { BlobsController } from './blobs/BlobsController';
 export { AddressType } from './blobs/AddressType';
 export { OscListener } from './OscListener';

@@ -1,4 +1,4 @@
-import { BlobsController, KeyValue } from './lib/broox';
+import { SkeletonController, KeyValue, MqttClient } from './lib/brooxVisionNode';
 
 (async () => {
   const response = await fetch('./config/config.json');
@@ -8,41 +8,82 @@ import { BlobsController, KeyValue } from './lib/broox';
   particles = [],
   amount = 0,
   mouse = {x:0,y:0},
-  hands = [{x:0,y:0}, {x:0,y:0}],
-  radius = 1;
+  hands = [{x:0,y:0}, {x:0,y:0}]
 
   var ww = canvas.width = window.innerWidth;
   var wh = canvas.height = window.innerHeight;
 
+  const client = new MqttClient(config.mqtt.host, config.mqtt.port);
+  client.onMessage((message) => {
+    window.postMessage(message);
+  });
+  client.connect();
+
   const onUpdate = () => {
-    for(let [id, value] of blobsController.getSkeletons()) {
-      const skel = value.get();
-      if(skel.leftHand.x > 0 && skel.leftHand.y > 0) {
-        hands[0] = skel.leftHand;
+    const skeletons = skeletonController.getSkeletons();
+    if(!skeletons.length) {
+      hands = [{x:0,y:0}, {x:0,y:0}];
+    }
+    for(let skeleton of skeletons) {
+      const leftHand = skeleton.getLeftHand();
+      if(leftHand.x > 0 && leftHand.y > 0) {
+        hands[0] = leftHand;
       }
-      if(skel.rightHand.x > 0 && skel.rightHand.y > 0) {
-        hands[1] = skel.rightHand;
-        mouse.x = skel.rightHand.x;
-        mouse.y = skel.rightHand.y;
-        radius = skel.rightHand.width;
+      const rightHand = skeleton.getRightHand();
+      if(rightHand.x > 0 && rightHand.y > 0) {
+        hands[1] =  rightHand;
+        mouse.x = rightHand.x;
+        mouse.y = rightHand.y;
       }
+      break;
     }
   }
+
   const onSettingsChanged = (settings) => {
-    console.log('settings changed', settings);
-    keyValue.setValue('blobs', 'settings', settings);
-  };
-  const blobsController = new BlobsController(document.body.clientWidth, document.body.clientHeight, true, false, onUpdate, () => {}, () => {}, () => {}, onSettingsChanged);
-  blobsController.setKeyToOpenSettings('d');
+    keyValue.setValue('textToParticles', 'settings', settings);
+    console.log('settings saved', settings);
+  }
+
+  const skeletonController = new SkeletonController(document.body.clientWidth, document.body.clientHeight, onUpdate, onSettingsChanged);
   const keyValue = new KeyValue();
-  const settings = keyValue.getValue('blobs', 'settings');
+  const settings = keyValue.getValue('textToParticles', 'settings');
   console.log('stored settings', settings);
   if(settings && settings != {}) {
-    blobsController.setActiveArea(settings.activeArea.x, settings.activeArea.y, settings.activeArea.width, settings.activeArea.height);
-    blobsController.setBlobsScale(settings.handScale, settings.blobScale);
-    blobsController.setBlobsColor(settings.handColor, settings.blobColor);
-    blobsController.setSimulate(settings.simulate);
+    skeletonController.setActiveArea(settings.activeArea.x, settings.activeArea.y, settings.activeArea.width, settings.activeArea.height);
+    skeletonController.setScale(settings.handScale, settings.bodyScale);
+    skeletonController.setColor(settings.handColor, settings.bodyColor);
+    skeletonController.setHandSize(settings.handSize);
   }
+
+  // const onUpdate = () => {
+  //   for(let [id, value] of blobsController.getSkeletons()) {
+  //     const skel = value.get();
+  //     if(skel.leftHand.x > 0 && skel.leftHand.y > 0) {
+  //       hands[0] = skel.leftHand;
+  //     }
+  //     if(skel.rightHand.x > 0 && skel.rightHand.y > 0) {
+  //       hands[1] = skel.rightHand;
+  //       mouse.x = skel.rightHand.x;
+  //       mouse.y = skel.rightHand.y;
+  //       radius = skel.rightHand.width;
+  //     }
+  //   }
+  // }
+  // const onSettingsChanged = (settings) => {
+  //   console.log('settings changed', settings);
+  //   keyValue.setValue('blobs', 'settings', settings);
+  // };
+  // const blobsController = new BlobsController(document.body.clientWidth, document.body.clientHeight, true, false, onUpdate, () => {}, () => {}, () => {}, onSettingsChanged);
+  // blobsController.setKeyToOpenSettings('d');
+  // const keyValue = new KeyValue();
+  // const settings = keyValue.getValue('blobs', 'settings');
+  // console.log('stored settings', settings);
+  // if(settings && settings != {}) {
+  //   blobsController.setActiveArea(settings.activeArea.x, settings.activeArea.y, settings.activeArea.width, settings.activeArea.height);
+  //   blobsController.setBlobsScale(settings.handScale, settings.blobScale);
+  //   blobsController.setBlobsColor(settings.handColor, settings.blobColor);
+  //   blobsController.setSimulate(settings.simulate);
+  // }
 
   function Particle(x,y){
     this.x =  Math.random()*ww;
@@ -74,14 +115,16 @@ import { BlobsController, KeyValue } from './lib/broox';
     ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
     ctx.fill();
     for(let hand of hands) {
-      var a = this.x - hand.x;
-      var b = this.y - hand.y;
-      var distance = Math.sqrt( a*a + b*b );
-      if(distance<(hand.width)){
-        this.accX = (this.x - hand.x)/100;
-        this.accY = (this.y - hand.y)/100;
-        this.vx += this.accX;
-        this.vy += this.accY;
+      if(hand.x > 0 && hand.y > 0) {
+        var a = this.x - hand.x;
+        var b = this.y - hand.y;
+        var distance = Math.sqrt( a*a + b*b );
+        if(distance<(hand.width)){
+          this.accX = (this.x - hand.x)/100;
+          this.accY = (this.y - hand.y)/100;
+          this.vx += this.accX;
+          this.vy += this.accY;
+        }
       }
     }
   }

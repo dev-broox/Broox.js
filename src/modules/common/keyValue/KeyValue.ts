@@ -2,7 +2,7 @@ import { FileSystemStorage } from './FileSystemStorage';
 import { LocalStorage } from './LocalStorage';
 import { Storage } from './Storage';
 import { Window } from '../Window';
-import Message from '../../../Message';
+import Message from '../Message';
 
 /**
  * Stores and retrieves values in json format.

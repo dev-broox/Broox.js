@@ -22,6 +22,7 @@
   "dependencies": {
     "hex-to-rgba": "^2.0.1",
     "moment": "^2.29.4",
+    "paho-mqtt": "^1.1.0",
     "parcel": "^2.2.1",
     "tweakpane": "^3.1.4",
     "typedoc": "^0.22.17"
@@ -29,7 +30,7 @@
   "media": "dist/media/brooxMedia.js",
   "mediaPlayer": "dist/mediaPlayer/brooxMediaPlayer.js",
   "logger": "dist/logger/brooxLogger.js",
-  "analytics": "dist/analytics/brooxAnalytics.js",
+  "visionNode": "dist/visionNode/brooxVisionNode.js",
   "targets": {
     "media": {
       "source": "src/modules/media/Media.module.ts",
@@ -40,19 +41,29 @@
       "source": "src/modules/mediaPlayer/MediaPlayer.module.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
-      "includeNodeModules": [ "hex-to-rgba", "tweakpane" ]
+      "includeNodeModules": [
+        "hex-to-rgba",
+        "tweakpane"
+      ]
     },
     "logger": {
       "source": "src/modules/logger/Logger.module.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
-      "includeNodeModules": [ "hex-to-rgba", "tweakpane" ]
+      "includeNodeModules": [
+        "hex-to-rgba",
+        "tweakpane"
+      ]
     },
-    "analytics": {
-      "source": "src/modules/analytics/Analytics.module.ts",
+    "visionNode": {
+      "source": "src/modules/visionNode/VisionNode.module.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
-      "includeNodeModules": [ "moment" ]
+      "includeNodeModules": [
+        "hex-to-rgba",
+        "tweakpane",
+        "paho-mqtt"
+      ]
     }
   },
   "devDependencies": {

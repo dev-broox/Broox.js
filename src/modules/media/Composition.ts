@@ -4,7 +4,7 @@ import { drawElement } from './Context';
  * Generates images composition based on different elements.
  * ``` typescript
  * // example
- * const composition = new broox.media.Composition(width, height, borderWidth);
+ * const composition = new Composition(width, height, borderWidth);
  * composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
  * composition.get().then(blob => {
  *   image.src = URL.createObjectURL(blob);
@@ -45,7 +45,7 @@ export class Composition {
    * @param mirror Value indicating whether to mirror the image.
    * ``` typescript
    * // example
-   * const composition = new broox.media.Composition(width, height, borderWidth);
+   * const composition = new Composition(width, height, borderWidth);
    * composition.addElement(webcam, 0, 0, webcam.videoWidth, webcam.videoHeight, 1, false);
    * composition.addElement(image, 0, 0, image.width, image.height, 1, false);
    * ```

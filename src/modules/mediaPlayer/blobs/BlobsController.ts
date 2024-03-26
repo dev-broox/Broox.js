@@ -2,7 +2,7 @@ import hexToRgba from 'hex-to-rgba';
 import { AddressType } from './AddressType';
 import { Blobs } from './Blobs';
 import Rect from './Rect';
-import { Settings } from './Settings';
+import { SkeletonSettings } from '../../common/SkeletonSettings';
 
 /**
  * Handles skeleton and single blobs and provides a visual way of updating their configuration.
@@ -11,7 +11,7 @@ export class BlobsController {
   private simulate: boolean = false;
   private skeletonBlobs: Blobs;
   private singleBlobs: Blobs;
-  private settings: Settings;
+  private settings: SkeletonSettings;
   private activeArea: Rect;
   private showBlob: boolean = true;
   private blobScale: number;
@@ -56,7 +56,7 @@ export class BlobsController {
     this.simulate && this.singleBlobs.enableMouseBlob(true);
     this.maxWidth = width;
     this.maxHeight = height;
-    this.settings = new Settings();
+    this.settings = new SkeletonSettings();
     window.addEventListener('message', (event) => {
       this.singleBlobs.onOSCMessage(event.data);
       this.skeletonBlobs.onOSCMessage(event.data);
