@@ -179,19 +179,36 @@ Converts a blob to an image.
 <br/>
 
 
-<a href="#gesturehandler-2" id="gesturehandler-2" style="color: inherit; text-decoration: none;">
-  <h4><a href="classes/mediaPlayer.GestureHandler.html">GestureHandler</a></h4>
-</a>
-<p>Parses MQTT events sent by Vision Node and allows to handle the different gestures.</p>
-<pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">gestureHandler</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">GestureHandler</span><span class="hl-1">(</span><span class="hl-8">500</span><span class="hl-1">, </span><span class="hl-8">2</span><span class="hl-1">);</span><br/><span class="hl-2">gestureHandler</span><span class="hl-1">.</span><span class="hl-7">onPresence</span><span class="hl-1">(() </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Presence&#39;</span><span class="hl-1">));</span>
-</code></pre>
-<br/>
-
-
 <a href="#mqttclient" id="mqttclient" style="color: inherit; text-decoration: none;">
   <h4><a href="classes/visionNode.MqttClient.html">MqttClient</a></h4>
 </a>
 <p>MQTT client.</p>
 <pre><code class="language-typescript"><span class="hl-4">// example</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">client</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-7">MqttClient</span><span class="hl-1">(</span><span class="hl-3">&#39;localhost&#39;</span><span class="hl-1">, </span><span class="hl-8">1884</span><span class="hl-1">);</span><br/><span class="hl-2">client</span><span class="hl-1">.</span><span class="hl-7">onMessage</span><span class="hl-1">(() </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">));</span>
 </code></pre>
-<br/></div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/logger.html">logger</a></li><li class=" tsd-kind-module"><a href="modules/media.html">media</a></li><li class=" tsd-kind-module"><a href="modules/mediaPlayer.html">media<wbr/>Player</a></li><li class=" tsd-kind-module"><a href="modules/visionNode.html">vision<wbr/>Node</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+<br/>
+
+
+<a href="#controller" id="controller" style="color: inherit; text-decoration: none;">
+  <h2><a href="modules/controller.html">Controller</a></h2>
+</a>
+<p>Provides context to communicate with Controller.</p>
+
+<a href="#usage-4" id="usage-4" style="color: inherit; text-decoration: none;">
+  <h4>Usage</h4>
+</a>
+<br/>
+
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">getNodes</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;./brooxController.js&#39;</span><span class="hl-1">;</span>
+</code></pre>
+<br/>
+
+
+<a href="#functions-2" id="functions-2" style="color: inherit; text-decoration: none;">
+  <h4>Functions</h4>
+</a>
+<ul>
+<li><a href="modules/controller.html#getNodes">getNodes</a><br/>
+Gets nodes list.
+<br/></li>
+</ul>
+<br/></div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/controller.html">controller</a></li><li class=" tsd-kind-module"><a href="modules/logger.html">logger</a></li><li class=" tsd-kind-module"><a href="modules/media.html">media</a></li><li class=" tsd-kind-module"><a href="modules/mediaPlayer.html">media<wbr/>Player</a></li><li class=" tsd-kind-module"><a href="modules/visionNode.html">vision<wbr/>Node</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

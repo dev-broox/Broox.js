@@ -32,12 +32,20 @@ export class MqttClient {
   connect() {
     this.client.connect({ onSuccess: () => {
       console.log('MQTT connected');
-      this.client.subscribe('#');
+      // this.client.subscribe('#');
     }, onFailure: () => {
       setTimeout(() => {
         this.connect();
       }, 5000);
     }});
+  }
+
+  /**
+   * Subscribes to the given topic.
+   * @param topic MQTT topic.
+   */
+  subscribe(topic: string) {
+    this.client.subscribe(topic);
   }
 
   /**

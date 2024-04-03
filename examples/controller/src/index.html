@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Controller example</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 20px;
+        background-color: white;
+        color: gray;
+      }
+      button {
+        margin-top: 5px;
+      }
+      input {
+        width: 200px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>Controller IP</div>
+      <input id="controllerIp" type="text" value="127.0.0.1">
+      <div>Device ID</div>
+      <input id="deviceId" type="text" value="-NretEYgcRYOPvBUdXJU">
+      <div>Device IP</div>
+      <input id="deviceIp" type="text" value="192.168.0.201">
+      <div>Device Type</div>
+      <input id="deviceType" type="text" value="media_player">
+    </div>
+    <button id="btnGet">Get Nodes</button>
+    <div id="nodes"></div>
+    <script type="module">
+      import { getNodes } from './brooxController.js';
+      
+      const controllerIpInput = document.getElementById('controllerIp');
+      const deviceIdInput = document.getElementById('deviceId');
+      const deviceIpInput = document.getElementById('deviceIp');
+      const deviceTypeInput = document.getElementById('deviceType');
+      const nodesResult = document.getElementById('nodes');
+      
+      document.getElementById('btnGet').onclick = () => {
+        if(controllerIpInput.value && deviceIdInput.value && deviceIpInput.value && deviceTypeInput.value) {
+          // get nodes
+          getNodes(controllerIpInput.value, deviceIdInput.value, deviceIpInput.value, deviceTypeInput.value).then(nodes => {
+            console.log(nodes);
+            nodesResult.innerText = '';
+            nodesResult.innerText = JSON.stringify(nodes, null, 2);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

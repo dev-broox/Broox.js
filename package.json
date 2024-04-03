@@ -31,6 +31,7 @@
   "mediaPlayer": "dist/mediaPlayer/brooxMediaPlayer.js",
   "logger": "dist/logger/brooxLogger.js",
   "visionNode": "dist/visionNode/brooxVisionNode.js",
+  "controller": "dist/controller/brooxController.js",
   "targets": {
     "media": {
       "source": "src/modules/media/Media.module.ts",
@@ -64,6 +65,11 @@
         "tweakpane",
         "paho-mqtt"
       ]
+    },
+    "controller": {
+      "source": "src/modules/controller/Controller.module.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true
     }
   },
   "devDependencies": {

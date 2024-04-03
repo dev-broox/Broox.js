@@ -215,3 +215,23 @@ const client = new MqttClient('localhost', 1884);
 client.onMessage(() => console.log(message));
 ```
 <br/>
+
+## {@link controller | Controller}
+
+Provides context to communicate with Controller.
+
+#### Usage
+<br/>
+
+``` typescript
+import { getNodes } from './brooxController.js';
+```
+<br/>
+
+#### Functions
+- {@link getNodes}
+  <br/>
+  Gets nodes list.
+<br/>
+
+<br/>
