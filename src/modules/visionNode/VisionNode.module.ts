@@ -56,6 +56,17 @@
  * ```
  * <br/>
  * 
+ * #### {@link OscClient}
+ *
+ * OSC client.
+ *
+ * ``` typescript
+ * // example
+ * const client = new OscClient('http://localhost/webrtc');
+ * client.onMessage((message) => console.log(message));
+ * ```
+ * <br/>
+ * 
  * @module visionNode
  */
 
@@ -63,3 +74,4 @@ export { SkeletonController } from './skeleton/SkeletonController';
 export { KeyValue } from '../common/keyValue/KeyValue';
 export { GestureHandler } from './gesture/GestureHandler';
 export { MqttClient } from './MqttClient';
+export { OscClient } from './OscClient';
